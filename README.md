@@ -1,56 +1,78 @@
 # The Homeless Genealogy Initiative — Website
 
-A static website (plain HTML, CSS, and JavaScript, with no build step) for the Homeless Genealogy Initiative ("Putting Down Roots"). Its layout takes inspiration from Kiva: participant story cards, a story page for each person, and Donate buttons throughout. Donations go to the program as a whole, never to one participant.
+Live site: https://theian-studios.github.io/homeless-genealogy-initiative/
 
-## Pages
+A static website for the Homeless Genealogy Initiative ("Putting Down Roots"). A small Python script (`build.py`) turns the content files into finished HTML pages. GitHub runs it automatically on every push to `main` and publishes the result with GitHub Pages.
 
-| Page | File |
+## Where things live
+
+| What | File |
 | --- | --- |
-| Home | `index.html` |
-| Meet our participants | `stories.html` |
-| A participant's story | `story.html?p=<id>` (for example `story.html?p=jan`) |
-| About ("What is Putting Down Roots") | `about.html` |
-| How it works | `how-it-works.html` |
-| Contact | `contact.html` |
+| Participant stories | `content/participants/<name>.md` (one file per person) |
+| Participant photos | `assets/img/` |
+| Email, Donate link, Facebook, address, live URL | `site.json` |
+| Home, About, How it works, Contact, 404 pages | `src/pages/` |
+| Participants list page | `src/pages/stories/index.html` |
+| Story page layout | `src/templates/story.html` |
+| Header, footer, `<head>` tags shared by every page | `src/layout.html` |
+| "Support the program" banner | `src/partials/support.html` |
+| Styles | `assets/css/styles.css` |
+| Mobile menu and contact form behavior | `assets/js/main.js` |
 
-## Common updates
+## Adding or editing a participant
 
-### Add or edit a participant
-Everything about participants lives in **`assets/js/participants.js`**. Instructions are at the top of that file.
+You can do this directly on GitHub in the browser. Within a minute or two of saving, the site rebuilds itself.
 
-1. Put their photo in `assets/img/`. A portrait about 900×1200 px works best.
-2. Copy an existing entry in `participants.js` and fill in `id`, `name`, `photo`, `tag`, `blurb`, `quote`, and `story`.
-3. The new person shows up automatically on the home page, the participants page, and their own story page.
+1. Upload their photo to `assets/img/`, for example `maria.jpg`. A portrait about 900×1200 px works best.
+2. Create `content/participants/maria.md`. The file name becomes the page address (`stories/maria.html`).
 
-If someone has no photo yet, set `photo: null` and the site shows their initial instead.
+```markdown
+---
+name: Maria
+order: 6
+photo: maria.jpg
+photo_position: 50% 30%
+quote: A short quote in Maria’s own words.
+featured: no
+---
 
-### Change the Donate link, email, Facebook page, or address
-Edit the `SITE` settings at the top of **`assets/js/main.js`**.
+First paragraph of the story.
 
-- `donateUrl`: no online giving page exists yet, so Donate buttons open the contact form with "Donations" selected. Paste a real giving link here once there is one.
-- `formEndpoint`: the contact form has no email service connected yet. When someone presses Send, their own email app opens with the message already filled in and addressed to the program's email. To have messages sent straight from the site instead, create a free form at [Formspree](https://formspree.io) and paste its URL here.
+Second paragraph. Use *asterisks* for italics.
 
-### Change the navigation, header, or footer
-These are written once, in `assets/js/main.js` (`NAV`, `renderHeader`, `renderFooter`), and shared by every page.
-
-### Colors and fonts
-Colors are variables at the top of `assets/css/styles.css`. Headings use Fraunces and body text uses DM Sans, both from Google Fonts.
-
-## Preview locally
-
-```bash
-python3 -m http.server 8080
+> “A line starting with > becomes a large pull quote.”
 ```
 
-Then open http://localhost:8080.
+- `order` sets the position in the list.
+- `photo_position` controls which part of the photo stays visible when it's cropped. The second number moves the crop up or down.
+- `featured: yes` gives that person the large spot on the home page. Only one person should have it.
+- Leave `photo:` empty if there's no photo yet. The site shows their initial instead.
+- `summary:` is optional. When present, it appears in a box above the full story.
 
-## Publish with GitHub Pages
+## Donate link and contact form
 
-1. Create a new repository on GitHub, for example `homeless-genealogy-initiative`.
-2. Push this folder to it:
-   ```bash
-   git remote add origin https://github.com/<your-username>/homeless-genealogy-initiative.git
-   git push -u origin main
-   ```
-3. On GitHub, go to **Settings → Pages**. Under "Build and deployment", choose **Deploy from a branch**, then branch **main** and folder **/ (root)**.
-4. After a minute or two, the site is live at `https://<your-username>.github.io/homeless-genealogy-initiative/`.
+Edit `site.json`:
+
+- `donate_url`: Donate buttons open the contact form with "Donations" selected. Replace this with a real giving page link when you have one.
+- `form_endpoint`: blank means the form opens the visitor's own email app with their message filled in. To have messages sent straight from the site, create a free form at Web3Forms or Formspree and paste its URL here.
+- `url`: the site's public address. Change it if you set up a custom domain.
+
+## Building locally
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install pillow
+```
+
+```bash
+.venv/bin/python build.py --base / && python3 -m http.server 8080 -d _site
+```
+
+Then open http://localhost:8080. Pillow resizes the photos, converts them to WebP and creates the link-preview images. Without it, the build still works, but photos are copied at full size.
+
+## What the build produces
+
+- A complete HTML page for every page and every participant. Nothing depends on JavaScript to show up.
+- Link-preview tags for Facebook, iMessage and other apps, with a cropped photo for each story page and `assets/img/og-home.jpg` for everything else.
+- Resized WebP photos, so phones download small images.
+- `sitemap.xml`, `robots.txt`, and a 404 page.
+- Redirects from the old addresses (`story.html?p=jan` and `stories.html`).

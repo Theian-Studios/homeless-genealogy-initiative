@@ -1,0 +1,87 @@
+<!--
+title: The Homeless Genealogy Initiative
+description: Fund real jobs, real skills, and a path to stability for Utah's homeless community. Participants are paid to help link U.S. census records to the FamilySearch Family Tree with BYU's Record Linking Lab.
+-->
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <h1>Fund real jobs, real skills, and a path to stability for Utah’s homeless community.</h1>
+      <p class="hero__lede">We hire people experiencing homelessness in Utah County for paid, remote genealogy work with BYU’s Record Linking Lab. The job comes with weekly training and support toward steady, long-term employment.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="{{ site.donate_url }}">Donate</a>
+        <a class="link-arrow" href="#participants">Meet our participants</a>
+      </div>
+    </div>
+    <figure class="hero__figure">
+      {{ photo.jan.hero }}
+      <figcaption>Jan, program participant. <a href="{{ base }}stories/jan.html">Read Jan’s story</a></figcaption>
+    </figure>
+  </div>
+</section>
+
+<p class="affiliation container">Hosted by Brigham Young University’s Department of Economics, in collaboration with the BYU Record Linking Lab. Serving Utah County since 2026.</p>
+
+<section class="section" id="participants">
+  <div class="container">
+    <header class="section-header">
+      <h2>Meet our participants</h2>
+      <p>Your donation provides employment and grows the Family Tree.</p>
+    </header>
+    {{ participants.featured }}
+    <div class="card-grid card-grid--4">
+      {{ participants.not_featured }}
+    </div>
+    <p class="section-more"><a class="link-arrow" href="{{ base }}stories/">All participant stories</a></p>
+  </div>
+</section>
+
+<section class="section section--tinted">
+  <div class="container split">
+    <div>
+      <h2>How the job works</h2>
+      <p>No résumé or spotless work history is required, just a willingness to show up and try. The job is built around the barriers people face, rather than requiring that they clear them first.</p>
+      <p><a class="link-arrow" href="{{ base }}how-it-works.html">The six steps of the program</a></p>
+    </div>
+    <dl class="facts">
+      <div><dt>Hours</dt><dd>10 hours a week, on a schedule participants set themselves</dd></div>
+      <div><dt>Location</dt><dd>Fully remote: a public library, a campus, a shelter, or a phone all work</dd></div>
+      <div><dt>Pay</dt><dd>Paid wages from the start of onboarding, then part-time employment after the first month</dd></div>
+      <div><dt>Training</dt><dd>Weekly sessions on technology, workplace skills, and closing employment gaps</dd></div>
+      <div><dt>The work</dt><dd>Linking every person in the U.S. census since 1800 to the FamilySearch Family Tree</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container quote-feature">
+    <div class="quote-feature__photo">{{ photo.jessie.quote }}</div>
+    <figure class="quote-feature__body">
+      <blockquote>
+        <p>The biggest thing I wish people understand of homelessness is it’s not always just that person.</p>
+      </blockquote>
+      <figcaption>Jessie, program participant. <a href="{{ base }}stories/jessie.html">Read Jessie’s story</a></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section section--rule">
+  <div class="container">
+    <header class="section-header">
+      <h2>A lasting impact</h2>
+      <p>The program creates value both for the people it employs and for the families who benefit from their work.</p>
+    </header>
+    <div class="columns-2">
+      <div>
+        <h3>Long-term employment</h3>
+        <p>Participants build meaningful work experience, develop transferable skills, and overcome barriers to employment through employment itself.</p>
+      </div>
+      <div>
+        <h3>Family connections for future generations</h3>
+        <p>Working with BYU’s Record Linking Lab, employees make a lasting contribution to historical and genealogical research.</p>
+      </div>
+    </div>
+    <p class="section-more"><a class="link-arrow" href="{{ base }}about.html">About the initiative</a></p>
+  </div>
+</section>
+
+{{ partial.support }}

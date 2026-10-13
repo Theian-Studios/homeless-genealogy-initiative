@@ -1,0 +1,31 @@
+<div class="container story">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="{{ base }}">Home</a> <span aria-hidden="true">/</span> <a href="{{ base }}stories/">Participants</a> <span aria-hidden="true">/</span> <span aria-current="page">{{ p.name }}</span>
+  </nav>
+  <div class="story__layout">
+    <div class="story__photo">{{ p.photo }}</div>
+    <article class="story__article">
+      <h1>{{ p.name }}</h1>
+      <p class="story__quote">“{{ p.quote }}”</p>
+      <div class="story__body">
+        {{ p.body }}
+      </div>
+    </article>
+    <aside class="story__support">
+      <h2>Support participants like {{ p.name }}</h2>
+      <p>Gifts pay participants’ wages and fund weekly training. Donations support the whole program, not individual participants.</p>
+      <a class="btn btn--primary" href="{{ site.donate_url }}">Donate</a>
+    </aside>
+  </div>
+</div>
+
+<section class="section section--rule">
+  <div class="container">
+    <header class="section-header">
+      <h2>More participant stories</h2>
+    </header>
+    <div class="card-grid card-grid--4">
+      {{ p.more }}
+    </div>
+  </div>
+</section>
