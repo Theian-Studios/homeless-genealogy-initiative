@@ -55,14 +55,14 @@
           el.addEventListener("transitionend", done);
         });
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+      { rootMargin: "0px 0px -4% 0px", threshold: 0.05 }
     );
     targets.forEach((el) => {
       if (el.getBoundingClientRect().top < window.innerHeight) return;
       // Stagger siblings in the same grid (cards, goal columns).
       const index = [...el.parentElement.children].indexOf(el);
       if (el.matches(".card, .columns-2 > div, .way, .problem__card, .faq__item")) {
-        el.style.setProperty("--delay", `${(index % 4) * 0.09}s`);
+        el.style.setProperty("--delay", `${(index % 4) * 0.05}s`);
       }
       el.classList.add("reveal");
       observer.observe(el);
@@ -82,7 +82,7 @@
       const leaving = slides[current];
       leaving.classList.add("is-leaving");
       leaving.hidden = true;
-      setTimeout(() => leaving.classList.remove("is-leaving"), 600);
+      setTimeout(() => leaving.classList.remove("is-leaving"), 350);
       current = next % slides.length;
       slides[current].hidden = false;
     };
