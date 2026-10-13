@@ -19,6 +19,7 @@ and social-sharing images are generated; without it, photos are copied as-is.
 
 import argparse
 import datetime
+import hashlib
 import html
 import json
 import re
@@ -272,6 +273,9 @@ def main():
         "site.donate_url": esc(donate),
         **{f"site.{k}": esc(v) for k, v in site.items() if k != "donate_url"},
     }
+    # Content hashes so browsers fetch new CSS/JS as soon as they change.
+    for key, rel in (("css", "assets/css/styles.css"), ("js", "assets/js/main.js")):
+        ctx[f"version.{key}"] = hashlib.sha1((ROOT / rel).read_bytes()).hexdigest()[:8]
     for key in ("stories", "about", "how", "hire", "contact"):
         ctx[f"current.{key}"] = ""
 
