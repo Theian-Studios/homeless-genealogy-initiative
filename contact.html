@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact Us — The Homeless Genealogy Initiative</title>
+  <meta name="description" content="Have questions about the Homeless Genealogy Initiative? Reach out about donations, volunteering, or the employment program.">
+  <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Get in touch</span>
+        <h1>Contact Us</h1>
+        <p>Have questions about our program? We are here to help. Reach out to us using the form below or through our other contact channels.</p>
+      </div>
+      <img class="page-hero__roots" src="assets/img/logo-mark.svg" alt="">
+    </section>
+
+    <section class="section">
+      <div class="container contact-layout">
+        <div class="form-card" id="contact-form-card">
+          <h2 style="font-size:1.8rem">Send us a message</h2>
+          <form id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required>
+                <p class="field__error" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+                <p class="field__error" aria-live="polite"></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="subject">Subject</label>
+              <select id="subject" name="subject" required>
+                <option value="" disabled selected>Choose a subject…</option>
+                <option value="general">General Inquiry</option>
+                <option value="donations">Donations</option>
+                <option value="volunteer">Volunteer Opportunities</option>
+                <option value="employment">Employment Program</option>
+              </select>
+              <p class="field__error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+              <p class="field__error" aria-live="polite"></p>
+            </div>
+            <button class="btn btn--primary" type="submit"><span data-icon="mail"></span> Send message</button>
+            <div id="form-status" class="form-status" role="status"></div>
+          </form>
+        </div>
+
+        <div>
+          <div class="info-card info-card--giving">
+            <h3><span data-icon="heart"></span> Interested in donating?</h3>
+            <p>Online giving is coming soon. In the meantime, choose <strong>Donations</strong> in the form and we’ll reach out about how you can support the program.</p>
+          </div>
+          <div class="info-card">
+            <h3><span data-icon="pin"></span> Office location</h3>
+            <p data-site-address></p>
+          </div>
+          <div class="info-card">
+            <h3><span data-icon="mail"></span> Email</h3>
+            <p><a data-site-email href="#"></a></p>
+          </div>
+          <div class="info-card">
+            <h3>Follow us</h3>
+            <a class="social-link" data-site-facebook href="#" target="_blank" rel="noopener">
+              <span class="social-link__icon" data-icon="facebook"></span>
+              <span>BYU Record Linking Lab<br><small style="font-weight:500;color:var(--muted)">on Facebook</small></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="assets/js/participants.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
