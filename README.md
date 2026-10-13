@@ -32,7 +32,8 @@ name: Maria
 order: 6
 photo: maria.jpg
 photo_position: 50% 30%
-quote: A short quote in Maria’s own words.
+quote: A quote in Maria’s own words, shown at the top of her story.
+card_quote: A short version for her card (under 8 words).
 featured: no
 ---
 
@@ -44,10 +45,11 @@ Second paragraph. Use *asterisks* for italics.
 ```
 
 - `order` sets the position in the list.
+- Participants without a photo are left off the site until one is added.
 - `photo_position` controls which part of the photo stays visible when it's cropped. The second number moves the crop up or down.
 - `featured: yes` gives that person the large spot on the home page. Only one person should have it.
 - Leave `photo:` empty if there's no photo yet. The site shows their initial instead.
-- `summary:` is optional. When present, it appears in a box above the full story.
+- `summary:` is optional. When present, it becomes the story's first paragraph and is used as the excerpt if she's featured on the home page.
 - `status:` is optional, for example `status: Graduated` or `status: Now working full-time`. It shows as a label on the person's card and story page.
 - To post an update on someone's progress, add a heading and a paragraph at the end of their story:
 

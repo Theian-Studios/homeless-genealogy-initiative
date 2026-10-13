@@ -4,6 +4,7 @@ order: 1
 photo: 
 photo_position: 50% 30%
 quote: Everyone needs somebody who cares. I try to be kind to everybody.
+card_quote: Everything comes back to hope.
 featured: no
 ---
 

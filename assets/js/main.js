@@ -34,9 +34,9 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if ("IntersectionObserver" in window && !reduceMotion) {
     const targets = document.querySelectorAll(
-      ".section-header, .featured, .card, .facts, .quote-rotator, .columns-2 > div, " +
+      ".section-header, .featured, .card, .facts, .voice, .columns-2 > div, " +
         ".steps li, .split > *, .support__inner, .section-more, .ledger, .problem__card, " +
-        ".way, .faq__item, .pooled-note"
+        ".way, .faq__item"
     );
     const observer = new IntersectionObserver(
       (entries) => {
@@ -61,7 +61,7 @@
       if (el.getBoundingClientRect().top < window.innerHeight) return;
       // Stagger siblings in the same grid (cards, goal columns).
       const index = [...el.parentElement.children].indexOf(el);
-      if (el.matches(".card, .columns-2 > div, .way, .problem__card, .faq__item")) {
+      if (el.matches(".card, .columns-2 > div, .way, .problem__card, .faq__item, .voice")) {
         el.style.setProperty("--delay", `${(index % 4) * 0.05}s`);
       }
       el.classList.add("reveal");
@@ -69,33 +69,8 @@
     });
   }
 
-  /* ---------- Rotating participant quotes ----------
-     Quotes change every 8 seconds and pause while the pointer or keyboard
-     focus is on them. Motion-sensitive visitors see the first quote only. */
-  const rotator = document.querySelector(".quote-rotator");
-  if (rotator && !reduceMotion) {
-    const slides = [...rotator.querySelectorAll(".quote-slide")];
-    let current = 0;
-    let timer = null;
-
-    const show = (next) => {
-      const leaving = slides[current];
-      leaving.classList.add("is-leaving");
-      leaving.hidden = true;
-      setTimeout(() => leaving.classList.remove("is-leaving"), 350);
-      current = next % slides.length;
-      slides[current].hidden = false;
-    };
-    const stop = () => { clearInterval(timer); timer = null; };
-    const start = () => { if (!timer) timer = setInterval(() => show(current + 1), 8000); };
-
-    rotator.classList.add("js-rotator");
-    rotator.addEventListener("mouseenter", stop);
-    rotator.addEventListener("mouseleave", start);
-    rotator.addEventListener("focusin", stop);
-    rotator.addEventListener("focusout", start);
-    if (slides.length > 1) start();
-  }
+  /* ---------- Footer year ---------- */
+  document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 
   /* ---------- Copy story link ---------- */
   document.querySelectorAll(".copy-link").forEach((button) => {

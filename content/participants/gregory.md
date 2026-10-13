@@ -4,6 +4,7 @@ order: 2
 photo: gregory.jpg
 photo_position: 50% 35%
 quote: I want to feel accomplished.
+card_quote: I want to feel accomplished.
 featured: no
 ---
 

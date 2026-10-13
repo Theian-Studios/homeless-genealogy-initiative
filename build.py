@@ -191,6 +191,7 @@ def load_participants(photos, base):
             "name": meta.get("name", pid.title()),
             "order": int(meta.get("order", 99)),
             "quote": meta.get("quote", ""),
+            "card_quote": meta.get("card_quote") or meta.get("quote", ""),
             "featured": meta.get("featured", "no").lower() in ("yes", "true"),
             "summary": meta.get("summary", ""),
             "position": meta.get("photo_position", "50% 30%"),
@@ -220,7 +221,7 @@ def card(p, base):
     return f"""<a class="card" href="{base}stories/{p['id']}.html">
         <div class="card__photo">{photo_for(p, base, 'card')}{status}</div>
         <h3 class="card__name">{esc(p['name'])}</h3>
-        <p class="card__quote">“{esc(p['quote'])}”</p>
+        <p class="card__quote">“{esc(p['card_quote'])}”</p>
         <span class="card__more">Read {esc(p['name'])}’s story</span>
       </a>"""
 
@@ -335,7 +336,8 @@ def main():
         nxt = people[(i + 1) % len(people)]
         body = markdown_blocks(p["body_md"])
         if p["summary"]:
-            body = f'<p class="story__summary">{inline_md(p["summary"])}</p>\n        <h2>Expanded story</h2>\n        {body}'
+            # A summary opens the story as its first paragraph, like every other page.
+            body = f'<p>{inline_md(p["summary"])}</p>\n        {body}'
         others = [q for q in people if q is not p][:4]
         story_ctx_cols = grid_cols(len(others))
         story_ctx = {
@@ -349,7 +351,7 @@ def main():
             "p.share_url": quote(f"{site_url}stories/{p['id']}.html", safe=""),
             "p.next_url": f"{base}stories/{nxt['id']}.html",
             "p.next_name": esc(nxt["name"]),
-            "p.next_quote": esc(nxt["quote"]),
+            "p.next_quote": esc(nxt["card_quote"]),
             "p.status": f'<p class="status-badge status-badge--inline">{esc(p["status"])}</p>' if p["status"] else "",
         }
         meta = {

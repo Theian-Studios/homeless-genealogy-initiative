@@ -4,6 +4,7 @@ order: 5
 photo: alison.jpg
 photo_position: 50% 30%
 quote: We’re only going forward, we ain’t going backwards. We ain’t doing this again.
+card_quote: We’re only going forward.
 featured: yes
 ---
 
