@@ -11,6 +11,9 @@
       toggle.setAttribute("aria-expanded", String(open));
     };
     toggle.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
+    document.addEventListener("click", (e) => {
+      if (nav.classList.contains("is-open") && !nav.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
+    });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && nav.classList.contains("is-open")) {
         setOpen(false);
