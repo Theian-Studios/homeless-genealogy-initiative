@@ -24,7 +24,7 @@ import json
 import re
 import shutil
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 try:
     from PIL import Image, ImageOps
@@ -202,6 +202,7 @@ def load_participants(photos, base):
             "position": meta.get("photo_position", "50% 30%"),
             "body_md": body,
             "photo_file": meta.get("photo", ""),
+            "status": meta.get("status", ""),
         }
         p["excerpt"] = p["summary"] or first_paragraph(body)
         p["info"] = None
@@ -220,8 +221,9 @@ def photo_for(p, base, variant):
 
 
 def card(p, base):
+    status = f'<span class="status-badge">{esc(p["status"])}</span>' if p["status"] else ""
     return f"""<a class="card" href="{base}stories/{p['id']}.html">
-        <div class="card__photo">{photo_for(p, base, 'card')}</div>
+        <div class="card__photo">{photo_for(p, base, 'card')}{status}</div>
         <h3 class="card__name">{esc(p['name'])}</h3>
         <p class="card__quote">“{esc(p['quote'])}”</p>
         <span class="card__more">Read {esc(p['name'])}’s story</span>
@@ -270,7 +272,7 @@ def main():
         "site.donate_url": esc(donate),
         **{f"site.{k}": esc(v) for k, v in site.items() if k != "donate_url"},
     }
-    for key in ("stories", "about", "how", "contact"):
+    for key in ("stories", "about", "how", "hire", "contact"):
         ctx[f"current.{key}"] = ""
 
     for path in (ROOT / "src" / "partials").glob("*.html"):
@@ -331,6 +333,9 @@ def main():
             "p.photo": photo_for(p, base, "story"),
             "p.body": body,
             "p.more": "\n      ".join(card(q, base) for q in others),
+            "p.url": esc(f"{site_url}stories/{p['id']}.html"),
+            "p.share_url": quote(f"{site_url}stories/{p['id']}.html", safe=""),
+            "p.status": f'<p class="status-badge status-badge--inline">{esc(p["status"])}</p>' if p["status"] else "",
         }
         meta = {
             "title": f"{p['name']}’s story",

@@ -31,8 +31,9 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if ("IntersectionObserver" in window && !reduceMotion) {
     const targets = document.querySelectorAll(
-      ".section-header, .featured, .card, .facts, .quote-feature, .columns-2 > div, " +
-        ".steps li, .split > *, .support__inner, .section-more, .ledger"
+      ".section-header, .featured, .card, .facts, .quote-rotator, .columns-2 > div, " +
+        ".steps li, .split > *, .support__inner, .section-more, .ledger, .problem__card, " +
+        ".way, .faq__item, .pooled-note"
     );
     const observer = new IntersectionObserver(
       (entries) => {
@@ -57,11 +58,65 @@
       if (el.getBoundingClientRect().top < window.innerHeight) return;
       // Stagger siblings in the same grid (cards, goal columns).
       const index = [...el.parentElement.children].indexOf(el);
-      if (el.matches(".card, .columns-2 > div")) el.style.setProperty("--delay", `${(index % 4) * 0.09}s`);
+      if (el.matches(".card, .columns-2 > div, .way, .problem__card, .faq__item")) {
+        el.style.setProperty("--delay", `${(index % 4) * 0.09}s`);
+      }
       el.classList.add("reveal");
       observer.observe(el);
     });
   }
+
+  /* ---------- Rotating participant quotes ---------- */
+  const rotator = document.querySelector(".quote-rotator");
+  if (rotator) {
+    const slides = [...rotator.querySelectorAll(".quote-slide")];
+    const controls = rotator.parentElement.querySelector(".quote-controls");
+    const dots = [...controls.querySelectorAll(".quote-dot")];
+    let current = 0;
+    let timer = null;
+
+    const show = (next) => {
+      next = (next + slides.length) % slides.length;
+      if (next === current) return;
+      const leaving = slides[current];
+      leaving.classList.add("is-leaving");
+      leaving.hidden = true;
+      setTimeout(() => leaving.classList.remove("is-leaving"), 600);
+      slides[next].hidden = false;
+      dots[current].removeAttribute("aria-current");
+      dots[next].setAttribute("aria-current", "true");
+      current = next;
+    };
+    const stop = () => { clearInterval(timer); timer = null; };
+    const start = () => { if (!reduceMotion && !timer) timer = setInterval(() => show(current + 1), 7000); };
+
+    rotator.classList.add("js-rotator");
+    controls.hidden = false;
+    dots[0].setAttribute("aria-current", "true");
+    controls.querySelectorAll("[data-dir]").forEach((b) =>
+      b.addEventListener("click", () => { stop(); show(current + Number(b.dataset.dir)); start(); })
+    );
+    dots.forEach((d, i) => d.addEventListener("click", () => { stop(); show(i); start(); }));
+    const area = rotator.parentElement;
+    area.addEventListener("mouseenter", stop);
+    area.addEventListener("mouseleave", start);
+    area.addEventListener("focusin", stop);
+    area.addEventListener("focusout", start);
+    start();
+  }
+
+  /* ---------- Copy story link ---------- */
+  document.querySelectorAll(".copy-link").forEach((button) => {
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.url);
+        button.textContent = "Link copied";
+      } catch {
+        window.prompt("Copy this link:", button.dataset.url);
+      }
+      setTimeout(() => (button.textContent = "Copy link"), 2500);
+    });
+  });
 
   /* ---------- Contact form ---------- */
   const form = document.getElementById("contact-form");

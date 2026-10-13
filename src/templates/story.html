@@ -5,6 +5,7 @@
   <div class="story__layout">
     <div class="story__photo">{{ p.photo }}</div>
     <article class="story__article">
+      {{ p.status }}
       <h1>{{ p.name }}</h1>
       <p class="story__quote">“{{ p.quote }}”</p>
       <div class="story__body">
@@ -12,9 +13,14 @@
       </div>
     </article>
     <aside class="story__support">
-      <h2>Support participants like {{ p.name }}</h2>
-      <p>Gifts pay participants’ wages and fund weekly training. Donations support the whole program, not individual participants.</p>
+      <h2>Inspired by {{ p.name }}’s story?</h2>
+      <p>Your gift funds the program that gave {{ p.name }} paid work, weekly training, and support. Gifts go to the whole program, so every participant benefits.</p>
       <a class="btn btn--primary" href="{{ site.donate_url }}">Donate</a>
+      <p class="story__share">
+        <span>Share this story:</span>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ p.share_url }}" rel="noopener" target="_blank">Facebook</a>
+        <button type="button" class="copy-link" data-url="{{ p.url }}">Copy link</button>
+      </p>
     </aside>
   </div>
 </div>

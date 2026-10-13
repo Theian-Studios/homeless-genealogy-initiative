@@ -11,7 +11,7 @@ A static website for the Homeless Genealogy Initiative ("Putting Down Roots"). A
 | Participant stories | `content/participants/<name>.md` (one file per person) |
 | Participant photos | `assets/img/` |
 | Email, Donate link, Facebook, address, live URL | `site.json` |
-| Home, About, How it works, Contact, 404 pages | `src/pages/` |
+| Home, About, How it works (with FAQ), For employers, Contact, 404 pages | `src/pages/` |
 | Participants list page | `src/pages/stories/index.html` |
 | Story page layout | `src/templates/story.html` |
 | Header, footer, `<head>` tags shared by every page | `src/layout.html` |
@@ -48,6 +48,14 @@ Second paragraph. Use *asterisks* for italics.
 - `featured: yes` gives that person the large spot on the home page. Only one person should have it.
 - Leave `photo:` empty if there's no photo yet. The site shows their initial instead.
 - `summary:` is optional. When present, it appears in a box above the full story.
+- `status:` is optional, for example `status: Graduated` or `status: Now working full-time`. It shows as a label on the person's card and story page.
+- To post an update on someone's progress, add a heading and a paragraph at the end of their story:
+
+```markdown
+## Update: March 2027
+
+Alison finished the program and started a full-time job.
+```
 
 ## Donate link and contact form
 

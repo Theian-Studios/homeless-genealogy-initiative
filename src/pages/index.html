@@ -21,6 +21,25 @@ description: Fund real jobs, real skills, and a path to stability for Utah's hom
 
 <p class="affiliation container">Hosted by Brigham Young University’s Department of Economics, in collaboration with the BYU Record Linking Lab. Serving Utah County since 2026.</p>
 
+<section class="section problem">
+  <div class="container problem__grid">
+    <div class="problem__card">
+      <p class="section-label">The problem</p>
+      <h2>No job without an address. No address without a job.</h2>
+      <p>Employers expect references, reliable transportation, clean clothing, a permanent address, and a phone that works. For people experiencing homelessness, those requirements can close the door before an interview ever happens.</p>
+    </div>
+    <div class="problem__arrow" aria-hidden="true">
+      <svg viewBox="0 0 48 24"><path d="M2 12h40M32 3l10 9-10 9"/></svg>
+    </div>
+    <div class="problem__card problem__card--answer">
+      <p class="section-label">Where we come in</p>
+      <h2>So we built a job that doesn’t ask for any of that.</h2>
+      <p>Participants work remotely, ten hours a week, on their own schedule, and are paid from the start. Along the way, they help reconnect other families with their history while they rebuild their own.</p>
+      <a class="link-arrow" href="{{ base }}about.html">Why this approach works</a>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="participants">
   <div class="container">
     <header class="section-header">
@@ -53,15 +72,50 @@ description: Fund real jobs, real skills, and a path to stability for Utah's hom
   </div>
 </section>
 
-<section class="section">
-  <div class="container quote-feature">
-    <div class="quote-feature__photo">{{ photo.jessie.quote }}</div>
-    <figure class="quote-feature__body">
-      <blockquote>
-        <p>The biggest thing I wish people understand of homelessness is it’s not always just that person.</p>
-      </blockquote>
-      <figcaption>Jessie, program participant. <a href="{{ base }}stories/jessie.html">Read Jessie’s story</a></figcaption>
-    </figure>
+<section class="section quotes" aria-roledescription="carousel" aria-label="Participant quotes">
+  <div class="container">
+    <div class="quote-rotator">
+      <figure class="quote-feature quote-slide is-active" data-index="0">
+        <div class="quote-feature__photo">{{ photo.jessie.quote }}</div>
+        <div class="quote-feature__body">
+          <blockquote><p>The biggest thing I wish people understand of homelessness is it’s not always just that person.</p></blockquote>
+          <figcaption>Jessie, program participant. <a href="{{ base }}stories/jessie.html">Read Jessie’s story</a></figcaption>
+        </div>
+      </figure>
+      <figure class="quote-feature quote-slide" data-index="1" hidden>
+        <div class="quote-feature__photo">{{ photo.candace.quote }}</div>
+        <div class="quote-feature__body">
+          <blockquote><p>I’d rather have a term that reflects someone who’s trying.</p></blockquote>
+          <figcaption>Candace, program participant. <a href="{{ base }}stories/candace.html">Read Candace’s story</a></figcaption>
+        </div>
+      </figure>
+      <figure class="quote-feature quote-slide" data-index="2" hidden>
+        <div class="quote-feature__photo">{{ photo.gregory.quote }}</div>
+        <div class="quote-feature__body">
+          <blockquote><p>I don’t have a job. I need a job. I need to do something.</p></blockquote>
+          <figcaption>Gregory, program participant. <a href="{{ base }}stories/gregory.html">Read Gregory’s story</a></figcaption>
+        </div>
+      </figure>
+      <figure class="quote-feature quote-slide" data-index="3" hidden>
+        <div class="quote-feature__photo">{{ photo.alison.quote }}</div>
+        <div class="quote-feature__body">
+          <blockquote><p>I overcame hell.</p></blockquote>
+          <figcaption>Alison, program participant. <a href="{{ base }}stories/alison.html">Read Alison’s story</a></figcaption>
+        </div>
+      </figure>
+      <figure class="quote-feature quote-slide" data-index="4" hidden>
+        <div class="quote-feature__photo">{{ photo.jan.quote }}</div>
+        <div class="quote-feature__body">
+          <blockquote><p>I know what I want to do, and I know the steps I need to take.</p></blockquote>
+          <figcaption>Jan, program participant. <a href="{{ base }}stories/jan.html">Read Jan’s story</a></figcaption>
+        </div>
+      </figure>
+    </div>
+    <div class="quote-controls" hidden>
+      <button type="button" class="quote-controls__btn" data-dir="-1" aria-label="Previous quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="quote-controls__dots"><button type="button" class="quote-dot" aria-label="Show quote 1 of 5"></button><button type="button" class="quote-dot" aria-label="Show quote 2 of 5"></button><button type="button" class="quote-dot" aria-label="Show quote 3 of 5"></button><button type="button" class="quote-dot" aria-label="Show quote 4 of 5"></button><button type="button" class="quote-dot" aria-label="Show quote 5 of 5"></button></div>
+      <button type="button" class="quote-controls__btn" data-dir="1" aria-label="Next quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
   </div>
 </section>
 
@@ -83,6 +137,37 @@ description: Fund real jobs, real skills, and a path to stability for Utah's hom
       </div>
     </div>
     <p class="section-more"><a class="link-arrow" href="{{ base }}about.html">About the initiative</a></p>
+  </div>
+</section>
+
+<section class="section section--tinted">
+  <div class="container">
+    <header class="section-header">
+      <p class="section-label">Get involved</p>
+      <h2>There’s more than one way to help.</h2>
+    </header>
+    <div class="ways">
+      <a class="way" href="{{ site.donate_url }}">
+        <h3>Give</h3>
+        <p>Fund wages and weekly training for everyone in the program.</p>
+        <span class="way__cta">Donate</span>
+      </a>
+      <a class="way" href="{{ base }}hire.html">
+        <h3>Hire</h3>
+        <p>Looking for dependable, detail-minded employees? Meet people who are ready for what’s next.</p>
+        <span class="way__cta">For employers</span>
+      </a>
+      <a class="way" href="{{ base }}contact.html?subject=referral#contact-form">
+        <h3>Refer someone</h3>
+        <p>Know someone in Utah County experiencing homelessness who wants to work? No résumé needed.</p>
+        <span class="way__cta">Make a referral</span>
+      </a>
+      <a class="way" href="{{ base }}contact.html?subject=partner#contact-form">
+        <h3>Volunteer or partner</h3>
+        <p>Shelters, caseworkers, and volunteers help people find the program and keep going.</p>
+        <span class="way__cta">Get in touch</span>
+      </a>
+    </div>
   </div>
 </section>
 
