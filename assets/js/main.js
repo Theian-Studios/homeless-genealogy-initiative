@@ -19,6 +19,50 @@
     });
   }
 
+  /* ---------- Header shadow once the page scrolls ---------- */
+  const header = document.querySelector(".site-header");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* ---------- Reveal on scroll ----------
+     Only elements that start below the first screen are hidden, so nothing
+     flickers on load and everything stays visible if JavaScript fails. */
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const targets = document.querySelectorAll(
+      ".section-header, .featured, .card, .facts, .quote-feature, .columns-2 > div, " +
+        ".steps li, .split > *, .support__inner, .section-more, .ledger"
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          el.classList.add("is-visible");
+          observer.unobserve(el);
+          // Hand control back to hover effects once the entrance finishes.
+          const done = (e) => {
+            if (e.target !== el) return;
+            el.removeEventListener("transitionend", done);
+            el.classList.remove("reveal", "is-visible");
+            el.style.removeProperty("--delay");
+          };
+          el.addEventListener("transitionend", done);
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+    );
+    targets.forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      // Stagger siblings in the same grid (cards, goal columns).
+      const index = [...el.parentElement.children].indexOf(el);
+      if (el.matches(".card, .columns-2 > div")) el.style.setProperty("--delay", `${(index % 4) * 0.09}s`);
+      el.classList.add("reveal");
+      observer.observe(el);
+    });
+  }
+
   /* ---------- Contact form ---------- */
   const form = document.getElementById("contact-form");
   if (!form) return;
