@@ -1,6 +1,6 @@
 <div class="container story">
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="{{ base }}">Home</a> <span aria-hidden="true">/</span> <a href="{{ base }}stories/">Participants</a> <span aria-hidden="true">/</span> <span aria-current="page">{{ p.name }}</span>
+    <a href="{{ base }}">Home</a> <span aria-hidden="true">/</span> <a href="{{ base }}stories/">Stories</a> <span aria-hidden="true">/</span> <span aria-current="page">{{ p.name }}</span>
   </nav>
   <div class="story__layout">
     <div class="story__photo">{{ p.photo }}</div>
@@ -11,6 +11,11 @@
       <div class="story__body">
         {{ p.body }}
       </div>
+      <a class="next-story" href="{{ p.next_url }}">
+        <span class="next-story__label">Next story</span>
+        <span class="next-story__name">{{ p.next_name }}</span>
+        <span class="next-story__quote">“{{ p.next_quote }}”</span>
+      </a>
     </article>
     <aside class="story__support">
       <h2>Inspired by {{ p.name }}’s story?</h2>

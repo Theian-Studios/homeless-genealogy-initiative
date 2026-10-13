@@ -538,6 +538,19 @@ strong { font-weight: 600; }
 .copy-link { background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 0.18em; }
 .page-header__actions { margin: 28px 0 0; }
 
+/* ---------- Next story ---------- */
+.next-story {
+  display: grid; gap: 4px; margin-top: 48px; padding: 24px 28px; text-decoration: none; color: inherit;
+  background: #fff; border: 1px solid var(--rule-soft); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+.next-story:hover { transform: translateY(-2px); box-shadow: var(--shadow); color: inherit; }
+.next-story__label { font-size: 0.9rem; font-weight: 600; color: var(--clay-text); }
+.next-story__name { font-family: var(--serif); font-size: 1.6rem; color: var(--forest); }
+.next-story__name::after { content: "→"; margin-left: 0.4em; display: inline-block; transition: transform 0.18s var(--ease); }
+.next-story:hover .next-story__name::after { transform: translateX(4px); }
+.next-story__quote { color: var(--muted); }
+
 /* ---------- Panel outlines ---------- */
 .problem__card:not(.problem__card--answer), .featured, .facts, .columns-2 > div, .way,
 .faq__item, .pooled-note, .story__summary, .contact-info__block--note { border: 1px solid var(--rule-soft); }

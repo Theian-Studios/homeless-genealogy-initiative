@@ -331,7 +331,8 @@ def main():
 
     # Participant story pages
     story_tpl = (ROOT / "src" / "templates" / "story.html").read_text(encoding="utf-8")
-    for p in people:
+    for i, p in enumerate(people):
+        nxt = people[(i + 1) % len(people)]
         body = markdown_blocks(p["body_md"])
         if p["summary"]:
             body = f'<p class="story__summary">{inline_md(p["summary"])}</p>\n        <h2>Expanded story</h2>\n        {body}'
@@ -346,6 +347,9 @@ def main():
             "p.more_cols": story_ctx_cols,
             "p.url": esc(f"{site_url}stories/{p['id']}.html"),
             "p.share_url": quote(f"{site_url}stories/{p['id']}.html", safe=""),
+            "p.next_url": f"{base}stories/{nxt['id']}.html",
+            "p.next_name": esc(nxt["name"]),
+            "p.next_quote": esc(nxt["quote"]),
             "p.status": f'<p class="status-badge status-badge--inline">{esc(p["status"])}</p>' if p["status"] else "",
         }
         meta = {

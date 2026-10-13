@@ -33,28 +33,13 @@ description: Fund real jobs, real skills, and a path to stability for Utah's hom
     <div class="problem__card problem__card--answer">
       <p class="section-label">Where we come in</p>
       <h2>So we built a job that doesn’t ask for any of that.</h2>
-      <p>Participants work remotely for 10 hours a week, on their own schedule, and are paid from day one. Along the way, they help reconnect other families with their history while they rebuild their own.</p>
-      <a class="link-arrow" href="{{ base }}about.html">Why this approach works</a>
+      <p>No car, address, or work history needed. Participants work from anywhere they can get online and are paid from day one. Along the way, they help reconnect other families with their history while they rebuild their own.</p>
+      <a class="link-arrow" href="#the-job">How the job works</a>
     </div>
   </div>
 </section>
 
-<section class="section" id="participants">
-  <div class="container">
-    <header class="section-header">
-      <p class="section-label">Meet our participants</p>
-      <h2>Real people. Real work. Real progress.</h2>
-      <p>Your donation provides employment and grows the Family Tree.</p>
-    </header>
-    {{ participants.featured }}
-    <div class="card-grid card-grid--scroll card-grid--{{ participants.not_featured_cols }}">
-      {{ participants.not_featured }}
-    </div>
-    <p class="section-more"><a class="link-arrow" href="{{ base }}stories/">All participant stories</a></p>
-  </div>
-</section>
-
-<section class="section section--tinted">
+<section class="section section--tinted" id="the-job">
   <div class="container split">
     <div>
       <h2>A job that meets people where they are</h2>
@@ -71,38 +56,18 @@ description: Fund real jobs, real skills, and a path to stability for Utah's hom
   </div>
 </section>
 
-<section class="section quotes" aria-roledescription="carousel" aria-label="Participant quotes">
+<section class="section" id="participants">
   <div class="container">
-    <div class="quote-rotator">
-      <figure class="quote-feature quote-slide is-active" data-index="0">
-        <div class="quote-feature__photo">{{ photo.jessie.quote }}</div>
-        <div class="quote-feature__body">
-          <blockquote><p>The biggest thing I wish people understand of homelessness is it’s not always just that person.</p></blockquote>
-          <figcaption>Jessie, program participant. <a href="{{ base }}stories/jessie.html">Read Jessie’s story</a></figcaption>
-        </div>
-      </figure>
-      <figure class="quote-feature quote-slide" data-index="1" hidden>
-        <div class="quote-feature__photo">{{ photo.gregory.quote }}</div>
-        <div class="quote-feature__body">
-          <blockquote><p>I don’t have a job. I need a job. I need to do something.</p></blockquote>
-          <figcaption>Gregory, program participant. <a href="{{ base }}stories/gregory.html">Read Gregory’s story</a></figcaption>
-        </div>
-      </figure>
-      <figure class="quote-feature quote-slide" data-index="2" hidden>
-        <div class="quote-feature__photo">{{ photo.alison.quote }}</div>
-        <div class="quote-feature__body">
-          <blockquote><p>I overcame hell.</p></blockquote>
-          <figcaption>Alison, program participant. <a href="{{ base }}stories/alison.html">Read Alison’s story</a></figcaption>
-        </div>
-      </figure>
-      <figure class="quote-feature quote-slide" data-index="3" hidden>
-        <div class="quote-feature__photo">{{ photo.jan.quote }}</div>
-        <div class="quote-feature__body">
-          <blockquote><p>I know what I want to do, and I know the steps I need to take.</p></blockquote>
-          <figcaption>Jan, program participant. <a href="{{ base }}stories/jan.html">Read Jan’s story</a></figcaption>
-        </div>
-      </figure>
+    <header class="section-header">
+      <p class="section-label">Meet our participants</p>
+      <h2>Real people. Real work. Real progress.</h2>
+      <p>Your donation provides employment and grows the Family Tree.</p>
+    </header>
+    {{ participants.featured }}
+    <div class="card-grid card-grid--scroll card-grid--{{ participants.not_featured_cols }}">
+      {{ participants.not_featured }}
     </div>
+    <p class="section-more"><a class="link-arrow" href="{{ base }}stories/">See all stories</a></p>
   </div>
 </section>
 
