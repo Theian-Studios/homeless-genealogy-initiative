@@ -69,43 +69,32 @@
     });
   }
 
-  /* ---------- Rotating participant quotes ---------- */
+  /* ---------- Rotating participant quotes ----------
+     Quotes change every 8 seconds and pause while the pointer or keyboard
+     focus is on them. Motion-sensitive visitors see the first quote only. */
   const rotator = document.querySelector(".quote-rotator");
-  if (rotator) {
+  if (rotator && !reduceMotion) {
     const slides = [...rotator.querySelectorAll(".quote-slide")];
-    const controls = rotator.parentElement.querySelector(".quote-controls");
-    const dots = [...controls.querySelectorAll(".quote-dot")];
     let current = 0;
     let timer = null;
 
     const show = (next) => {
-      next = (next + slides.length) % slides.length;
-      if (next === current) return;
       const leaving = slides[current];
       leaving.classList.add("is-leaving");
       leaving.hidden = true;
       setTimeout(() => leaving.classList.remove("is-leaving"), 600);
-      slides[next].hidden = false;
-      dots[current].removeAttribute("aria-current");
-      dots[next].setAttribute("aria-current", "true");
-      current = next;
+      current = next % slides.length;
+      slides[current].hidden = false;
     };
     const stop = () => { clearInterval(timer); timer = null; };
-    const start = () => { if (!reduceMotion && !timer) timer = setInterval(() => show(current + 1), 7000); };
+    const start = () => { if (!timer) timer = setInterval(() => show(current + 1), 8000); };
 
     rotator.classList.add("js-rotator");
-    controls.hidden = false;
-    dots[0].setAttribute("aria-current", "true");
-    controls.querySelectorAll("[data-dir]").forEach((b) =>
-      b.addEventListener("click", () => { stop(); show(current + Number(b.dataset.dir)); start(); })
-    );
-    dots.forEach((d, i) => d.addEventListener("click", () => { stop(); show(i); start(); }));
-    const area = rotator.parentElement;
-    area.addEventListener("mouseenter", stop);
-    area.addEventListener("mouseleave", start);
-    area.addEventListener("focusin", stop);
-    area.addEventListener("focusout", start);
-    start();
+    rotator.addEventListener("mouseenter", stop);
+    rotator.addEventListener("mouseleave", start);
+    rotator.addEventListener("focusin", stop);
+    rotator.addEventListener("focusout", start);
+    if (slides.length > 1) start();
   }
 
   /* ---------- Copy story link ---------- */

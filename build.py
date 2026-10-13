@@ -170,13 +170,6 @@ def picture(base, info, alt, sizes, position="", eager=False):
     )
 
 
-def placeholder(name):
-    return (
-        f'<div class="photo-placeholder" role="img" aria-label="{esc(name)}, photo coming soon">'
-        f'<span>{esc(name[:1])}</span><small>Photo coming soon</small></div>'
-    )
-
-
 SIZES = {
     "card": "(max-width: 600px) 100vw, (max-width: 960px) 50vw, 300px",
     "featured": "(max-width: 900px) 100vw, 520px",
@@ -207,16 +200,17 @@ def load_participants(photos, base):
         }
         p["excerpt"] = p["summary"] or first_paragraph(body)
         p["info"] = None
-        if p["photo_file"] and (IMG_SRC / p["photo_file"]).exists():
-            p["info"] = photos.prepare(p["photo_file"], p["position"], f"{pid}.jpg")
+        if not (p["photo_file"] and (IMG_SRC / p["photo_file"]).exists()):
+            # Participants appear on the site once they have a photo.
+            print(f"  Skipping {pid}: no photo yet")
+            continue
+        p["info"] = photos.prepare(p["photo_file"], p["position"], f"{pid}.jpg")
         people.append(p)
     people.sort(key=lambda x: (x["order"], x["name"]))
     return people
 
 
 def photo_for(p, base, variant):
-    if not p["info"]:
-        return placeholder(p["name"])
     eager = variant in ("hero", "story")
     return picture(base, p["info"], f"Portrait of {p['name']}", SIZES[variant], p["position"], eager)
 
@@ -229,6 +223,14 @@ def card(p, base):
         <p class="card__quote">“{esc(p['quote'])}”</p>
         <span class="card__more">Read {esc(p['name'])}’s story</span>
       </a>"""
+
+
+def grid_cols(n):
+    """Pick 3 or 4 columns so the last row of cards isn't a lone straggler."""
+    if n <= 3:
+        return "3"
+    fill = lambda c: (n % c or c) / c  # how full the last row is
+    return "4" if fill(4) >= fill(3) else "3"
 
 
 def featured(p, base):
@@ -284,8 +286,11 @@ def main():
 
     feat = next((p for p in people if p["featured"] and p["info"]), people[0])
     ctx["participants.featured"] = featured(feat, base)
-    ctx["participants.not_featured"] = "\n      ".join(card(p, base) for p in people if p is not feat)
+    rest = [p for p in people if p is not feat]
+    ctx["participants.not_featured"] = "\n      ".join(card(p, base) for p in rest)
     ctx["participants.all"] = "\n      ".join(card(p, base) for p in people)
+    ctx["participants.not_featured_cols"] = grid_cols(len(rest))
+    ctx["participants.all_cols"] = grid_cols(len(people))
     for p in people:
         for variant in SIZES:
             ctx[f"photo.{p['id']}.{variant}"] = photo_for(p, base, variant)
@@ -331,12 +336,14 @@ def main():
         if p["summary"]:
             body = f'<p class="story__summary">{inline_md(p["summary"])}</p>\n        <h2>Expanded story</h2>\n        {body}'
         others = [q for q in people if q is not p][:4]
+        story_ctx_cols = grid_cols(len(others))
         story_ctx = {
             "p.name": esc(p["name"]),
             "p.quote": esc(p["quote"]),
             "p.photo": photo_for(p, base, "story"),
             "p.body": body,
             "p.more": "\n      ".join(card(q, base) for q in others),
+            "p.more_cols": story_ctx_cols,
             "p.url": esc(f"{site_url}stories/{p['id']}.html"),
             "p.share_url": quote(f"{site_url}stories/{p['id']}.html", safe=""),
             "p.status": f'<p class="status-badge status-badge--inline">{esc(p["status"])}</p>' if p["status"] else "",

@@ -48,7 +48,7 @@ description: Fund real jobs, real skills, and a path to stability for Utah's hom
       <p>Your donation provides employment and grows the Family Tree.</p>
     </header>
     {{ participants.featured }}
-    <div class="card-grid card-grid--4">
+    <div class="card-grid card-grid--scroll card-grid--{{ participants.not_featured_cols }}">
       {{ participants.not_featured }}
     </div>
     <p class="section-more"><a class="link-arrow" href="{{ base }}stories/">All participant stories</a></p>
@@ -83,27 +83,20 @@ description: Fund real jobs, real skills, and a path to stability for Utah's hom
         </div>
       </figure>
       <figure class="quote-feature quote-slide" data-index="1" hidden>
-        <div class="quote-feature__photo">{{ photo.candace.quote }}</div>
-        <div class="quote-feature__body">
-          <blockquote><p>I’d rather have a term that reflects someone who’s trying.</p></blockquote>
-          <figcaption>Candace, program participant. <a href="{{ base }}stories/candace.html">Read Candace’s story</a></figcaption>
-        </div>
-      </figure>
-      <figure class="quote-feature quote-slide" data-index="2" hidden>
         <div class="quote-feature__photo">{{ photo.gregory.quote }}</div>
         <div class="quote-feature__body">
           <blockquote><p>I don’t have a job. I need a job. I need to do something.</p></blockquote>
           <figcaption>Gregory, program participant. <a href="{{ base }}stories/gregory.html">Read Gregory’s story</a></figcaption>
         </div>
       </figure>
-      <figure class="quote-feature quote-slide" data-index="3" hidden>
+      <figure class="quote-feature quote-slide" data-index="2" hidden>
         <div class="quote-feature__photo">{{ photo.alison.quote }}</div>
         <div class="quote-feature__body">
           <blockquote><p>I overcame hell.</p></blockquote>
           <figcaption>Alison, program participant. <a href="{{ base }}stories/alison.html">Read Alison’s story</a></figcaption>
         </div>
       </figure>
-      <figure class="quote-feature quote-slide" data-index="4" hidden>
+      <figure class="quote-feature quote-slide" data-index="3" hidden>
         <div class="quote-feature__photo">{{ photo.jan.quote }}</div>
         <div class="quote-feature__body">
           <blockquote><p>I know what I want to do, and I know the steps I need to take.</p></blockquote>
@@ -111,32 +104,6 @@ description: Fund real jobs, real skills, and a path to stability for Utah's hom
         </div>
       </figure>
     </div>
-    <div class="quote-controls" hidden>
-      <button type="button" class="quote-controls__btn" data-dir="-1" aria-label="Previous quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <div class="quote-controls__dots"><button type="button" class="quote-dot" aria-label="Show quote 1 of 5"></button><button type="button" class="quote-dot" aria-label="Show quote 2 of 5"></button><button type="button" class="quote-dot" aria-label="Show quote 3 of 5"></button><button type="button" class="quote-dot" aria-label="Show quote 4 of 5"></button><button type="button" class="quote-dot" aria-label="Show quote 5 of 5"></button></div>
-      <button type="button" class="quote-controls__btn" data-dir="1" aria-label="Next quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-    </div>
-  </div>
-</section>
-
-<section class="section section--rule">
-  <div class="container">
-    <header class="section-header">
-      <p class="section-label">A lasting impact</p>
-      <h2>Two goals. One program.</h2>
-      <p>The program creates value both for the people it employs and for the families who benefit from their work.</p>
-    </header>
-    <div class="columns-2">
-      <div>
-        <h3>Long-term employment</h3>
-        <p>Participants build meaningful work experience, develop transferable skills, and overcome barriers to employment through employment itself.</p>
-      </div>
-      <div>
-        <h3>Family connections for future generations</h3>
-        <p>Working with BYU’s Record Linking Lab, employees make a lasting contribution to historical and genealogical research.</p>
-      </div>
-    </div>
-    <p class="section-more"><a class="link-arrow" href="{{ base }}about.html">About the initiative</a></p>
   </div>
 </section>
 
