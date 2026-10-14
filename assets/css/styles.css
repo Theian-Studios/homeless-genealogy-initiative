@@ -1,4 +1,4 @@
-/* The Homeless Genealogy Initiative */
+/* STEP: Supportive Transitional Employment Program */
 
 :root {
   --ink: #1c2420;
@@ -111,7 +111,9 @@ strong { font-weight: 600; }
 .site-header__inner { position: relative; display: flex; align-items: center; gap: 28px; min-height: var(--header-h); }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--forest); text-decoration: none; }
 .brand img { width: 40px; height: 40px; flex-shrink: 0; }
-.brand__name { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; line-height: 1.15; }
+.brand__text { display: flex; flex-direction: column; }
+.brand__name { font-family: var(--serif); font-size: 1.55rem; font-weight: 700; line-height: 1; letter-spacing: 0.04em; }
+.brand__full { font-size: 0.74rem; font-weight: 500; color: var(--muted); line-height: 1.25; margin-top: 3px; }
 .brand:hover { color: var(--forest); }
 
 .nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
@@ -168,7 +170,8 @@ strong { font-weight: 600; }
 @keyframes menu-down { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 @media (max-width: 420px) {
   :root { --gutter: 16px; }
-  .brand__name { font-size: 1rem; }
+  .brand__name { font-size: 1.35rem; }
+  .brand__full { font-size: 0.66rem; max-width: 15em; }
   .brand img { width: 34px; height: 34px; }
 }
 
@@ -421,7 +424,9 @@ strong { font-weight: 600; }
 .site-footer a { color: #fff; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; color: #fff; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.4fr; gap: 40px; }
-.footer-name { font-family: var(--serif); font-size: 1.3rem; color: #fff; margin-bottom: 10px; }
+.footer-name { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 1.6rem; font-weight: 700; letter-spacing: 0.04em; color: #fff; margin-bottom: 2px; }
+.footer-name img { background: #fbf8f2; border-radius: 8px; padding: 3px; width: 34px; height: 34px; }
+.footer-full { color: #fff; font-weight: 500; margin-bottom: 12px; }
 .footer-about p:last-child { max-width: 28em; }
 .footer-heading { font-family: var(--sans); font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 14px; letter-spacing: 0; }
 .site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }

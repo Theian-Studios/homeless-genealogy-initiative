@@ -32,9 +32,12 @@
 
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="brand" href="{{ base }}">
+      <a class="brand" href="{{ base }}" aria-label="STEP: Supportive Transitional Employment Program, home">
         <img src="{{ base }}assets/img/logo-mark.svg" alt="" width="40" height="40">
-        <span class="brand__name">The Homeless Genealogy Initiative</span>
+        <span class="brand__text">
+          <span class="brand__name">STEP</span>
+          <span class="brand__full">Supportive Transitional Employment Program</span>
+        </span>
       </a>
       <nav class="nav" id="primary-nav" aria-label="Primary">
         <a href="{{ base }}about.html"{{ current.about }}>About</a>
@@ -61,7 +64,8 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-about">
-          <p class="footer-name">The Homeless Genealogy Initiative</p>
+          <p class="footer-name"><img src="{{ base }}assets/img/logo-mark.svg" alt="" width="32" height="32"> STEP</p>
+          <p class="footer-full">Supportive Transitional Employment Program</p>
           <p>A transitional employment program in Utah County. Participants are paid to help link U.S. census records since 1800 to the FamilySearch Family Tree while they prepare for long-term work.</p>
         </div>
         <nav aria-label="Footer">
@@ -95,8 +99,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© <span data-year>{{ year }}</span> The Homeless Genealogy Initiative</p>
-        <p>Putting Down Roots</p>
+        <p>© <span data-year>{{ year }}</span> STEP: Supportive Transitional Employment Program</p>
+        <p>Provo, Utah</p>
       </div>
     </div>
   </footer>

@@ -1,4 +1,4 @@
-/* The Homeless Genealogy Initiative: mobile menu and contact form.
+/* STEP: mobile menu and contact form.
    Pages are complete HTML without this script; it only adds behavior. */
 
 (function () {

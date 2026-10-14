@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the Homeless Genealogy Initiative website into _site/.
+"""Build the STEP (Supportive Transitional Employment Program) website into _site/.
 
     python3 build.py               # build for the live site
     python3 build.py --base /      # build for local preview at http://localhost:8080/

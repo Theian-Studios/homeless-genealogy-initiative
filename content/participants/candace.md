@@ -8,7 +8,7 @@ card_quote: Everything comes back to hope.
 featured: no
 ---
 
-When Candace first joined the Homeless Genealogy Initiative, she was looking for work.
+When Candace first joined STEP, she was looking for work.
 
 She found much more than that.
 
@@ -30,4 +30,4 @@ The project has also provided something tangible during an uncertain season. The
 
 Perhaps that’s why the word *homeless* has never sat well with Candace. “I’d rather have a term that reflects someone who’s trying,” she says. “Something that captures the effort people are making instead of only their circumstances… Once you’re labeled, people stop seeing you as an individual,” she says. One word can’t capture a mother raising four children. It can’t capture someone who quietly welcomes newcomers, patiently teaches others, or notices when someone is sitting alone. It can’t capture the person encouraging others until they’re smiling more and standing a little straighter.
 
-The Homeless Genealogy Initiative has given Candace meaningful work, renewed confidence, and, as she says, “at least a little hope.” For her, it’s important not only to keep going, but to lend a hand along the way, smile a little more, and lift up others as they rise together.
+STEP has given Candace meaningful work, renewed confidence, and, as she says, “at least a little hope.” For her, it’s important not only to keep going, but to lend a hand along the way, smile a little more, and lift up others as they rise together.
