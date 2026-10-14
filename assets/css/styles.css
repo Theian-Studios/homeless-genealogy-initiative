@@ -12,6 +12,10 @@
   --green: #0b646f;      /* logo dark teal: links, buttons (6.5:1; white on it 6.9:1) */
   --green-dark: #084f58;
   --teal: #308d82;       /* logo teal */
+  --step-1: #0b646f;     /* logo bars, bottom to top */
+  --step-2: #308d82;
+  --step-3: #629e4a;
+  --step-2-text: #1f6f66; /* readable teal for small text (5.6:1) */
   --clay: #629e4a;       /* logo green: accents, large numerals */
   --clay-text: #3d6e2c;  /* small green text on light backgrounds (5.7:1) */
   --label-on-dark: #b9dba5; /* small text on navy/teal (5.8:1+) */
@@ -209,6 +213,10 @@ strong { font-weight: 600; }
   font-family: var(--sans); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.01em;
   color: var(--clay-text); margin: 0 0 12px;
 }
+.section-label::before, .page-header__kicker::before {
+  content: ""; display: inline-block; width: 15px; height: 12px; margin-right: 9px; vertical-align: -1px;
+  background: url("../img/logo-mark.svg") no-repeat center / contain;
+}
 .section--dark .section-label, .problem__card--answer .section-label { color: var(--label-on-dark); }
 .section-header { max-width: 680px; margin-bottom: 48px; }
 .section-header h2 { margin-bottom: 12px; }
@@ -283,14 +291,6 @@ strong { font-weight: 600; }
 .card__more { margin-top: auto; font-weight: 600; color: var(--green); font-size: 0.95rem; }
 
 
-/* ---------- Facts list ---------- */
-.facts { margin: 0; background: #fff; border-radius: var(--radius-lg); padding: 8px 28px; box-shadow: var(--shadow-sm); }
-.facts > div:last-child { border-bottom: 0; }
-.facts > div { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
-.facts dt { font-weight: 600; color: var(--forest); }
-.facts dd { margin: 0; color: var(--muted); }
-@media (max-width: 480px) { .facts > div { grid-template-columns: 1fr; gap: 2px; } }
-
 /* ---------- Support band ---------- */
 .support {
   color: #dfe8e2; padding: 72px 0; position: relative; overflow: hidden;
@@ -322,7 +322,7 @@ strong { font-weight: 600; }
 @media (max-width: 560px) { .ledger--2col { grid-template-columns: 1fr; } }
 
 /* ---------- How it works steps ---------- */
-.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; max-width: 900px; }
+.steps { list-style: none; margin: 0; padding: 0; max-width: 900px; }
 .steps li {
   counter-increment: step;
   display: grid; grid-template-columns: 96px 1fr; column-gap: 24px;
@@ -335,7 +335,7 @@ strong { font-weight: 600; }
   background: #fff; box-shadow: var(--shadow-sm); border: 1px solid var(--rule);
   font-family: var(--serif); font-size: 2.2rem; line-height: 1; color: var(--clay);
 }
-.steps h2 { font-size: 1.75rem; margin-bottom: 10px; }
+.steps h3 { font-size: 1.6rem; margin-bottom: 10px; }
 .steps p { margin: 0; color: var(--muted); font-size: 1.08rem; max-width: 40em; }
 @media (max-width: 600px) {
   .steps li { grid-template-columns: 48px 1fr; column-gap: 12px; padding: 28px 0; }
@@ -521,6 +521,63 @@ strong { font-weight: 600; }
 .copy-link { background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 0.18em; }
 .page-header__actions { margin: 28px 0 0; }
 
+/* ---------- Three-step staircase (home) ---------- */
+.stairs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 28px; align-items: start; }
+.stair--1 { padding-top: 112px; }
+.stair--2 { padding-top: 56px; }
+.stair__bar {
+  height: 76px; border-radius: 3px; margin-bottom: 22px; padding: 0 22px;
+  display: flex; align-items: center; color: #fff; font: 700 2.6rem/1 var(--sans);
+  box-shadow: 0 10px 24px rgba(10, 42, 69, 0.14);
+}
+.stair--1 .stair__bar { background: var(--step-1); }
+.stair--2 .stair__bar { background: var(--step-2); }
+.stair--3 .stair__bar { background: var(--step-3); }
+.stair h3 { font-size: 1.5rem; margin-bottom: 10px; }
+.stair p { color: var(--muted); }
+.stair__facts { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid var(--rule); display: grid; gap: 8px; font-size: 0.95rem; color: var(--ink); }
+.stair__facts li { padding-left: 18px; position: relative; }
+.stair__facts li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 9px; height: 6px; border-radius: 1px; }
+.stair--1 .stair__facts li::before { background: var(--step-1); }
+.stair--2 .stair__facts li::before { background: var(--step-2); }
+.stair--3 .stair__facts li::before { background: var(--step-3); }
+@media (max-width: 860px) {
+  .stairs { grid-template-columns: 1fr; gap: 40px; }
+  .stair--1, .stair--2 { padding-top: 0; }
+  .stair__bar { height: 60px; font-size: 2.1rem; margin-bottom: 16px; }
+  .stair--1 .stair__bar { width: 55%; }
+  .stair--2 .stair__bar { width: 77%; }
+}
+/* Bars slide in like the logo's steps (only when added by script, below the fold) */
+.js-stairs .stair__bar { transform: scaleX(0); transform-origin: left; transition: transform 0.45s var(--ease); }
+.js-stairs .stair > :not(.stair__bar) { opacity: 0; transform: translateY(8px); transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
+.js-stairs.is-in .stair__bar, .js-stairs.is-in .stair > :not(.stair__bar) { transform: none; opacity: 1; }
+.js-stairs .stair--2 .stair__bar { transition-delay: 0.12s; }
+.js-stairs .stair--3 .stair__bar { transition-delay: 0.24s; }
+.js-stairs .stair--1 > :not(.stair__bar) { transition-delay: 0.2s; }
+.js-stairs .stair--2 > :not(.stair__bar) { transition-delay: 0.32s; }
+.js-stairs .stair--3 > :not(.stair__bar) { transition-delay: 0.44s; }
+
+/* ---------- Program stages (How it works) ---------- */
+.phases { counter-reset: phase; display: grid; gap: 64px; max-width: 900px; }
+.phase { counter-increment: phase; }
+.phase .steps { counter-reset: step; }
+.phase .steps li::before { content: counter(phase) "." counter(step); font-size: 1.55rem; }
+@media (max-width: 600px) { .phase .steps li::before { font-size: 1.05rem; } }
+.phase__head { margin-bottom: 8px; }
+.phase__bar { display: block; height: 14px; border-radius: 2px; margin-bottom: 18px; }
+.phase--1 .phase__bar { width: 96px; background: var(--step-1); }
+.phase--2 .phase__bar { width: 144px; background: var(--step-2); }
+.phase--3 .phase__bar { width: 192px; background: var(--step-3); }
+.phase__label { font-weight: 700; font-size: 0.95rem; margin: 0 0 4px; }
+.phase--1 .phase__label { color: var(--step-1); }
+.phase--2 .phase__label { color: var(--step-2-text); }
+.phase--3 .phase__label { color: var(--clay-text); }
+.phase h2 { font-size: clamp(1.8rem, 3vw, 2.3rem); margin-bottom: 4px; }
+.phase--1 .steps li::before { color: var(--step-1); border-color: var(--step-1); }
+.phase--2 .steps li::before { color: var(--step-2-text); border-color: var(--step-2); }
+.phase--3 .steps li::before { color: var(--clay-text); border-color: var(--step-3); }
+
 /* ---------- Next story ---------- */
 .next-story {
   display: grid; gap: 4px; margin-top: 48px; padding: 24px 28px; text-decoration: none; color: inherit;
@@ -535,7 +592,7 @@ strong { font-weight: 600; }
 .next-story__quote { color: var(--muted); }
 
 /* ---------- Panel outlines ---------- */
-.problem__card:not(.problem__card--answer), .featured, .facts, .columns-2 > div, .way,
+.problem__card:not(.problem__card--answer), .featured, .columns-2 > div, .way,
 .faq__item, .contact-info__block--note { border: 1px solid var(--rule-soft); }
 .columns-2 > div, .way { border-top-width: 4px; border-top-color: var(--green); }
 .contact-info__block--note { border-left: 4px solid var(--clay); }

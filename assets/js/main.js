@@ -34,7 +34,7 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if ("IntersectionObserver" in window && !reduceMotion) {
     const targets = document.querySelectorAll(
-      ".section-header, .featured, .card, .facts, .voice, .columns-2 > div, " +
+      ".section-header, .featured, .card, .voice, .columns-2 > div, " +
         ".steps li, .split > *, .support__inner, .section-more, .ledger, .problem__card, " +
         ".way, .faq__item"
     );
@@ -67,6 +67,19 @@
       el.classList.add("reveal");
       observer.observe(el);
     });
+  }
+
+  /* ---------- Staircase: bars slide in when the section scrolls into view ---------- */
+  const stairs = document.querySelector(".stairs");
+  if (stairs && "IntersectionObserver" in window && !reduceMotion && stairs.getBoundingClientRect().top > window.innerHeight) {
+    stairs.classList.add("js-stairs");
+    const stairObserver = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        stairs.classList.add("is-in");
+        stairObserver.disconnect();
+      }
+    }, { threshold: 0.2 });
+    stairObserver.observe(stairs);
   }
 
   /* ---------- Footer year ---------- */
