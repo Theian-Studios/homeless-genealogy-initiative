@@ -1,32 +1,32 @@
 /* STEP: Support Transitions to Employment Program */
 
 :root {
-  --ink: #16212b;
-  --muted: #44505b;      /* 8:1 on paper */
-  --paper: #fbf8f2;
-  --paper-2: #efe8da;
-  --rule: #cfc5b2;
-  --rule-soft: #e6dfd0;  /* outline for white panels */
-  --forest: #0a2a45;     /* logo navy: headings, dark sections */
-  --forest-2: #071e33;
-  --green: #0b646f;      /* logo dark teal: links, buttons (6.5:1; white on it 6.9:1) */
+  --ink: #142627;
+  --muted: #3d4f50;      /* 8.1:1 on paper */
+  --paper: #f5f9f9;
+  --paper-2: #e3f0ef;
+  --rule: #c3d9d6;
+  --rule-soft: #d6e7e5;  /* outline for white panels */
+  --forest: #0d3b3e;     /* deep teal: headings, header, dark sections */
+  --forest-2: #092b2d;
+  --green: #0b646f;      /* teal: links, buttons (6.5:1; white on it 6.9:1) */
   --green-dark: #084f58;
-  --teal: #308d82;       /* logo teal */
+  --teal: #2a8f88;
   --step-1: #0b646f;     /* logo bars, bottom to top */
-  --step-2: #308d82;
-  --step-3: #629e4a;
+  --step-2: #2a8f88;
+  --step-3: #6fbfb2;
   --step-2-text: #1f6f66; /* readable teal for small text (5.6:1) */
-  --clay: #629e4a;       /* logo green: accents, large numerals */
-  --clay-text: #3d6e2c;  /* small green text on light backgrounds (5.7:1) */
-  --label-on-dark: #b9dba5; /* small text on navy/teal (5.8:1+) */
+  --clay: #127a77;       /* accent teal: Donate, large numerals, rules */
+  --clay-text: #0b646f;  /* small accent text on light backgrounds (6.5:1) */
+  --label-on-dark: #a8dcd6; /* small text on dark teal (8:1) */
 
   --serif: "Newsreader", Georgia, "Times New Roman", serif;
   --sans: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   --radius: 6px;
   --radius-lg: 14px;
-  --shadow-sm: 0 1px 2px rgba(28, 36, 32, 0.06), 0 4px 14px rgba(28, 36, 32, 0.06);
-  --shadow: 0 2px 4px rgba(28, 36, 32, 0.05), 0 14px 36px rgba(28, 36, 32, 0.12);
+  --shadow-sm: 0 1px 2px rgba(13, 59, 62, 0.06), 0 4px 14px rgba(13, 59, 62, 0.06);
+  --shadow: 0 2px 4px rgba(13, 59, 62, 0.05), 0 14px 36px rgba(13, 59, 62, 0.12);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --container: 1160px;
   --gutter: 24px;
@@ -94,8 +94,8 @@ strong { font-weight: 600; }
   transition: background 0.2s, color 0.2s;
 }
 .btn--primary { background: var(--green); color: #fff; }
-.btn--donate { background: var(--clay); color: var(--forest); }
-.btn--donate:hover { background: #74b05b; color: var(--forest); }
+.btn--donate { background: var(--clay); color: #fff; }
+.btn--donate:hover { background: #0e6663; color: #fff; }
 .btn--primary:hover { background: var(--green-dark); color: #fff; }
 .btn--light { background: #fff; color: var(--forest); }
 .btn--light:hover { background: var(--paper-2); color: var(--forest); }
@@ -113,16 +113,16 @@ strong { font-weight: 600; }
   background: var(--forest); color: #fff;
   transition: box-shadow 0.25s;
 }
-.site-header.is-scrolled { box-shadow: 0 6px 20px rgba(10, 42, 69, 0.25); }
+.site-header.is-scrolled { box-shadow: 0 6px 20px rgba(13, 59, 62, 0.25); }
 .site-header__inner { position: relative; display: flex; align-items: center; gap: 28px; min-height: var(--header-h); }
 .brand { display: flex; align-items: center; gap: 14px; color: #fff; text-decoration: none; }
 .brand__logo { width: auto; height: 32px; }
-.brand__full { font-size: 0.74rem; font-weight: 600; color: #b9c7d4; line-height: 1.25; padding-left: 14px; border-left: 1px solid rgba(255, 255, 255, 0.25); }
+.brand__full { font-size: 0.74rem; font-weight: 600; color: #a9c9c6; line-height: 1.25; padding-left: 14px; border-left: 1px solid rgba(255, 255, 255, 0.25); }
 .brand:hover { color: #fff; }
 
 .nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
 .nav a:not(.btn) {
-  color: #e6edf3; text-decoration: none; font-weight: 500; font-size: 0.98rem; white-space: nowrap;
+  color: #e3f0ef; text-decoration: none; font-weight: 500; font-size: 0.98rem; white-space: nowrap;
   padding: 6px 0; border-bottom: 2px solid transparent; transition: border-color 0.2s, color 0.2s;
 }
 .nav a:not(.btn):hover { border-bottom-color: rgba(255, 255, 255, 0.4); color: #fff; }
@@ -160,7 +160,7 @@ strong { font-weight: 600; }
     display: none; position: absolute; top: 100%; left: 0; right: 0; margin: 0;
     flex-direction: column; align-items: stretch; gap: 0;
     background: var(--forest); border-top: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 16px 32px rgba(10, 42, 69, 0.3);
+    box-shadow: 0 16px 32px rgba(13, 59, 62, 0.3);
     padding: 8px var(--gutter) 20px;
   }
   .nav.is-open { display: flex; animation: menu-down 0.16s var(--ease); }
@@ -399,7 +399,7 @@ strong { font-weight: 600; }
 .field label { display: block; font-weight: 600; margin-bottom: 6px; }
 .field input, .field select, .field textarea {
   width: 100%; font: inherit; color: var(--ink); background: #fff;
-  border: 1px solid #857e70; border-radius: var(--radius); padding: 12px 14px;
+  border: 1px solid #7d8f8e; border-radius: var(--radius); padding: 12px 14px;
 }
 .field textarea { resize: vertical; min-height: 160px; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--green); outline-offset: 0; border-color: var(--green); }
@@ -427,7 +427,7 @@ strong { font-weight: 600; }
 .not-found__links { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 12px; }
 
 /* ---------- Footer ---------- */
-.site-footer { background: var(--forest-2); color: #c9d6ce; padding: 64px 0 28px; font-size: 0.95rem; }
+.site-footer { background: var(--forest-2); color: #c5dcda; padding: 64px 0 28px; font-size: 0.95rem; }
 .site-footer a { color: #fff; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; color: #fff; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.4fr; gap: 40px; }
@@ -441,7 +441,7 @@ strong { font-weight: 600; }
 .footer-facebook svg { width: 18px; height: 18px; fill: currentColor; }
 .footer-bottom {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px;
-  margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.14); font-size: 0.86rem; color: #c2d1c8;
+  margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.14); font-size: 0.86rem; color: #c5dcda;
 }
 .footer-bottom p { margin: 0; }
 @media (max-width: 1000px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } .footer-about { grid-column: 1 / -1; } }
@@ -536,11 +536,11 @@ strong { font-weight: 600; }
 .stair__bar {
   height: 76px; border-radius: 3px; margin-bottom: 22px; padding: 0 22px;
   display: flex; align-items: center; color: #fff; font: 700 2.6rem/1 var(--sans);
-  box-shadow: 0 10px 24px rgba(10, 42, 69, 0.14);
+  box-shadow: 0 10px 24px rgba(13, 59, 62, 0.14);
 }
 .stair--1 .stair__bar { background: var(--step-1); }
 .stair--2 .stair__bar { background: var(--step-2); }
-.stair--3 .stair__bar { background: var(--step-3); }
+.stair--3 .stair__bar { background: var(--step-3); color: var(--forest); }
 .stair h3 { font-size: 1.5rem; margin-bottom: 10px; }
 .stair p { color: var(--muted); }
 .stair__facts { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid var(--rule); display: grid; gap: 8px; font-size: 0.95rem; color: var(--ink); }
