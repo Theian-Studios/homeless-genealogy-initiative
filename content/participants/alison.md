@@ -3,20 +3,19 @@ name: Alison
 order: 5
 photo: alison.jpg
 photo_position: 50% 30%
-quote: We’re only going forward, we ain’t going backwards. We ain’t doing this again.
-card_quote: We’re only going forward.
-featured: yes
+quote: I overcame hell.
+featured: no
 ---
 
-Alison is the kind of person who takes a little time to get to know, but once you become one of her “people,” you quickly discover how incredible she truly is. She is funny, curious, inquisitive, and has strong opinions about just about everything. She loves learning and asking questions, and she has a knack for turning an ordinary conversation into something memorable.
+Alison is the kind of person who takes a little time to get to know, but once you become one of her “people,” you quickly discover how incredible she is. She is funny, curious, and has strong opinions about just about everything. She loves learning and asking questions, and she has a knack for turning an ordinary conversation into something memorable.
 
-Alison’s dreams have always been connected to staying close to the ones she loved. While her family lived in a house, her dream was to live in a trailer with a nice bathroom so she could be like all her friends. Loving others and wanting to help people has stayed a constant in her life, apart from a brief stint as a child, when she dreamed of working at Taco Bell so she could eat there all the time. It was, in her words, the dream job.
+Alison’s childhood dreams were modest. When her family lived in a house, she wanted a trailer with a nice bathroom, like her friends had. For a while, the dream job was Taco Bell, so she could eat there every day. What stayed constant underneath was wanting to help people.
 
-Her dreams have evolved since her Taco Bell days, but her motivation to help others hasn’t. These days, Alison wants to own a home of her own to allow individuals with housing vouchers to rent from her. Underneath the desire to own her own place, this dream reflects someone who has spent years navigating systems that don’t have enough space for someone needing a little extra help.
+Her dreams have evolved since her Taco Bell days, but her motivation to help others hasn’t. These days, Alison wants to own a home of her own to allow individuals with housing vouchers to rent from her. That dream comes from someone who has spent years in systems with no room for people who need a little extra help.
 
 Alison’s story shows how someone can fall through the cracks if they don’t always fit the way a system functions.
 
-She loves learning, and working, but for Alison, transitions are particularly hard. Moving from West Virginia to Utah was difficult. Going from high school to college was difficult. Switching systems at work caused challenges as she struggled to adjust over and over again from losing jobs after systems changed. These struggles eventually led to homelessness.
+She loves learning and working, but for Alison, transitions are particularly hard. Moving from West Virginia to Utah was difficult. Going from high school to college was difficult. At work, every new system meant another hard adjustment, and more than once she lost a job when one changed. These struggles eventually led to homelessness.
 
 Over time, those experiences made Alison feel as though she was the problem. She could be interested in something, work hard, and genuinely want to succeed, but still falter when the systems around her change.
 
@@ -26,7 +25,7 @@ She is careful about her safety, stays away from drugs and alcohol, and is deter
 
 That process is already changing her life.
 
-Through the genealogy program, Alison has been able to practice self-reliance and gain small but deeply meaningful freedoms.
+Through STEP, Alison has been able to practice self-reliance and gain small but deeply meaningful freedoms.
 
 “I can buy my own allergy pills,” she said.
 
@@ -36,7 +35,7 @@ It sounds like a small thing.
 
 For Alison, it isn’t.
 
-It is the difference between needing to ask someone else for help and being able to take care of herself. It is a paycheck becoming a choice. It is dignity becoming something tangible and proving that she is capable.
+It is the difference between needing to ask someone else for help and being able to take care of herself. It is a paycheck becoming a choice. It is dignity made tangible: proof that she is capable.
 
 Alison now has a temporary apartment, another major step toward the future she wants. But even with a place to live, she knows there is still work ahead.
 

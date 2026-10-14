@@ -12,6 +12,11 @@ current: contact
 
 <section class="section">
   <div class="container contact-layout">
+    <div class="contact-main">
+    <div class="donate-note" id="donations">
+      <h2>Online giving is coming soon.</h2>
+      <p>Leave your name and email below with <strong>Donations</strong> selected, and we’ll follow up about how to give.</p>
+    </div>
     <form id="contact-form" class="contact-form" novalidate data-email="{{ site.email }}" data-endpoint="{{ site.form_endpoint }}">
       <div class="form-row">
         <div class="field">
@@ -47,18 +52,15 @@ current: contact
       <button class="btn btn--primary" type="submit">Send message</button>
       <p id="form-status" class="form-status" role="status"></p>
     </form>
+    </div>
 
     <aside class="contact-info">
-      <div class="contact-info__block contact-info__block--note">
-        <h2>Donations</h2>
-        <p>Online giving is coming soon. Until then, choose <strong>Donations</strong> in the form and we’ll be in touch about how to support the program.</p>
-      </div>
       <div class="contact-info__block">
         <h2>Office location</h2>
         <p>{{ site.address }}</p>
       </div>
       <div class="contact-info__block">
-        <h2>Email</h2>
+        <h2>Program email</h2>
         <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
       </div>
       <div class="contact-info__block">

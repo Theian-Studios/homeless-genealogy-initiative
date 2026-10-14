@@ -1,11 +1,11 @@
 <!--
 title: STEP: Support Transitions to Employment Program
-description: Fund real jobs, real skills, and a path to stability for people experiencing homelessness in Utah. Participants are paid to help link U.S. census records to the FamilySearch Family Tree with BYU's Record Linking Lab.
+description: Fund real jobs, real skills, and a path to stability for people experiencing homelessness in Utah County. Participants are paid to help link U.S. census records to the FamilySearch Family Tree with BYU's Record Linking Lab.
 -->
 <section class="hero">
   <div class="container hero__grid">
     <div class="hero__text">
-      <h1>Fund real jobs, real skills, and <em>a path to stability</em> for people experiencing homelessness in Utah.</h1>
+      <h1>Fund real jobs, real skills, and <em>a path to stability</em> for people experiencing homelessness in Utah County.</h1>
       <p class="hero__lede">STEP is a paid, remote job with weekly training, built for people in Utah County who are working their way out of homelessness. It’s a first step toward steady, long-term employment.</p>
       <div class="hero__actions">
         <a class="btn btn--primary" href="{{ site.donate_url }}">Donate</a>
@@ -33,7 +33,7 @@ description: Fund real jobs, real skills, and a path to stability for people exp
     <div class="problem__card problem__card--answer">
       <p class="section-label">Where we come in</p>
       <h2>So we built a job that doesn’t ask for any of that.</h2>
-      <p>No car, permanent address, or recent work history needed. And while participants rebuild their own lives, they help reconnect other families with their history.</p>
+      <p>None of that is required. And while participants rebuild their own lives, they help reconnect other families with their history.</p>
       <a class="link-arrow" href="#the-job">How the job works</a>
     </div>
   </div>
@@ -44,13 +44,13 @@ description: Fund real jobs, real skills, and a path to stability for people exp
     <header class="section-header">
       <p class="section-label">How STEP works</p>
       <h2>Three steps to a lasting job.</h2>
-      <p>From a first paycheck to a job that lasts.</p>
+      <p>Here’s the path from day one to the next job.</p>
     </header>
     <ol class="stairs">
       <li class="stair stair--1">
         <div class="stair__bar" aria-hidden="true"><span>1</span></div>
         <h3>Start working</h3>
-        <p>Participants earn a paycheck from day one, helping BYU’s Record Linking Lab connect census records to the Family Tree.</p>
+        <p>Participants earn a paycheck from day one, helping BYU’s Record Linking Lab connect census records to the FamilySearch Family Tree.</p>
         <ul class="stair__facts">
           <li>10 hours a week, on their own schedule</li>
           <li>From a library, shelter, campus, or phone</li>
@@ -84,11 +84,9 @@ description: Fund real jobs, real skills, and a path to stability for people exp
     <header class="section-header">
       <p class="section-label">Meet our participants</p>
       <h2>Real people. Real work. Real progress.</h2>
-      <p>Your donation provides employment and grows the Family Tree.</p>
     </header>
-    {{ participants.featured }}
-    <div class="card-grid card-grid--scroll card-grid--{{ participants.not_featured_cols }}">
-      {{ participants.not_featured }}
+    <div class="card-grid card-grid--scroll card-grid--{{ participants.all_cols }}">
+      {{ participants.all }}
     </div>
     <p class="section-more"><a class="link-arrow" href="{{ base }}stories/">See all stories</a></p>
   </div>
@@ -103,7 +101,7 @@ description: Fund real jobs, real skills, and a path to stability for people exp
     <div class="ways">
       <a class="way" href="{{ site.donate_url }}">
         <h3>Give</h3>
-        <p>Fund wages and weekly training for everyone in the program.</p>
+        <p>Your donation provides employment and grows the Family Tree.</p>
         <span class="way__cta">Donate</span>
       </a>
       <a class="way" href="{{ base }}hire.html">

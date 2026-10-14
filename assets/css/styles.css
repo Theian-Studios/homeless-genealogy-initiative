@@ -420,9 +420,16 @@ strong { font-weight: 600; }
 .contact-info__block:last-child { border-bottom: 1px solid var(--rule); }
 .contact-info__block h2 { font-family: var(--sans); font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; letter-spacing: 0; }
 .contact-info__block p { margin: 0; color: var(--muted); }
-.contact-info__block--note { background: #fff; padding: 22px; border-top: 0; margin-bottom: 8px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border-left: 4px solid var(--clay); }
 .facebook-link { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; }
 .facebook-link svg { width: 24px; height: 24px; fill: #1877f2; flex-shrink: 0; }
+
+.donate-note {
+  background: #fff; border: 1px solid var(--rule-soft); border-left: 4px solid var(--clay);
+  border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 28px; box-shadow: var(--shadow-sm);
+}
+.donate-note h2 { font-size: 1.35rem; margin-bottom: 6px; }
+.donate-note p { margin: 0; color: var(--muted); }
+:target.donate-note { animation: rise 0.4s var(--ease); }
 
 /* ---------- 404 ---------- */
 .not-found__links { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 12px; }
@@ -603,9 +610,8 @@ strong { font-weight: 600; }
 
 /* ---------- Panel outlines ---------- */
 .problem__card:not(.problem__card--answer), .featured, .columns-2 > div, .way,
-.faq__item, .contact-info__block--note { border: 1px solid var(--rule-soft); }
+.faq__item { border: 1px solid var(--rule-soft); }
 .columns-2 > div, .way { border-top-width: 4px; border-top-color: var(--green); }
-.contact-info__block--note { border-left: 4px solid var(--clay); }
 
 /* ---------- Motion ---------- */
 @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
