@@ -213,10 +213,6 @@ strong { font-weight: 600; }
   font-family: var(--sans); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.01em;
   color: var(--clay-text); margin: 0 0 12px;
 }
-.section-label::before, .page-header__kicker::before {
-  content: ""; display: inline-block; width: 15px; height: 12px; margin-right: 9px; vertical-align: -1px;
-  background: url("../img/logo-mark.svg") no-repeat center / contain;
-}
 .section--dark .section-label, .problem__card--answer .section-label { color: var(--label-on-dark); }
 .section-header { max-width: 680px; margin-bottom: 48px; }
 .section-header h2 { margin-bottom: 12px; }
