@@ -292,7 +292,10 @@ def main():
         **{f"site.{k}": esc(v) for k, v in site.items() if k != "donate_url"},
     }
     # Content hashes so browsers fetch new CSS/JS as soon as they change.
-    for key, rel in (("css", "assets/css/styles.css"), ("js", "assets/js/main.js")):
+    for key, rel in (("css", "assets/css/styles.css"), ("js", "assets/js/main.js"),
+                     ("logo", "assets/img/step-logo.svg"), ("logo_white", "assets/img/step-logo-white.svg"),
+                     ("icon", "assets/img/logo-mark.svg"), ("favicon", "assets/img/favicon-32.png"),
+                     ("touch_icon", "assets/img/apple-touch-icon.png"), ("og", "assets/img/og-home.jpg")):
         ctx[f"version.{key}"] = hashlib.sha1((ROOT / rel).read_bytes()).hexdigest()[:8]
     for key in ("stories", "about", "how", "hire", "contact"):
         ctx[f"current.{key}"] = ""
@@ -313,7 +316,7 @@ def main():
             ctx[f"photo.{p['id']}.{variant}"] = photo_for(p, base, variant)
 
     layout = (ROOT / "src" / "layout.html").read_text(encoding="utf-8")
-    default_og = f"{site_url}assets/img/og-home.jpg"
+    default_og = f"{site_url}assets/img/og-home.jpg?v={ctx['version.og']}"
     sitemap = []
 
     def write_page(out_path, meta, content):
