@@ -5,3 +5,5 @@ _site/
 __pycache__/
 # Source material (contains unpublished drafts/notes)
 Website Materials_.pdf
+# Design deliverables (not part of the site)
+*.pdf
