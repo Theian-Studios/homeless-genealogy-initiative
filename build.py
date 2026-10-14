@@ -285,7 +285,9 @@ def main():
     if not re.match(r"^(https?:|mailto:)", donate):
         donate = base + donate
 
+    build_id = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d%H%M%S")
     ctx = {
+        "build": build_id,
         "base": base,
         "year": datetime.date.today().year,
         "site.donate_url": esc(donate),
@@ -406,6 +408,8 @@ def main():
     )
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {site_url}sitemap.xml\n", encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
+    # Pages compare their build id with this file and refresh once if they're stale.
+    (OUT / "version.json").write_text(json.dumps({"build": build_id}), encoding="utf-8")
 
     print(f"Built {len(sitemap)} pages into {OUT.relative_to(ROOT)}/ (base {base})"
           + ("" if Image else " — Pillow not installed, images copied without resizing"))

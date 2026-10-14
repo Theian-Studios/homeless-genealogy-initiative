@@ -2,6 +2,23 @@
    Pages are complete HTML without this script; it only adds behavior. */
 
 (function () {
+  /* ---------- Refresh stale pages ----------
+     GitHub Pages lets browsers reuse a page for 10 minutes. If a newer version
+     has been published since this copy was saved, fetch it and reload once. */
+  const buildMeta = document.querySelector('meta[name="build"]');
+  if (buildMeta && window.fetch) {
+    fetch(buildMeta.dataset.versionUrl, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then(async (v) => {
+        if (!v || !v.build || v.build === buildMeta.content) return;
+        const key = "step-reloaded-" + v.build;
+        try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, "1"); } catch { return; }
+        await fetch(location.href, { cache: "reload" });
+        location.reload();
+      })
+      .catch(() => {});
+  }
+
   /* ---------- Mobile menu ---------- */
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.getElementById("primary-nav");
