@@ -94,8 +94,9 @@ strong { font-weight: 600; }
   transition: background 0.2s, color 0.2s;
 }
 .btn--primary { background: var(--green); color: #fff; }
-.btn--donate { background: var(--clay); color: #fff; }
-.btn--donate:hover { background: #0e6663; color: #fff; }
+/* Donate sits on the dark header: light teal with dark text so it stands out (5.7:1) */
+.btn--donate { background: #6fbfb2; color: var(--forest); }
+.btn--donate:hover { background: #8fd0c5; color: var(--forest); }
 .btn--primary:hover { background: var(--green-dark); color: #fff; }
 .btn--light { background: #fff; color: var(--forest); }
 .btn--light:hover { background: var(--paper-2); color: var(--forest); }
