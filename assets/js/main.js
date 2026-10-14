@@ -69,17 +69,43 @@
     });
   }
 
-  /* ---------- Staircase: bars slide in when the section scrolls into view ---------- */
-  const stairs = document.querySelector(".stairs");
-  if (stairs && "IntersectionObserver" in window && !reduceMotion && stairs.getBoundingClientRect().top > window.innerHeight) {
-    stairs.classList.add("js-stairs");
-    const stairObserver = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        stairs.classList.add("is-in");
-        stairObserver.disconnect();
-      }
-    }, { threshold: 0.2 });
-    stairObserver.observe(stairs);
+  /* ---------- Steps grow as you scroll ----------
+     Each step's progress (0 to 1) follows its position in the window, so the
+     staircase builds as you scroll down and unbuilds if you scroll back up. */
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const scrollGroups = [
+    { list: document.querySelector(".stairs"), items: ".stair", bar: ".stair__bar" },
+    { list: document.querySelector(".phases"), items: ".phase", bar: ".phase__bar" },
+  ].filter((g) => g.list);
+  if (scrollGroups.length && !reduceMotion) {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const vh = window.innerHeight;
+      scrollGroups.forEach(({ list, items, bar }) => {
+        const els = [...list.querySelectorAll(items)];
+        const sideBySide = els.length > 1 && Math.abs(els[0].offsetLeft - els[1].offsetLeft) > 10;
+        const listTop = list.getBoundingClientRect().top;
+        els.forEach((el, i) => {
+          let p;
+          if (sideBySide) {
+            // Columns: build left to right as the row scrolls up the screen.
+            p = (vh * 0.92 - listTop) / (vh * 0.45) - i * 0.3;
+          } else {
+            // Stacked: each step follows its own bar.
+            const top = el.querySelector(bar).getBoundingClientRect().top;
+            p = (vh * 0.95 - top) / (vh * 0.3);
+          }
+          el.style.setProperty("--p", ease(clamp(p)).toFixed(3));
+        });
+      });
+    };
+    const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    scrollGroups.forEach((g) => g.list.classList.add("is-scroll"));
+    update();
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
   }
 
   /* ---------- Footer year ---------- */

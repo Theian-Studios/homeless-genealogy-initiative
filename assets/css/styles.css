@@ -1,4 +1,4 @@
-/* STEP: Supportive Transitional Employment Program */
+/* STEP: Supporting Transitions to Employment Program */
 
 :root {
   --ink: #16212b;
@@ -544,15 +544,16 @@ strong { font-weight: 600; }
   .stair--1 .stair__bar { width: 55%; }
   .stair--2 .stair__bar { width: 77%; }
 }
-/* Bars slide in like the logo's steps (only when added by script, below the fold) */
-.js-stairs .stair__bar { transform: scaleX(0); transform-origin: left; transition: transform 0.45s var(--ease); }
-.js-stairs .stair > :not(.stair__bar) { opacity: 0; transform: translateY(8px); transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
-.js-stairs.is-in .stair__bar, .js-stairs.is-in .stair > :not(.stair__bar) { transform: none; opacity: 1; }
-.js-stairs .stair--2 .stair__bar { transition-delay: 0.12s; }
-.js-stairs .stair--3 .stair__bar { transition-delay: 0.24s; }
-.js-stairs .stair--1 > :not(.stair__bar) { transition-delay: 0.2s; }
-.js-stairs .stair--2 > :not(.stair__bar) { transition-delay: 0.32s; }
-.js-stairs .stair--3 > :not(.stair__bar) { transition-delay: 0.44s; }
+/* Scroll-linked: main.js sets --p (0 to 1) on each step as it scrolls into view.
+   Without the script (or with reduced motion) everything shows at full size. */
+.stairs.is-scroll .stair { --e: var(--p, 1); }
+.stairs.is-scroll .stair__bar { transform: scaleX(var(--e)); transform-origin: left; }
+.stairs.is-scroll .stair__bar span { opacity: calc(var(--e) * 2 - 1); }
+.stairs.is-scroll .stair > :not(.stair__bar) {
+  opacity: calc(var(--e) * 1.6 - 0.6);
+  transform: translateY(calc((1 - var(--e)) * 18px));
+}
+.phases.is-scroll .phase__bar { transform: scaleX(var(--p, 1)); transform-origin: left; }
 
 /* ---------- Program stages (How it works) ---------- */
 .phases { counter-reset: phase; display: grid; gap: 64px; max-width: 900px; }
