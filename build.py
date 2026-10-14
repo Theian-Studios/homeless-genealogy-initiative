@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the STEP (Supporting Transitions to Employment Program) website into _site/.
+"""Build the STEP (Support Transitions to Employment Program) website into _site/.
 
     python3 build.py               # build for the live site
     python3 build.py --base /      # build for local preview at http://localhost:8080/
@@ -176,6 +176,7 @@ SIZES = {
     "hero": "(max-width: 900px) 100vw, 520px",
     "story": "(max-width: 960px) 100vw, 360px",
     "quote": "240px",
+    "collage": "(max-width: 900px) 45vw, 260px",
 }
 
 
@@ -212,7 +213,7 @@ def load_participants(photos, base):
 
 
 def photo_for(p, base, variant):
-    eager = variant in ("hero", "story")
+    eager = variant in ("hero", "story", "collage")
     return picture(base, p["info"], f"Portrait of {p['name']}", SIZES[variant], p["position"], eager)
 
 
@@ -224,6 +225,20 @@ def card(p, base):
         <p class="card__quote">“{esc(p['card_quote'])}”</p>
         <span class="card__more">Read {esc(p['name'])}’s story</span>
       </a>"""
+
+
+def collage(people, base):
+    """Hero collage: up to four participants in two staggered columns."""
+    tiles = []
+    for i, p in enumerate(people[:4]):
+        tiles.append(
+            f'<a class="collage__tile collage__tile--{i + 1}" href="{base}stories/{p['id']}.html">'
+            f'{photo_for(p, base, "collage")}<span class="collage__name">{esc(p['name'])}</span></a>'
+        )
+    cols = (tiles[0::2], tiles[1::2])
+    return '<div class="collage">' + "".join(
+        f'<div class="collage__col">{"".join(c)}</div>' for c in cols
+    ) + "</div>"
 
 
 def grid_cols(n):
@@ -290,6 +305,7 @@ def main():
     rest = [p for p in people if p is not feat]
     ctx["participants.not_featured"] = "\n      ".join(card(p, base) for p in rest)
     ctx["participants.all"] = "\n      ".join(card(p, base) for p in people)
+    ctx["participants.collage"] = collage(people, base)
     ctx["participants.not_featured_cols"] = grid_cols(len(rest))
     ctx["participants.all_cols"] = grid_cols(len(people))
     for p in people:

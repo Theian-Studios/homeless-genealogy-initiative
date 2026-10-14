@@ -1,4 +1,4 @@
-/* STEP: Supporting Transitions to Employment Program */
+/* STEP: Support Transitions to Employment Program */
 
 :root {
   --ink: #16212b;
@@ -186,13 +186,30 @@ strong { font-weight: 600; }
 .hero__lede { font-size: 1.2rem; color: var(--muted); max-width: 34em; margin-bottom: 32px; }
 .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
 .hero__figure { margin: 0; }
-.hero__figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-.hero__figure figcaption { margin-top: 14px; }
-.hero__figure figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
+.hero__figure figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 16px; }
+
+/* Hero collage: two staggered columns of participant photos */
+.collage { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+.collage__col { display: grid; gap: 14px; }
+.collage__col:nth-child(2) { margin-top: 56px; }
+.collage__tile {
+  position: relative; display: block; overflow: hidden; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow); background: var(--paper-2);
+}
+.collage__tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s var(--ease); }
+.collage__tile--1, .collage__tile--4 { aspect-ratio: 4 / 5; }
+.collage__tile--2, .collage__tile--3 { aspect-ratio: 1 / 1; }
+.collage__tile:hover img { transform: scale(1.04); }
+.collage__name {
+  position: absolute; left: 10px; bottom: 10px; padding: 4px 11px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94); color: var(--forest); font-size: 0.85rem; font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
 @media (max-width: 900px) {
   .hero { padding: 40px 0; }
   .hero__grid { grid-template-columns: 1fr; gap: 36px; }
-  .hero__figure img { aspect-ratio: 4 / 3.4; }
+  .collage__col:nth-child(2) { margin-top: 32px; }
+  .collage, .collage__col { gap: 10px; }
 }
 
 .hero__trust {
@@ -600,7 +617,10 @@ strong { font-weight: 600; }
 .hero__text > :nth-child(2) { animation-delay: 0.05s; }
 .hero__text > :nth-child(3) { animation-delay: 0.1s; }
 .hero__text > :nth-child(4) { animation-delay: 0.15s; }
-.hero__figure { animation: rise 0.5s var(--ease) 0.08s both; }
+.collage__tile { animation: rise 0.5s var(--ease) both; }
+.collage__tile--2 { animation-delay: 0.06s; }
+.collage__tile--3 { animation-delay: 0.12s; }
+.collage__tile--4 { animation-delay: 0.18s; }
 .page-header .container > * { animation: rise 0.4s var(--ease) both; }
 .page-header .container > :nth-child(2) { animation-delay: 0.04s; }
 .page-header .container > :nth-child(3) { animation-delay: 0.08s; }
