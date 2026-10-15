@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the STEP (Supported Transitions to Employment Program) website into _site/.
+"""Build the STEP (Supporting Transitions to Employment Program) website into _site/.
 
     python3 build.py               # build for the live site
     python3 build.py --base /      # build for local preview at http://localhost:8080/
@@ -228,29 +228,27 @@ def card(p, base):
 
 
 def carousel(people, base):
-    """Hero carousel: one large portrait at a time, with name tabs that act as controls."""
-    slides, tabs = [], []
+    """Hero carousel: one large portrait at a time; the quote card links to the story; dots switch people."""
+    slides, dots = [], []
     for i, p in enumerate(people):
         active = " is-active" if i == 0 else ""
         url = f"{base}stories/{p['id']}.html"
         slides.append(
             f'<div class="hc__slide{active}" data-index="{i}"{"" if i == 0 else " aria-hidden=\"true\""}>'
             f'{picture(base, p["info"], f"Portrait of {p['name']}", SIZES["hero"], p["position"], eager=(i == 0))}'
-            f'<div class="hc__card"><p class="hc__quote">“{esc(p["card_quote"])}”</p>'
-            f'<p class="hc__by"><span class="hc__name">{esc(p["name"])}</span>'
-            f'<a class="link-arrow" href="{url}">Read {esc(p["name"])}’s story</a></p></div></div>'
+            f'<a class="hc__card" href="{url}"{"" if i == 0 else " tabindex=\"-1\""}>'
+            f'<span class="hc__quote">“{esc(p["card_quote"])}”</span>'
+            f'<span class="hc__name">{esc(p["name"])}</span></a></div>'
         )
-        thumb = picture(base, p["info"], "", "40px", p["position"]) if p["info"] else ""
-        tabs.append(
-            f'<a class="hc__tab{active}" href="{url}" data-index="{i}"{" aria-current=\"true\"" if i == 0 else ""}>'
-            f'<span class="hc__face">{thumb}</span><span class="hc__tabname">{esc(p["name"])}</span>'
-            f'<span class="hc__bar" aria-hidden="true"></span></a>'
+        dots.append(
+            f'<button class="hc__dot{active}" type="button" data-index="{i}" aria-label="Show {esc(p["name"])}"'
+            f'{" aria-current=\"true\"" if i == 0 else ""}><span><i class="hc__bar"></i></span></button>'
         )
     return (
         '<div class="hc" aria-roledescription="carousel" aria-label="Participants">'
         f'<div class="hc__stage">{"".join(slides)}</div>'
-        f'<div class="hc__tabs">{"".join(tabs)}'
-        '<button class="hc__pause" type="button" hidden>Pause</button></div></div>'
+        f'<div class="hc__dots" hidden>{"".join(dots)}'
+        '<button class="hc__pause" type="button">Pause</button></div></div>'
     )
 
 

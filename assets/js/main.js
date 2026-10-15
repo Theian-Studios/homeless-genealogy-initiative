@@ -132,7 +132,8 @@
   const hc = document.querySelector(".hc");
   if (hc) {
     const slides = [...hc.querySelectorAll(".hc__slide")];
-    const tabs = [...hc.querySelectorAll(".hc__tab")];
+    const tabs = [...hc.querySelectorAll(".hc__dot")];
+    const cards = [...hc.querySelectorAll(".hc__card")];
     const pauseBtn = hc.querySelector(".hc__pause");
     const DURATION = 6000;
     hc.style.setProperty("--hc-time", DURATION + "ms");
@@ -142,11 +143,13 @@
       next = (next + slides.length) % slides.length;
       slides[current].classList.remove("is-active");
       slides[current].setAttribute("aria-hidden", "true");
+      cards[current].setAttribute("tabindex", "-1");
       tabs[current].classList.remove("is-active");
       tabs[current].removeAttribute("aria-current");
       current = next;
       slides[current].classList.add("is-active");
       slides[current].removeAttribute("aria-hidden");
+      cards[current].removeAttribute("tabindex");
       // Restart the progress bar on the new tab.
       const bar = tabs[current].querySelector(".hc__bar");
       bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
@@ -159,18 +162,15 @@
       hc.classList.toggle("is-playing", playing);
       if (playing) timer = setTimeout(() => { show(current + 1); schedule(); }, DURATION);
     };
-    tabs.forEach((tab, i) => tab.addEventListener("click", (e) => {
-      if (i === current) return; // second click on the active tab opens the story
-      e.preventDefault(); show(i); schedule();
-    }));
+    tabs.forEach((dot, i) => dot.addEventListener("click", () => { if (i !== current) { show(i); schedule(); } }));
     const hold = (on) => { held = on; hc.classList.toggle("is-held", on); schedule(); };
     hc.addEventListener("mouseenter", () => hold(true));
     hc.addEventListener("mouseleave", () => hold(false));
     // Hold for keyboard focus only, so a mouse click on a tab doesn't stop rotation for good.
     hc.addEventListener("focusin", (e) => { if (e.target.matches(":focus-visible")) hold(true); });
     hc.addEventListener("focusout", () => hold(false));
-    if (pauseBtn && slides.length > 1) {
-      pauseBtn.hidden = false;
+    if (slides.length > 1) {
+      hc.querySelector(".hc__dots").hidden = false;
       const label = () => { pauseBtn.textContent = userPaused ? "Play" : "Pause"; pauseBtn.setAttribute("aria-pressed", String(userPaused)); };
       pauseBtn.addEventListener("click", () => { userPaused = !userPaused; label(); schedule(); });
       label();
