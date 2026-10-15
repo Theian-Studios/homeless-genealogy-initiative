@@ -126,15 +126,14 @@
   }
 
   /* ---------- Hero carousel ----------
-     Rotates every 6 seconds; the tab under each photo shows progress and jumps to
-     that person when clicked. Pauses on hover/focus and with the Pause control;
-     motion-sensitive visitors start paused. */
+     Rotates every 6 seconds; the dots show progress and jump to a person when
+     clicked. Pauses on hover and keyboard focus; motion-sensitive visitors
+     start paused. */
   const hc = document.querySelector(".hc");
   if (hc) {
     const slides = [...hc.querySelectorAll(".hc__slide")];
     const tabs = [...hc.querySelectorAll(".hc__dot")];
     const cards = [...hc.querySelectorAll(".hc__card")];
-    const pauseBtn = hc.querySelector(".hc__pause");
     const DURATION = 6000;
     hc.style.setProperty("--hc-time", DURATION + "ms");
     let current = 0, timer = null, userPaused = reduceMotion, held = false;
@@ -171,9 +170,6 @@
     hc.addEventListener("focusout", () => hold(false));
     if (slides.length > 1) {
       hc.querySelector(".hc__dots").hidden = false;
-      const label = () => { pauseBtn.textContent = userPaused ? "Play" : "Pause"; pauseBtn.setAttribute("aria-pressed", String(userPaused)); };
-      pauseBtn.addEventListener("click", () => { userPaused = !userPaused; label(); schedule(); });
-      label();
     }
     schedule();
   }

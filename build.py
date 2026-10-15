@@ -247,8 +247,7 @@ def carousel(people, base):
     return (
         '<div class="hc" aria-roledescription="carousel" aria-label="Participants">'
         f'<div class="hc__stage">{"".join(slides)}</div>'
-        f'<div class="hc__dots" hidden>{"".join(dots)}'
-        '<button class="hc__pause" type="button">Pause</button></div></div>'
+        f'<div class="hc__dots" hidden>{"".join(dots)}</div></div>'
     )
 
 
