@@ -250,6 +250,11 @@ strong { font-weight: 600; }
 /* ---------- Sections ---------- */
 .section { padding: 80px 0; }
 .section--tinted { background: var(--paper-2); }
+/* Blue band, same as the support band; white cards sit on it. */
+.section--blue { background: var(--green); }
+.section--blue .section-label { color: #d6e6f8; }
+.section--blue .section-header h2 { color: #fff; }
+.section--blue .way { border-color: transparent; box-shadow: none; }
 .section--rule { border-top: 1px solid var(--rule); }
 .section--dark { background: var(--forest); color: #e6eee9; }
 .section--dark h2 { color: #fff; }
