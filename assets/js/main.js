@@ -48,8 +48,8 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- Steps grow as you scroll ----------
-     Each step's progress (0 to 1) follows its position in the window, so the
-     staircase builds as you scroll down and unbuilds if you scroll back up. */
+     Each step's progress (0 to 1) follows its position in the window the first
+     time it comes into view; once drawn, it stays drawn. */
   const clamp = (v) => Math.min(1, Math.max(0, v));
   const ease = (t) => 1 - Math.pow(1 - t, 3);
   const scrollGroups = [
@@ -75,9 +75,14 @@
             const top = el.querySelector(bar).getBoundingClientRect().top;
             p = (vh * 0.95 - top) / (vh * 0.3);
           }
-          el.style.setProperty("--p", ease(clamp(p)).toFixed(3));
+          // Only ever move forward, so the steps build once and stay drawn.
+          const value = Math.max(ease(clamp(p)), el._stepP || 0);
+          el._stepP = value;
+          el.style.setProperty("--p", value.toFixed(3));
         });
       });
+      const done = scrollGroups.every(({ list, items }) => [...list.querySelectorAll(items)].every((el) => el._stepP >= 1));
+      if (done) { window.removeEventListener("scroll", request); window.removeEventListener("resize", request); }
     };
     const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
     scrollGroups.forEach((g) => g.list.classList.add("is-scroll"));
