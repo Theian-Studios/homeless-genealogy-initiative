@@ -7,17 +7,17 @@
   --paper-2: #f3f4f6;
   --rule: #cfd4db;
   --rule-soft: #e1e4e9;  /* outline for white panels */
-  --forest: #1b365d;     /* deep blue: headings, header, dark sections */
-  --forest-2: #142a49;
-  --green: #1f5fae;      /* blue: links, buttons (5.8:1; white on it 6.4:1) */
-  --green-dark: #184c8c;
-  --teal: #4a86cf;
-  --step-1: #1f5fae;     /* logo bars, bottom to top */
-  --step-2: #4a86cf;
-  --step-3: #9ec5f0;
-  --step-2-text: #1f5fae; /* readable blue for small text (5.2:1+) */
-  --clay: #2f6fd0;       /* accent blue: large numerals, rules */
-  --clay-text: #1f5fae;  /* small accent text on light backgrounds (5.2:1+) */
+  --forest: #002e5d;     /* BYU navy: headings, header, dark sections */
+  --forest-2: #002246;
+  --green: #0062b8;      /* BYU royal: links, buttons (6.1:1; white on it 6.1:1) */
+  --green-dark: #004a8a;
+  --teal: #4c91cd;
+  --step-1: #0062b8;     /* logo bars, bottom to top */
+  --step-2: #4c91cd;
+  --step-3: #99c0e3;
+  --step-2-text: #0062b8; /* readable blue for small text (5.2:1+) */
+  --clay: #1a74c4;       /* accent blue: large numerals, rules */
+  --clay-text: #0062b8;  /* small accent text on light backgrounds (5.2:1+) */
   --label-on-dark: #b9d3f2; /* small text on dark blue (7.9:1) */
 
   --serif: "Newsreader", Georgia, "Times New Roman", serif;
@@ -25,8 +25,8 @@
 
   --radius: 6px;
   --radius-lg: 14px;
-  --shadow-sm: 0 1px 2px rgba(27, 54, 93, 0.05), 0 2px 8px rgba(27, 54, 93, 0.04);
-  --shadow: 0 1px 3px rgba(27, 54, 93, 0.05), 0 8px 22px rgba(27, 54, 93, 0.08);
+  --shadow-sm: 0 1px 2px rgba(0, 46, 93, 0.05), 0 2px 8px rgba(0, 46, 93, 0.04);
+  --shadow: 0 1px 3px rgba(0, 46, 93, 0.05), 0 8px 22px rgba(0, 46, 93, 0.08);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --container: 1160px;
   --gutter: 24px;
@@ -95,8 +95,8 @@ strong { font-weight: 600; }
 }
 .btn--primary { background: var(--green); color: #fff; }
 /* Donate sits on the dark header: light blue with dark text so it stands out (6.8:1) */
-.btn--donate { background: #9ec5f0; color: var(--forest); }
-.btn--donate:hover { background: #b8d6f5; color: var(--forest); }
+.btn--donate { background: #99c0e3; color: var(--forest); }
+.btn--donate:hover { background: #b4d1ec; color: var(--forest); }
 .btn--primary:hover { background: var(--green-dark); color: #fff; }
 .btn--light { background: #fff; color: var(--forest); }
 .btn--light:hover { background: var(--paper-2); color: var(--forest); }
@@ -114,7 +114,7 @@ strong { font-weight: 600; }
   background: var(--forest); color: #fff;
   transition: box-shadow 0.25s;
 }
-.site-header.is-scrolled { box-shadow: 0 2px 10px rgba(27, 54, 93, 0.16); }
+.site-header.is-scrolled { box-shadow: 0 2px 10px rgba(0, 46, 93, 0.16); }
 .site-header__inner { position: relative; display: flex; align-items: center; gap: 28px; min-height: var(--header-h); }
 .brand { display: flex; align-items: center; gap: 14px; color: #fff; text-decoration: none; }
 .brand__logo { width: auto; height: 32px; }
@@ -161,7 +161,7 @@ strong { font-weight: 600; }
     display: none; position: absolute; top: 100%; left: 0; right: 0; margin: 0;
     flex-direction: column; align-items: stretch; gap: 0;
     background: var(--forest); border-top: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 20px rgba(27, 54, 93, 0.18);
+    box-shadow: 0 10px 20px rgba(0, 46, 93, 0.18);
     padding: 8px var(--gutter) 20px;
   }
   .nav.is-open { display: flex; }
@@ -214,7 +214,7 @@ strong { font-weight: 600; }
 .hc__dot { width: 20px; height: 22px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
 .hc__dot span { display: block; width: 7px; height: 7px; border-radius: 50%; background: #c3cad3; transition: background 0.2s; }
 .hc__dot:hover span { background: #9aa3ae; }
-.hc__dot.is-active span { background: #6f8fbf; }
+.hc__dot.is-active span { background: #5999d1; }
 /* Small previous/next arrows on the sides of the photo */
 .hc__nav {
   position: absolute; top: 50%; z-index: 2; transform: translateY(-50%);
@@ -581,7 +581,7 @@ strong { font-weight: 600; }
 .stair__bar {
   height: 76px; border-radius: 3px; margin-bottom: 22px; padding: 0 22px;
   display: flex; align-items: center; color: #fff; font: 700 2.6rem/1 var(--sans);
-  box-shadow: 0 4px 12px rgba(27, 54, 93, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 46, 93, 0.08);
 }
 .stair--1 .stair__bar { background: var(--step-1); }
 .stair--2 .stair__bar { background: var(--step-2); }
