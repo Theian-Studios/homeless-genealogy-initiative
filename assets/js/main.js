@@ -174,6 +174,33 @@
     schedule();
   }
 
+  /* ---------- Line the hero photo up with the text ----------
+     On wide screens the photo's top meets the top of the headline and its bottom
+     meets the rule above the "Hosted by" line. Uses offsetTop, which ignores the
+     entrance animation's transforms. */
+  const heroFig = document.querySelector(".hero__figure");
+  const heroStage = heroFig && heroFig.querySelector(".hc__stage");
+  if (heroStage) {
+    const h1 = document.querySelector(".hero h1");
+    const rule = document.querySelector(".hero__trust");
+    const fit = () => {
+      if (window.matchMedia("(max-width: 900px)").matches || !h1 || !rule) {
+        heroFig.style.marginTop = ""; heroStage.style.height = ""; heroStage.style.aspectRatio = "";
+        return;
+      }
+      const cs = getComputedStyle(h1);
+      const halfLeading = (parseFloat(cs.lineHeight) - parseFloat(cs.fontSize)) / 2;
+      const top = h1.offsetTop + Math.max(0, halfLeading);
+      const bottom = rule.offsetTop;
+      heroFig.style.marginTop = top + "px";
+      heroStage.style.aspectRatio = "auto";
+      heroStage.style.height = Math.max(240, bottom - top) + "px";
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  }
+
   /* ---------- Footer year ---------- */
   document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 
