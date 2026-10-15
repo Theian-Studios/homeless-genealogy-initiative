@@ -236,9 +236,9 @@ def carousel(people, base):
         slides.append(
             f'<div class="hc__slide{active}" data-index="{i}"{"" if i == 0 else " aria-hidden=\"true\""}>'
             f'{picture(base, p["info"], f"Portrait of {p['name']}", SIZES["hero"], p["position"], eager=(i == 0))}'
-            f'<div class="hc__card"><p class="hc__name">{esc(p["name"])}</p>'
-            f'<p class="hc__quote">“{esc(p["card_quote"])}”</p>'
-            f'<a class="link-arrow" href="{url}">Read {esc(p["name"])}’s story</a></div></div>'
+            f'<div class="hc__card"><p class="hc__quote">“{esc(p["card_quote"])}”</p>'
+            f'<p class="hc__by"><span class="hc__name">{esc(p["name"])}</span>'
+            f'<a class="link-arrow" href="{url}">Read {esc(p["name"])}’s story</a></p></div></div>'
         )
         thumb = picture(base, p["info"], "", "40px", p["position"]) if p["info"] else ""
         tabs.append(
