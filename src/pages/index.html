@@ -11,7 +11,18 @@ description: Fund real jobs, real skills, and a path to stability for people exp
         <a class="btn btn--primary" href="{{ site.donate_url }}">Donate</a>
         <a class="link-arrow" href="#participants">Meet our participants</a>
       </div>
-      <p class="hero__trust">Hosted by Brigham Young University’s Department of Economics, in collaboration with the BYU Record Linking Lab. Founded in 2026.</p>
+      <div class="hero__trust">
+        <p class="hero__trust-label">Hosted by</p>
+        <div class="partners">
+          <a class="partner partner--byu" href="https://economics.byu.edu/" rel="noopener">
+            <img src="{{ base }}assets/img/partners/byu.svg" alt="Brigham Young University" width="80" height="23">
+            <span>Department of Economics</span>
+          </a>
+          <a class="partner" href="https://record-linking-lab.byu.edu/" rel="noopener">
+            <img src="{{ base }}assets/img/partners/record-linking-lab.jpg" alt="BYU Record Linking Lab" width="350" height="126">
+          </a>
+        </div>
+      </div>
     </div>
     <figure class="hero__figure">
       {{ participants.carousel }}
