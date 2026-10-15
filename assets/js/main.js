@@ -167,6 +167,11 @@
     hc.addEventListener("focusout", () => hold(false));
     if (slides.length > 1) {
       hc.querySelector(".hc__dots").hidden = false;
+      hc.querySelectorAll(".hc__nav").forEach((btn) => {
+        btn.hidden = false;
+        const step = btn.classList.contains("hc__nav--prev") ? -1 : 1;
+        btn.addEventListener("click", () => { show(current + step); schedule(); });
+      });
     }
     schedule();
   }

@@ -204,10 +204,22 @@ strong { font-weight: 600; }
 .hc__card:hover .hc__name { color: var(--green); }
 .hc__dots { display: flex; align-items: center; justify-content: center; gap: 2px; margin-top: 12px; }
 .hc__dots[hidden] { display: none; }
-.hc__dot { width: 26px; height: 26px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
-.hc__dot span { display: block; width: 10px; height: 10px; border-radius: 50%; background: #7f8794; transition: background 0.2s, transform 0.2s var(--ease); }
-.hc__dot:hover span { background: var(--muted); }
-.hc__dot.is-active span { background: var(--green); transform: scale(1.2); }
+.hc__dot { width: 20px; height: 22px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.hc__dot span { display: block; width: 7px; height: 7px; border-radius: 50%; background: #c3cad3; transition: background 0.2s; }
+.hc__dot:hover span { background: #9aa3ae; }
+.hc__dot.is-active span { background: #6f8fbf; }
+/* Small previous/next arrows on the sides of the photo */
+.hc__nav {
+  position: absolute; top: 50%; z-index: 2; transform: translateY(-50%);
+  width: 36px; height: 36px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
+  display: grid; place-items: center; background: rgba(255, 255, 255, 0.88); color: var(--forest);
+  box-shadow: var(--shadow-sm); transition: background 0.2s;
+}
+.hc__nav:hover { background: #fff; }
+.hc__nav[hidden] { display: none; }
+.hc__nav--prev { left: 12px; }
+.hc__nav--next { right: 12px; }
+.hc__nav svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 560px) {
   .hc__stage { aspect-ratio: 4 / 5.4; }
   .hc__card { left: 10px; right: 10px; bottom: 10px; padding: 10px 12px; }

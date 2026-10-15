@@ -247,7 +247,11 @@ def carousel(people, base):
         )
     return (
         '<div class="hc" aria-roledescription="carousel" aria-label="Participants">'
-        f'<div class="hc__stage">{"".join(slides)}</div>'
+        f'<div class="hc__stage">{"".join(slides)}'
+        '<button class="hc__nav hc__nav--prev" type="button" aria-label="Previous participant" hidden>'
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>'
+        '<button class="hc__nav hc__nav--next" type="button" aria-label="Next participant" hidden>'
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>'
         f'<div class="hc__dots" hidden>{"".join(dots)}</div></div>'
     )
 
