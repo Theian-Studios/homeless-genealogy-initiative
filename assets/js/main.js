@@ -125,6 +125,59 @@
     window.addEventListener("resize", request);
   }
 
+  /* ---------- Hero carousel ----------
+     Rotates every 6 seconds; the tab under each photo shows progress and jumps to
+     that person when clicked. Pauses on hover/focus and with the Pause control;
+     motion-sensitive visitors start paused. */
+  const hc = document.querySelector(".hc");
+  if (hc) {
+    const slides = [...hc.querySelectorAll(".hc__slide")];
+    const tabs = [...hc.querySelectorAll(".hc__tab")];
+    const pauseBtn = hc.querySelector(".hc__pause");
+    const DURATION = 6000;
+    hc.style.setProperty("--hc-time", DURATION + "ms");
+    let current = 0, timer = null, userPaused = reduceMotion, held = false;
+
+    const show = (next) => {
+      next = (next + slides.length) % slides.length;
+      slides[current].classList.remove("is-active");
+      slides[current].setAttribute("aria-hidden", "true");
+      tabs[current].classList.remove("is-active");
+      tabs[current].removeAttribute("aria-current");
+      current = next;
+      slides[current].classList.add("is-active");
+      slides[current].removeAttribute("aria-hidden");
+      // Restart the progress bar on the new tab.
+      const bar = tabs[current].querySelector(".hc__bar");
+      bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
+      tabs[current].classList.add("is-active");
+      tabs[current].setAttribute("aria-current", "true");
+    };
+    const schedule = () => {
+      clearTimeout(timer);
+      const playing = !userPaused && !held && slides.length > 1;
+      hc.classList.toggle("is-playing", playing);
+      if (playing) timer = setTimeout(() => { show(current + 1); schedule(); }, DURATION);
+    };
+    tabs.forEach((tab, i) => tab.addEventListener("click", (e) => {
+      if (i === current) return; // second click on the active tab opens the story
+      e.preventDefault(); show(i); schedule();
+    }));
+    const hold = (on) => { held = on; hc.classList.toggle("is-held", on); schedule(); };
+    hc.addEventListener("mouseenter", () => hold(true));
+    hc.addEventListener("mouseleave", () => hold(false));
+    // Hold for keyboard focus only, so a mouse click on a tab doesn't stop rotation for good.
+    hc.addEventListener("focusin", (e) => { if (e.target.matches(":focus-visible")) hold(true); });
+    hc.addEventListener("focusout", () => hold(false));
+    if (pauseBtn && slides.length > 1) {
+      pauseBtn.hidden = false;
+      const label = () => { pauseBtn.textContent = userPaused ? "Play" : "Pause"; pauseBtn.setAttribute("aria-pressed", String(userPaused)); };
+      pauseBtn.addEventListener("click", () => { userPaused = !userPaused; label(); schedule(); });
+      label();
+    }
+    schedule();
+  }
+
   /* ---------- Footer year ---------- */
   document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 

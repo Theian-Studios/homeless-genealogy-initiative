@@ -227,18 +227,31 @@ def card(p, base):
       </a>"""
 
 
-def collage(people, base):
-    """Hero collage: up to four participants in two staggered columns."""
-    tiles = []
-    for i, p in enumerate(people[:4]):
-        tiles.append(
-            f'<a class="collage__tile collage__tile--{i + 1}" href="{base}stories/{p['id']}.html">'
-            f'{photo_for(p, base, "collage")}<span class="collage__name">{esc(p['name'])}</span></a>'
+def carousel(people, base):
+    """Hero carousel: one large portrait at a time, with name tabs that act as controls."""
+    slides, tabs = [], []
+    for i, p in enumerate(people):
+        active = " is-active" if i == 0 else ""
+        url = f"{base}stories/{p['id']}.html"
+        slides.append(
+            f'<div class="hc__slide{active}" data-index="{i}"{"" if i == 0 else " aria-hidden=\"true\""}>'
+            f'{picture(base, p["info"], f"Portrait of {p['name']}", SIZES["hero"], p["position"], eager=(i == 0))}'
+            f'<div class="hc__card"><p class="hc__name">{esc(p["name"])}</p>'
+            f'<p class="hc__quote">“{esc(p["card_quote"])}”</p>'
+            f'<a class="link-arrow" href="{url}">Read {esc(p["name"])}’s story</a></div></div>'
         )
-    cols = (tiles[0::2], tiles[1::2])
-    return '<div class="collage">' + "".join(
-        f'<div class="collage__col">{"".join(c)}</div>' for c in cols
-    ) + "</div>"
+        thumb = picture(base, p["info"], "", "40px", p["position"]) if p["info"] else ""
+        tabs.append(
+            f'<a class="hc__tab{active}" href="{url}" data-index="{i}"{" aria-current=\"true\"" if i == 0 else ""}>'
+            f'<span class="hc__face">{thumb}</span><span class="hc__tabname">{esc(p["name"])}</span>'
+            f'<span class="hc__bar" aria-hidden="true"></span></a>'
+        )
+    return (
+        '<div class="hc" aria-roledescription="carousel" aria-label="Participants">'
+        f'<div class="hc__stage">{"".join(slides)}</div>'
+        f'<div class="hc__tabs">{"".join(tabs)}'
+        '<button class="hc__pause" type="button" hidden>Pause</button></div></div>'
+    )
 
 
 def grid_cols(n):
@@ -310,7 +323,7 @@ def main():
     rest = [p for p in people if p is not feat]
     ctx["participants.not_featured"] = "\n      ".join(card(p, base) for p in rest)
     ctx["participants.all"] = "\n      ".join(card(p, base) for p in people)
-    ctx["participants.collage"] = collage(people, base)
+    ctx["participants.carousel"] = carousel(people, base)
     ctx["participants.not_featured_cols"] = grid_cols(len(rest))
     ctx["participants.all_cols"] = grid_cols(len(people))
     for p in people:
