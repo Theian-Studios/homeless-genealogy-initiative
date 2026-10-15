@@ -126,7 +126,7 @@
   }
 
   /* ---------- Hero carousel ----------
-     Rotates every 6 seconds; the dots show who is on screen and jump to a person
+     Rotates every 4.8 seconds; the dots show who is on screen and jump to a person
      when clicked. Pauses on hover and keyboard focus; motion-sensitive visitors
      start paused. */
   const hc = document.querySelector(".hc");
@@ -134,7 +134,7 @@
     const slides = [...hc.querySelectorAll(".hc__slide")];
     const tabs = [...hc.querySelectorAll(".hc__dot")];
     const cards = [...hc.querySelectorAll(".hc__card")];
-    const DURATION = 6000;
+    const DURATION = 4800;
     hc.style.setProperty("--hc-time", DURATION + "ms");
     let current = 0, timer = null, userPaused = reduceMotion, held = false;
 

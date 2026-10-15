@@ -3,8 +3,8 @@
 :root {
   --ink: #1a2230;
   --muted: #444d5a;      /* 7.8:1 on page */
-  --paper: #f3f4f6;
-  --paper-2: #e7e9ed;
+  --paper: #ffffff;
+  --paper-2: #f3f4f6;
   --rule: #cfd4db;
   --rule-soft: #e1e4e9;  /* outline for white panels */
   --forest: #1b365d;     /* deep blue: headings, header, dark sections */
