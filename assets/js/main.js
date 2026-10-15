@@ -45,46 +45,7 @@
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  /* ---------- Reveal on scroll ----------
-     Only elements that start below the first screen are hidden, so nothing
-     flickers on load and everything stays visible if JavaScript fails. */
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if ("IntersectionObserver" in window && !reduceMotion) {
-    const targets = document.querySelectorAll(
-      ".section-header, .featured, .card, .voice, .columns-2 > div, " +
-        ".steps li, .split > *, .support__inner, .section-more, .ledger, .problem__card, " +
-        ".way, .faq__item"
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target;
-          el.classList.add("is-visible");
-          observer.unobserve(el);
-          // Hand control back to hover effects once the entrance finishes.
-          const done = (e) => {
-            if (e.target !== el) return;
-            el.removeEventListener("transitionend", done);
-            el.classList.remove("reveal", "is-visible");
-            el.style.removeProperty("--delay");
-          };
-          el.addEventListener("transitionend", done);
-        });
-      },
-      { rootMargin: "0px 0px -4% 0px", threshold: 0.05 }
-    );
-    targets.forEach((el) => {
-      if (el.getBoundingClientRect().top < window.innerHeight) return;
-      // Stagger siblings in the same grid (cards, goal columns).
-      const index = [...el.parentElement.children].indexOf(el);
-      if (el.matches(".card, .columns-2 > div, .way, .problem__card, .faq__item, .voice")) {
-        el.style.setProperty("--delay", `${(index % 4) * 0.05}s`);
-      }
-      el.classList.add("reveal");
-      observer.observe(el);
-    });
-  }
 
   /* ---------- Steps grow as you scroll ----------
      Each step's progress (0 to 1) follows its position in the window, so the
