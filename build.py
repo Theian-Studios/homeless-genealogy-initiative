@@ -237,9 +237,10 @@ def carousel(people, base):
             f'<div class="hc__slide{active}" data-index="{i}"{"" if i == 0 else " aria-hidden=\"true\""}>'
             # Load every slide's photo up front so a slide never appears before its image.
             f'{picture(base, p["info"], f"Portrait of {p['name']}", SIZES["hero"], p["position"], eager=(i == 0)).replace(' loading="lazy"', '')}'
-            f'<a class="hc__card" href="{url}"{"" if i == 0 else " tabindex=\"-1\""}>'
-            f'<span class="hc__quote">“{esc(p["card_quote"])}”</span>'
-            f'<span class="hc__name">{esc(p["name"])}</span></a></div>'
+            f'<div class="hc__card"><p class="hc__quote">“{esc(p["card_quote"])}”</p>'
+            f'<div class="hc__meta"><span class="hc__name">{esc(p["name"])}</span>'
+            f'<a class="hc__read" href="{url}" aria-label="Read {esc(p["name"])}’s story"'
+            f'{"" if i == 0 else " tabindex=\"-1\""}>Read story</a></div></div></div>'
         )
         dots.append(
             f'<button class="hc__dot{active}" type="button" data-index="{i}" aria-label="Show {esc(p["name"])}"'

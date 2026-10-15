@@ -133,22 +133,41 @@
   if (hc) {
     const slides = [...hc.querySelectorAll(".hc__slide")];
     const tabs = [...hc.querySelectorAll(".hc__dot")];
-    const cards = [...hc.querySelectorAll(".hc__card")];
+    const links = [...hc.querySelectorAll(".hc__read")];
     const DURATION = 4800;
     hc.style.setProperty("--hc-time", DURATION + "ms");
     let current = 0, timer = null, userPaused = reduceMotion, held = false;
 
-    const show = (next) => {
+    // dir: 1 = next (new photo slides in from the right), -1 = previous (from the left).
+    const show = (next, dir = 1) => {
       next = (next + slides.length) % slides.length;
-      slides[current].classList.remove("is-active");
-      slides[current].setAttribute("aria-hidden", "true");
-      cards[current].setAttribute("tabindex", "-1");
+      if (next === current) return;
+      const leaving = slides[current], entering = slides[next];
+      // Put the incoming slide just off-screen on the correct side, without animating.
+      entering.style.transition = "none";
+      entering.style.transform = `translateX(${dir * 100}%)`;
+      void entering.offsetWidth;
+      entering.style.transition = entering.style.transform = "";
+      entering.classList.add("is-active");
+      entering.removeAttribute("aria-hidden");
+      // Send the outgoing slide off the opposite side, then park it out of view.
+      leaving.classList.remove("is-active");
+      leaving.classList.add("is-leaving");
+      leaving.style.transform = `translateX(${-dir * 100}%)`;
+      leaving.setAttribute("aria-hidden", "true");
+      setTimeout(() => {
+        if (leaving.classList.contains("is-active")) return;
+        leaving.style.transition = "none";
+        leaving.classList.remove("is-leaving");
+        leaving.style.transform = "";
+        void leaving.offsetWidth;
+        leaving.style.transition = "";
+      }, 650);
+      links[current].setAttribute("tabindex", "-1");
       tabs[current].classList.remove("is-active");
       tabs[current].removeAttribute("aria-current");
       current = next;
-      slides[current].classList.add("is-active");
-      slides[current].removeAttribute("aria-hidden");
-      cards[current].removeAttribute("tabindex");
+      links[current].removeAttribute("tabindex");
       tabs[current].classList.add("is-active");
       tabs[current].setAttribute("aria-current", "true");
     };
@@ -158,7 +177,7 @@
       hc.classList.toggle("is-playing", playing);
       if (playing) timer = setTimeout(() => { show(current + 1); schedule(); }, DURATION);
     };
-    tabs.forEach((dot, i) => dot.addEventListener("click", () => { if (i !== current) { show(i); schedule(); } }));
+    tabs.forEach((dot, i) => dot.addEventListener("click", () => { if (i !== current) { show(i, i > current ? 1 : -1); schedule(); } }));
     const hold = (on) => { held = on; hc.classList.toggle("is-held", on); schedule(); };
     hc.addEventListener("mouseenter", () => hold(true));
     hc.addEventListener("mouseleave", () => hold(false));
@@ -170,7 +189,7 @@
       hc.querySelectorAll(".hc__nav").forEach((btn) => {
         btn.hidden = false;
         const step = btn.classList.contains("hc__nav--prev") ? -1 : 1;
-        btn.addEventListener("click", () => { show(current + step); schedule(); });
+        btn.addEventListener("click", () => { show(current + step, step); schedule(); });
       });
     }
     schedule();

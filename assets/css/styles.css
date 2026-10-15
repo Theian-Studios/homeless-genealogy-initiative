@@ -190,18 +190,24 @@ strong { font-weight: 600; }
 
 /* Hero carousel: one portrait at a time; name tabs below act as controls */
 .hc__stage { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); background: var(--paper-2); }
-.hc__slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 0.7s var(--ease), visibility 0.7s; }
-.hc__slide.is-active { opacity: 1; visibility: visible; }
+/* Slides move sideways; main.js sets the direction (next slides left, previous slides right). */
+.hc__slide { position: absolute; inset: 0; visibility: hidden; transform: translateX(100%); transition: transform 0.6s var(--ease), visibility 0s 0.6s; }
+.hc__slide.is-active { visibility: visible; transform: none; transition: transform 0.6s var(--ease), visibility 0s; }
+.hc__slide.is-leaving { visibility: visible; transition: transform 0.6s var(--ease), visibility 0s; }
 .hc__slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 7s linear; }
 .hc__slide.is-active img { transform: scale(1); }
 .hc__card {
-  position: absolute; left: 16px; right: 16px; bottom: 16px; display: block; background: #fff; border-radius: 12px;
-  padding: 14px 18px; box-shadow: var(--shadow); border-left: 4px solid var(--green); color: inherit; text-decoration: none;
+  position: absolute; left: 14px; right: 14px; bottom: 14px; background: #fff; border-radius: 14px;
+  padding: 16px 18px 14px; box-shadow: 0 10px 30px rgba(27, 54, 93, 0.22);
 }
-.hc__card:hover { color: inherit; }
-.hc__quote { display: block; font-family: var(--serif); font-style: italic; font-size: 1.4rem; line-height: 1.3; color: var(--forest); margin: 0 0 8px; }
-.hc__name { display: block; font-family: var(--sans); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
-.hc__card:hover .hc__name { color: var(--green); }
+.hc__quote { font-family: var(--serif); font-style: italic; font-size: 1.35rem; line-height: 1.3; color: var(--forest); margin: 0 0 12px; }
+.hc__meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
+.hc__name { font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.hc__read {
+  flex-shrink: 0; display: inline-block; padding: 7px 14px; border-radius: 999px; background: var(--green); color: #fff;
+  font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: background 0.2s;
+}
+.hc__read:hover { background: var(--green-dark); color: #fff; }
 .hc__dots { display: flex; align-items: center; justify-content: center; gap: 2px; margin-top: 12px; }
 .hc__dots[hidden] { display: none; }
 .hc__dot { width: 20px; height: 22px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
@@ -211,20 +217,21 @@ strong { font-weight: 600; }
 /* Small previous/next arrows on the sides of the photo */
 .hc__nav {
   position: absolute; top: 50%; z-index: 2; transform: translateY(-50%);
-  width: 36px; height: 36px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
-  display: grid; place-items: center; background: rgba(255, 255, 255, 0.88); color: var(--forest);
-  box-shadow: var(--shadow-sm); transition: background 0.2s;
+  width: 30px; height: 30px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
+  display: grid; place-items: center; background: rgba(255, 255, 255, 0.55); color: var(--forest);
+  transition: background 0.2s;
 }
-.hc__nav:hover { background: #fff; }
+.hc__nav:hover { background: rgba(255, 255, 255, 0.9); }
 .hc__nav[hidden] { display: none; }
-.hc__nav--prev { left: 12px; }
-.hc__nav--next { right: 12px; }
-.hc__nav svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.hc__nav--prev { left: 10px; }
+.hc__nav--next { right: 10px; }
+.hc__nav svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 560px) {
   .hc__stage { aspect-ratio: 4 / 5.4; }
-  .hc__card { left: 10px; right: 10px; bottom: 10px; padding: 10px 12px; }
-  .hc__quote { font-size: 1.15rem; margin-bottom: 6px; }
-  .hc__card .link-arrow { font-size: 0.86rem; }
+  .hc__card { left: 10px; right: 10px; bottom: 10px; padding: 12px 14px 10px; }
+  .hc__quote { font-size: 1.12rem; margin-bottom: 8px; }
+  .hc__meta { padding-top: 8px; }
+  .hc__read { padding: 6px 12px; font-size: 0.8rem; }
 }
 @media (max-width: 900px) {
   .hero { padding: 40px 0; }
