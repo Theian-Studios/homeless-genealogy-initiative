@@ -1,8 +1,8 @@
-# STEP: Support Transitions to Employment Program — Website
+# STEP: Supported Transitions to Employment Program — Website
 
 Live site: https://theian-studios.github.io/homeless-genealogy-initiative/
 
-A static website for STEP, the Support Transitions to Employment Program. A small Python script (`build.py`) turns the content files into finished HTML pages. GitHub runs it automatically on every push to `main` and publishes the result with GitHub Pages.
+A static website for STEP, the Supported Transitions to Employment Program. A small Python script (`build.py`) turns the content files into finished HTML pages. GitHub runs it automatically on every push to `main` and publishes the result with GitHub Pages.
 
 ## Where things live
 
