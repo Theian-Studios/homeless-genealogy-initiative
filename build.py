@@ -243,7 +243,7 @@ def carousel(people, base):
         )
         dots.append(
             f'<button class="hc__dot{active}" type="button" data-index="{i}" aria-label="Show {esc(p["name"])}"'
-            f'{" aria-current=\"true\"" if i == 0 else ""}><span><i class="hc__bar"></i></span></button>'
+            f'{" aria-current=\"true\"" if i == 0 else ""}><span></span></button>'
         )
     return (
         '<div class="hc" aria-roledescription="carousel" aria-label="Participants">'

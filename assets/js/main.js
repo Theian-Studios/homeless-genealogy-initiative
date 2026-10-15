@@ -126,8 +126,8 @@
   }
 
   /* ---------- Hero carousel ----------
-     Rotates every 6 seconds; the dots show progress and jump to a person when
-     clicked. Pauses on hover and keyboard focus; motion-sensitive visitors
+     Rotates every 6 seconds; the dots show who is on screen and jump to a person
+     when clicked. Pauses on hover and keyboard focus; motion-sensitive visitors
      start paused. */
   const hc = document.querySelector(".hc");
   if (hc) {
@@ -149,9 +149,6 @@
       slides[current].classList.add("is-active");
       slides[current].removeAttribute("aria-hidden");
       cards[current].removeAttribute("tabindex");
-      // Restart the progress bar on the new tab.
-      const bar = tabs[current].querySelector(".hc__bar");
-      bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
       tabs[current].classList.add("is-active");
       tabs[current].setAttribute("aria-current", "true");
     };
