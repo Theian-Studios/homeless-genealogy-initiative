@@ -185,7 +185,7 @@ strong { font-weight: 600; }
 }
 
 /* ---------- Home: hero ---------- */
-.hero { padding: 64px 0 56px; }
+.hero { padding: 64px 0 36px; }
 /* The photo column's width comes from main.js (90% of the text's height); 400px until then. */
 .hero__grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 72px; align-items: start; }
 .hero h1 { margin-bottom: 24px; }
@@ -522,7 +522,9 @@ strong { font-weight: 600; }
 
 /* ---------- Problem → answer ---------- */
 .problem__grid { display: grid; grid-template-columns: 1fr 64px 1fr; align-items: stretch; }
-.problem__card { background: #fff; border-radius: var(--radius-lg); padding: 36px 38px; box-shadow: var(--shadow-sm); }
+.problem__card { display: flex; flex-direction: column; align-items: flex-start; background: #fff; border-radius: var(--radius-lg); padding: 36px 38px; box-shadow: var(--shadow-sm); }
+/* The link sits at the bottom of the box. */
+.problem__card > a:last-child { margin-top: auto; padding-top: 20px; }
 .problem__card h3 { font-size: clamp(1.5rem, 2.4vw, 1.95rem); margin-bottom: 14px; }
 .problem__card p:not(.section-label) { color: var(--muted); }
 .problem__card--answer { background: var(--forest); color: #dfe8e2; box-shadow: var(--shadow); border: 1px solid var(--forest); }
