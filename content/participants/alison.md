@@ -5,7 +5,6 @@ photo: alison.jpg
 photo_position: 50% 66%
 quote: I overcame hell.
 hero_quote: …we’re only going forward, we ain’t going backwards. We ain’t doing this again.
-featured: no
 ---
 
 Alison is the kind of person who takes a little time to get to know, but once you become one of her “people,” you quickly discover how incredible she is. She is funny, curious, and has strong opinions about just about everything. She loves learning and asking questions, and she has a knack for turning an ordinary conversation into something memorable.

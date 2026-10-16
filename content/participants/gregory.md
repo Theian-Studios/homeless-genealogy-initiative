@@ -5,7 +5,6 @@ photo: gregory.jpg
 photo_position: 50% 88%
 quote: I want to feel accomplished.
 hero_quote: I don’t have a job. I need a job. I need to do something.
-featured: no
 ---
 
 In his own words, Gregory is a “tinker.” Give him something new to learn, a machine to figure out, or a problem to solve, and he will find a way to understand it. “I got into everything,” he says. That curiosity has shaped a lifetime of work and learning.

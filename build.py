@@ -13,6 +13,20 @@ Sources:
     src/templates/story.html     participant story page
     assets/                      CSS, JS and images (copied as-is)
 
+How a build runs (see main()):
+    1. Delete _site/ and copy assets/ into it.
+    2. Read every participant file and make resized photos for each one.
+    3. Fill a dictionary ("ctx") with every value a page can ask for: site settings,
+       file hashes for cache-busting, ready-made HTML for cards and the carousel, ...
+    4. For each page in src/pages/, swap its {{ placeholders }} for ctx values, then
+       wrap it in src/layout.html. Same for one story page per participant.
+    5. Write sitemap.xml, robots.txt and redirects for old addresses.
+
+Templates are plain HTML with {{ name }} placeholders and nothing else: no loops or
+conditions. Anything that repeats (cards, carousel slides) is built here in Python
+and handed to the template as a finished HTML string. An unknown placeholder stops
+the build with an error naming the file, so typos can't slip onto the live site.
+
 Pillow is optional. When installed, photos are resized and converted to WebP
 and social-sharing images are generated; without it, photos are copied as-is.
 """
@@ -43,10 +57,12 @@ PLACEHOLDER = re.compile(r"\{\{\s*([\w.\-]+)\s*\}\}")
 # --------------------------------------------------------------------------- helpers
 
 def esc(text):
+    """Make text safe to put inside HTML (turns < > & and quotes into entities)."""
     return html.escape(str(text), quote=True)
 
 
 def render(template, ctx, source="template"):
+    """Replace each {{ key }} in template with ctx[key]. `source` names the file in error messages."""
     def sub(match):
         key = match.group(1)
         if key not in ctx:
@@ -170,19 +186,21 @@ def picture(base, info, alt, sizes, position="", eager=False):
     )
 
 
+# How wide each kind of participant photo is drawn on screen. Browsers use this
+# (the <img sizes> attribute) to download the smallest file that still looks sharp.
+# Keep these roughly in line with styles.css if a layout changes.
 SIZES = {
-    "card": "(max-width: 600px) 100vw, (max-width: 960px) 50vw, 300px",
-    "featured": "(max-width: 900px) 100vw, 520px",
-    "hero": "(max-width: 900px) 100vw, 520px",
-    "story": "(max-width: 960px) 100vw, 360px",
-    "quote": "240px",
-    "collage": "(max-width: 900px) 45vw, 260px",
+    "card": "(max-width: 600px) 100vw, (max-width: 960px) 50vw, 300px",   # cards on Home, Stories, story pages
+    "hero": "(max-width: 900px) 100vw, 520px",                            # home page carousel
+    "story": "(max-width: 960px) 100vw, 360px",                           # big photo on a story page
+    "quote": "240px",                                                     # small round photo by quotes (About)
 }
 
 
 # --------------------------------------------------------------------------- participants
 
-def load_participants(photos, base):
+def load_participants(photos):
+    """Read content/participants/*.md into a list of dicts, sorted by `order`."""
     people = []
     for path in sorted((ROOT / "content" / "participants").glob("*.md")):
         meta, body = split_front_matter(path.read_text(encoding="utf-8"))
@@ -195,31 +213,42 @@ def load_participants(photos, base):
             "card_quote": meta.get("card_quote") or meta.get("quote", ""),
             # The home page carousel can show a different quote from the cards.
             "hero_quote": meta.get("hero_quote") or meta.get("card_quote") or meta.get("quote", ""),
-            "featured": meta.get("featured", "no").lower() in ("yes", "true"),
             "summary": meta.get("summary", ""),
             "position": meta.get("photo_position", "50% 30%"),
             "body_md": body,
             "photo_file": meta.get("photo", ""),
             "status": meta.get("status", ""),
         }
+        # Used for the page's search-engine description and link previews.
         p["excerpt"] = p["summary"] or first_paragraph(body)
-        p["info"] = None
-        if not (p["photo_file"] and (IMG_SRC / p["photo_file"]).exists()):
-            # Participants appear on the site once they have a photo.
-            print(f"  Skipping {pid}: no photo yet")
-            continue
-        p["info"] = photos.prepare(p["photo_file"], p["position"], f"{pid}.jpg")
+        p["info"] = None  # photo details from Photos.prepare(), or None when there's no photo
+        if p["photo_file"] and (IMG_SRC / p["photo_file"]).exists():
+            p["info"] = photos.prepare(p["photo_file"], p["position"], f"{pid}.jpg")
+        else:
+            # No photo yet: cards and the story page show the person's initial instead.
+            print(f"  {pid}: no photo yet, showing their initial")
         people.append(p)
     people.sort(key=lambda x: (x["order"], x["name"]))
     return people
 
 
+def initial(p):
+    """Stand-in for a missing photo: the person's first letter on light gray, in the same frame."""
+    return f'<span class="photo-initial" aria-hidden="true">{esc(p["name"][:1].upper())}</span>'
+
+
 def photo_for(p, base, variant):
-    eager = variant in ("hero", "story", "collage")
+    """The participant's photo as HTML for one of the SIZES variants (or their initial if no photo)."""
+    if not p["info"]:
+        return initial(p)
+    # Photos near the top of a page load right away; the rest wait until scrolled near.
+    eager = variant in ("hero", "story")
     return picture(base, p["info"], f"Portrait of {p['name']}", SIZES[variant], p["position"], eager)
 
 
 def card(p, base, level=3, read=True):
+    """A participant card linking to their story. `level` is the heading level for the name;
+    `read` adds the small "Read story" button."""
     status = f'<span class="status-badge">{esc(p["status"])}</span>' if p["status"] else ""
     read_btn = (f'<span class="card__read">Read story<span class="visually-hidden"> about {esc(p["name"])}</span></span>'
                 if read else "")
@@ -232,9 +261,10 @@ def card(p, base, level=3, read=True):
 
 
 def carousel(people, base):
-    """Hero carousel: one large portrait at a time; the quote card links to the story; dots switch people."""
+    """Hero carousel: one large portrait at a time; the quote card links to the story; dots switch people.
+    Only people with a photo appear here."""
     slides, dots = [], []
-    for i, p in enumerate(people):
+    for i, p in enumerate([q for q in people if q["info"]]):
         active = " is-active" if i == 0 else ""
         url = f"{base}stories/{p['id']}.html"
         slides.append(
@@ -269,18 +299,6 @@ def grid_cols(n):
     return "4" if fill(4) >= fill(3) else "3"
 
 
-def featured(p, base):
-    return f"""<article class="featured">
-      <div class="featured__photo">{photo_for(p, base, 'featured')}</div>
-      <div class="featured__text">
-        <h3>{esc(p['name'])}</h3>
-        <p class="featured__quote">“{esc(p['quote'])}”</p>
-        <p>{inline_md(p['excerpt'])}</p>
-        <a class="link-arrow" href="{base}stories/{p['id']}.html">Read {esc(p['name'])}’s story</a>
-      </div>
-    </article>"""
-
-
 # --------------------------------------------------------------------------- build
 
 def main():
@@ -299,7 +317,7 @@ def main():
     shutil.copytree(ROOT / "assets", OUT / "assets", ignore=shutil.ignore_patterns(".DS_Store"))
 
     photos = Photos()
-    people = load_participants(photos, base)
+    people = load_participants(photos)
 
     donate = site["donate_url"]
     if not re.match(r"^(https?:|mailto:)", donate):
@@ -323,17 +341,14 @@ def main():
     for path in (ROOT / "src" / "partials").glob("*.html"):
         ctx[f"partial.{path.stem}"] = render(path.read_text(encoding="utf-8"), ctx, path.name)
 
-    feat = next((p for p in people if p["featured"] and p["info"]), people[0])
-    ctx["participants.featured"] = featured(feat, base)
-    rest = [p for p in people if p is not feat]
-    ctx["participants.not_featured"] = "\n      ".join(card(p, base) for p in rest)
+    # Ready-made participant HTML that pages drop in with {{ participants.* }}.
     # Home page cards skip the Read story button (the whole card is still a link).
     ctx["participants.all"] = "\n      ".join(card(p, base, read=False) for p in people)
     # The stories page has no section heading above the cards, so names are h2 there.
     ctx["participants.all_h2"] = "\n      ".join(card(p, base, level=2) for p in people)
     ctx["participants.carousel"] = carousel(people, base)
-    ctx["participants.not_featured_cols"] = grid_cols(len(rest))
     ctx["participants.all_cols"] = grid_cols(len(people))
+    # {{ photo.<id>.<variant> }}, e.g. {{ photo.jan.quote }} on the About page.
     for p in people:
         for variant in SIZES:
             ctx[f"photo.{p['id']}.{variant}"] = photo_for(p, base, variant)
@@ -359,6 +374,20 @@ def main():
         text = json.dumps({"@context": "https://schema.org", **data}, ensure_ascii=False, separators=(",", ":"))
         return '<script type="application/ld+json">' + text.replace("</", "<\\/") + "</script>"
 
+    faq_item = re.compile(r'<details class="faq__item">\s*<summary>(.*?)</summary>\s*<div class="faq__answer">(.*?)</div>\s*</details>', re.S)
+
+    def plain(fragment):
+        return " ".join(html.unescape(re.sub(r"<[^>]+>", "", fragment)).split())
+
+    def faq_jsonld(content):
+        """FAQPage data for the question-and-answer blocks on a page, if it has any."""
+        items = faq_item.findall(content)
+        if not items:
+            return None
+        return {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": plain(q), "acceptedAnswer": {"@type": "Answer", "text": plain(a)}}
+            for q, a in items]}
+
     layout = (ROOT / "src" / "layout.html").read_text(encoding="utf-8")
     default_og = f"{site_url}assets/img/og-home.jpg?v={ctx['version.og']}"
     sitemap = []
@@ -379,9 +408,14 @@ def main():
             "og_image": esc(meta.get("og_image", default_og)),
             "og_image_alt": esc(meta.get("og_image_alt", site["name"])),
             "robots": '<meta name="robots" content="noindex">' if meta.get("noindex") else "",
-            "jsonld": jsonld(meta["jsonld"]) if meta.get("jsonld") else (jsonld(org) if is_home else ""),
         })
         page_ctx["content"] = render(content, page_ctx, out_path)
+        data = meta.get("jsonld") or ([org] if is_home else [])
+        data = [data] if isinstance(data, dict) else list(data)
+        faq = faq_jsonld(page_ctx["content"])
+        if faq:
+            data.append(faq)
+        page_ctx["jsonld"] = "\n  ".join(jsonld(d) for d in data)
         dest = OUT / out_path
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(render(layout, page_ctx, "layout.html"), encoding="utf-8")
@@ -430,7 +464,7 @@ def main():
             meta["og_image_alt"] = f"Portrait of {p['name']}"
         story_url = f"{site_url}stories/{p['id']}.html"
         publisher = {k: org[k] for k in ("@type", "@id", "name", "url", "logo")}
-        meta["jsonld"] = {
+        meta["jsonld"] = [{
             "@type": "Article",
             "headline": meta["title"],
             "description": meta["description"],
@@ -440,7 +474,14 @@ def main():
             "about": {"@type": "Person", "name": p["name"]},
             "author": publisher,
             "publisher": publisher,
-        }
+        }, {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": site_url},
+                {"@type": "ListItem", "position": 2, "name": "Stories", "item": site_url + "stories/"},
+                {"@type": "ListItem", "position": 3, "name": p["name"], "item": story_url},
+            ],
+        }]
         write_page(f"stories/{p['id']}.html", meta, render(story_tpl, {**ctx, **story_ctx}, "story.html"))
 
     # Old story links (story.html?p=jan) forward to the new pages.

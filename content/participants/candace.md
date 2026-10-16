@@ -4,7 +4,6 @@ order: 5
 photo: 
 photo_position: 50% 30%
 quote: Everyone needs somebody who cares. I try to be kind to everybody.
-featured: no
 ---
 
 When Candace first joined STEP, she was looking for work.

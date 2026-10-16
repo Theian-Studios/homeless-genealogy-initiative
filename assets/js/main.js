@@ -1,5 +1,20 @@
-/* STEP: mobile menu and contact form.
-   Pages are complete HTML without this script; it only adds behavior. */
+/* STEP: the site's only script. Plain JavaScript, no libraries, no build step.
+
+   Pages are complete HTML without this script; it only adds behavior, so the
+   site still works (minus these extras) if it fails to load. Each part below
+   checks whether its elements exist on the page and does nothing otherwise.
+
+   What's in here, in order:
+     Mobile menu           opens and closes the menu on phones
+     Header shadow         adds a shadow once the page scrolls
+     Steps grow            the home page's three-step bars grow as they scroll in
+     Hero carousel         rotates participant photos on the home page
+     Hero photo sizing     lines the carousel up with the headline on wide screens
+     Footer year           keeps the copyright year current
+     Copy story link       the "Copy link" button on story pages
+     Contact form          checks fields, then sends the message (see site.json form_endpoint)
+
+   Anyone who has "reduce motion" turned on gets no animation and a paused carousel. */
 
 (function () {
   /* ---------- Mobile menu ---------- */
