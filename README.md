@@ -1,29 +1,87 @@
-# STEP: Supporting Transitions to Employment Program — Website
+# STEP website
 
-Live site: https://theian-studios.github.io/step/
+The website for **STEP, the Supporting Transitions to Employment Program**. STEP gives paid, remote work to people experiencing homelessness in Utah County. Participants help BYU's Record Linking Lab link historical census records to the FamilySearch Family Tree while they get ready for long-term jobs.
 
-A static website for STEP, the Supporting Transitions to Employment Program. A small Python script (`build.py`) turns the content files into finished HTML pages. GitHub runs it automatically on every push to `main` and publishes the result with GitHub Pages.
+**Live site:** https://theian-studios.github.io/step/
+
+The site has 6 pages, plus one story page per participant:
+
+| Page | Who it's for |
+| --- | --- |
+| Home | Everyone. A short summary with links deeper in. |
+| About | Donors and partners. Why STEP exists and how it started. |
+| How it works | Anyone wanting detail: the three stages, the lab's work, and FAQ. |
+| Stories | Participant interviews, one page each. |
+| For employers | Hiring managers. |
+| Contact | Questions, referrals, donations, hiring. |
+
+## How it's built, in one paragraph
+
+This is a **static site**: plain HTML, one CSS file, one small JavaScript file, and no framework or database. A short Python script, [build.py](build.py), reads the page files and participant stories, fills in the shared header and footer, resizes photos, and writes the finished site into a `_site/` folder. Every time a change is pushed to the `main` branch, GitHub runs that script and publishes `_site/` with GitHub Pages. There is nothing else to host or maintain.
+
+```mermaid
+flowchart LR
+    A["content/participants/*.md<br>src/pages/*.html<br>site.json"] --> B["build.py"]
+    C["assets/<br>CSS, JS, images, fonts"] --> B
+    B --> D["_site/<br>finished website"]
+    D --> E["GitHub Pages<br>(live site)"]
+```
+
+## Quick start
+
+You need Python 3.10 or newer.
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+```
+
+```bash
+.venv/bin/python build.py --base / && python3 -m http.server 8080 -d _site
+```
+
+Then open http://localhost:8080. Re-run the build after each change.
+
+`--base /` builds the site to run from your own computer. Without it, links are set up for the live address under `/step/`.
 
 ## Where things live
 
-| What | File |
+```text
+├── build.py                    Turns everything below into the finished site
+├── site.json                   Email, donate link, address, live URL, participant count
+├── requirements.txt            Python packages for the build (just Pillow, for photos)
+├── content/
+│   └── participants/*.md       One file per participant story
+├── src/
+│   ├── layout.html             Header, footer and <head> shared by every page
+│   ├── pages/                  One file per page (Home, About, How it works, ...)
+│   ├── partials/               Snippets reused on several pages ("Support the program" band)
+│   └── templates/story.html    Layout for every participant story page
+├── assets/
+│   ├── css/styles.css          All styles
+│   ├── js/main.js              Mobile menu, carousel, contact form
+│   ├── img/                    Photos, logos, icons
+│   └── fonts/                  Newsreader and Public Sans (open-source fonts, self-hosted)
+├── docs/
+│   └── DEVELOPER-GUIDE.md      How the build and templates work, conventions, troubleshooting
+└── .github/workflows/deploy.yml   Builds and publishes the site on every push to main
+```
+
+`_site/` and `.venv/` are created on your computer and are not saved in the repository.
+
+## Common edits
+
+| To change… | Edit |
 | --- | --- |
-| Participant stories | `content/participants/<name>.md` (one file per person) |
-| Participant photos | `assets/img/` |
-| Email, Donate link, Facebook, address, live URL | `site.json` |
-| Number of participants so far (shown on Home, About, How it works) | `site.json` → `participants_so_far` |
-| Mailing address used for Google search results | `site.json` → `postal_address` |
-| Home, About, How it works (with FAQ), For employers, Contact, 404 pages | `src/pages/` |
-| Participants list page | `src/pages/stories/index.html` |
-| Story page layout | `src/templates/story.html` |
-| Header, footer, `<head>` tags shared by every page | `src/layout.html` |
-| "Support the program" banner | `src/partials/support.html` |
-| Styles | `assets/css/styles.css` |
-| Mobile menu and contact form behavior | `assets/js/main.js` |
+| Words on a page | `src/pages/<page>.html` |
+| The header menu or footer | `src/layout.html` |
+| Email, Facebook link, address | `site.json` |
+| "17 people have worked in STEP so far" | `site.json` → `participants_so_far` |
+| Colors and fonts | the variables at the top of `assets/css/styles.css` |
+| A participant's story | `content/participants/<name>.md` |
+
+You can make any of these edits directly on GitHub in the browser: open the file, click the pencil icon, and commit. The live site updates within a couple of minutes. Check progress under the repository's **Actions** tab.
 
 ## Adding or editing a participant
-
-You can do this directly on GitHub in the browser. Within a minute or two of saving, the site rebuilds itself.
 
 1. Upload their photo to `assets/img/`, for example `maria.jpg`. A portrait about 900×1200 px works best.
 2. Create `content/participants/maria.md`. The file name becomes the page address (`stories/maria.html`).
@@ -36,7 +94,6 @@ photo: maria.jpg
 photo_position: 50% 30%
 quote: A quote in Maria’s own words, shown at the top of her story.
 card_quote: A short version for her card (under 8 words).
-featured: no
 ---
 
 First paragraph of the story.
@@ -46,14 +103,21 @@ Second paragraph. Use *asterisks* for italics.
 > “A line starting with > becomes a large pull quote.”
 ```
 
-- `order` sets the position in the list.
-- Participants without a photo are left off the site until one is added.
-- `photo_position` controls which part of the photo stays visible when it's cropped. The second number moves the crop up or down.
-- `featured: yes` gives that person the large spot on the home page. Only one person should have it.
-- Leave `photo:` empty if there's no photo yet. The site shows their initial instead.
-- `summary:` is optional. When present, it becomes the story's first paragraph and is used as the excerpt if she's featured on the home page.
-- `status:` is optional, for example `status: Graduated` or `status: Now working full-time`. It shows as a label on the person's card and story page.
-- To post an update on someone's progress, add a heading and a paragraph at the end of their story:
+The lines between the two `---` marks are settings. Everything after them is the story.
+
+| Setting | What it does | If left out |
+| --- | --- | --- |
+| `name` | First name shown everywhere. | The file name, capitalized. |
+| `order` | Position in lists. Lower numbers come first. | Listed last. |
+| `quote` | Large quote at the top of their story page. | No quote. |
+| `photo` | File name in `assets/img/`. | Their card shows their initial, and they stay out of the home page carousel. |
+| `photo_position` | Which part of the photo stays visible when it's cropped. The second number moves the crop up (smaller) or down (larger). | `50% 30%` |
+| `card_quote` | Short quote for their card. | Uses `quote`. |
+| `hero_quote` | Quote for the home page carousel. | Uses `card_quote`. |
+| `summary` | An opening paragraph placed before the story. Also used as the description in search results and link previews. | The story's first paragraph is used for search results. |
+| `status` | A small label on their card and story, for example `Now working full-time`. | No label. |
+
+To post an update on someone's progress, add a heading and a paragraph at the end of their story:
 
 ```markdown
 ## Update: March 2027
@@ -63,28 +127,31 @@ Alison finished the program and started a full-time job.
 
 ## Donate link and contact form
 
-Edit `site.json`:
+Both are set in `site.json`:
 
-- `donate_url`: Donate buttons open the contact form with "Donations" selected. Replace this with a real giving page link when you have one.
-- `form_endpoint`: blank means the form opens the visitor's own email app with their message filled in. To have messages sent straight from the site, create a free form at Formspree and paste its URL here (for example `https://formspree.io/f/abcdwxyz`).
-- `url`: the site's public address. Change it if you set up a custom domain.
-
-## Building locally
-
-```bash
-python3 -m venv .venv && .venv/bin/pip install pillow
-```
-
-```bash
-.venv/bin/python build.py --base / && python3 -m http.server 8080 -d _site
-```
-
-Then open http://localhost:8080. Pillow resizes the photos, converts them to WebP and creates the link-preview images. Without it, the build still works, but photos are copied at full size.
+- **`donate_url`**: where every Donate button goes. Right now it opens the contact form with "Donations" selected. Replace it with a real giving page link when there is one.
+- **`form_endpoint`**: blank means the contact form opens the visitor's own email app with their message filled in. To have messages sent straight from the site, create a free form at [Formspree](https://formspree.io) or [Web3Forms](https://web3forms.com) and paste its URL here.
+- **`url`**: the site's public address. Change it if you set up a custom domain.
 
 ## What the build produces
 
 - A complete HTML page for every page and every participant. Nothing depends on JavaScript to show up.
-- Link-preview tags for Facebook, iMessage and other apps, with a cropped photo for each story page and `assets/img/og-home.jpg` for everything else.
+- Link previews for Facebook, iMessage and other apps, with a cropped photo for each story page.
 - Resized WebP photos, so phones download small images.
-- `sitemap.xml`, `robots.txt`, and a 404 page.
-- Redirects from the old addresses (`story.html?p=jan` and `stories.html`).
+- Search-engine data: `sitemap.xml`, `robots.txt`, and structured data for the organization, stories, breadcrumbs and FAQs.
+- A 404 page, and redirects from old addresses (`story.html?p=jan` and `stories.html`).
+
+## Open items
+
+These need decisions or material from the STEP team, not code:
+
+- A real online giving page for `donate_url`.
+- A form service for `form_endpoint`, so messages don't depend on the visitor's email app.
+- A photo for Candace.
+- A custom domain and a program email address in place of the current Gmail one.
+- Real photos of the lab and program to replace the illustrative ones on About, Employers and How it works.
+- Outcome numbers (hours worked, people who moved on to other jobs) and the names of the people who run STEP.
+
+## More detail
+
+[docs/DEVELOPER-GUIDE.md](docs/DEVELOPER-GUIDE.md) explains how the build and templates work, every placeholder a page can use, the CSS and JavaScript conventions, the design rules the site follows, and how to fix common problems.
