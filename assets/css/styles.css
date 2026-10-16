@@ -383,11 +383,21 @@ strong { font-weight: 600; }
 .page-header h1 { max-width: 18em; margin-bottom: 20px; }
 .page-header__lede { font-size: 1.2rem; color: var(--muted); max-width: 38em; margin: 0; }
 @media (max-width: 600px) { .page-header { padding: 40px 0 32px; } }
-/* Page header with a photo on the right (About, Employers) */
-.page-header--photo .container { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px 64px; align-items: center; }
-.page-header__photo { margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); background: #e1e4e9; }
+/* Page header with a photo filling its right side, edge to edge (About, Employers).
+   The photo starts just past the 540px text column and runs to the window's right edge. */
+.page-header--photo { position: relative; overflow: hidden; }
+.page-header--photo .page-header__text { max-width: 540px; }
+.page-header__photo {
+  position: absolute; top: 0; bottom: 0; right: 0; margin: 0; background: #e1e4e9;
+  width: calc(100% - max(var(--gutter), (100% - var(--container)) / 2 + var(--gutter)) - 596px);
+}
 .page-header__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-@media (max-width: 860px) { .page-header--photo .container { grid-template-columns: 1fr; } }
+@media (max-width: 860px) {
+  /* Stacked: the photo runs the full width under the text, flush with the bottom of the band. */
+  .page-header--photo { padding-bottom: 0; }
+  .page-header--photo .page-header__text { max-width: none; }
+  .page-header__photo { position: static; width: auto; aspect-ratio: 16 / 10; margin: 32px calc(-1 * var(--gutter)) 0; }
+}
 
 /* ---------- Prose ---------- */
 .prose { font-size: 1.1rem; max-width: 40em; }
