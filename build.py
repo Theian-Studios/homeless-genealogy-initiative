@@ -205,6 +205,10 @@ def load_participants(photos):
     for path in sorted((ROOT / "content" / "participants").glob("*.md")):
         meta, body = split_front_matter(path.read_text(encoding="utf-8"))
         pid = path.stem
+        if meta.get("draft", "no").lower() in ("yes", "true"):
+            # draft: yes keeps the story in the repository but off the website.
+            print(f"  {pid}: draft, not published")
+            continue
         p = {
             "id": pid,
             "name": meta.get("name", pid.title()),

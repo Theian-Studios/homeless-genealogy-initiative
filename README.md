@@ -119,6 +119,7 @@ The lines between the two `---` marks are settings. Everything after them is the
 | `hero_quote` | Quote for the home page carousel. | Uses `card_quote`. |
 | `summary` | An opening paragraph placed before the story. Also used as the description in search results and link previews. | The story's first paragraph is used for search results. |
 | `status` | A small label on their card and story, for example `Now working full-time`. | No label. |
+| `draft` | `yes` keeps the story in this repository but off the website. Change it to `no` (or delete the line) to publish. | Published. |
 
 To post an update on someone's progress, add a heading and a paragraph at the end of their story:
 
@@ -150,7 +151,7 @@ These need decisions or material from the STEP team, not code:
 
 - A real online giving page for `donate_url`.
 - A form service for `form_endpoint`, so messages don't depend on the visitor's email app.
-- A photo for Candace.
+- Candace's story is written but hidden (`draft: yes`) for now. It needs a decision and, ideally, a photo.
 - A custom domain and a program email address in place of the current Gmail one.
 - Real photos of the lab and program to replace the illustrative ones on About, Employers and How it works.
 - Outcome numbers (hours worked, people who moved on to other jobs) and the names of the people who run STEP.

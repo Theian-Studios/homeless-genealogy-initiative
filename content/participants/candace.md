@@ -1,5 +1,6 @@
 ---
 name: Candace
+draft: yes
 order: 5
 photo: 
 photo_position: 50% 30%
