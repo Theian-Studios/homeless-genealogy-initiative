@@ -193,6 +193,8 @@ def load_participants(photos, base):
             "order": int(meta.get("order", 99)),
             "quote": meta.get("quote", ""),
             "card_quote": meta.get("card_quote") or meta.get("quote", ""),
+            # The home page carousel can show a different quote from the cards.
+            "hero_quote": meta.get("hero_quote") or meta.get("card_quote") or meta.get("quote", ""),
             "featured": meta.get("featured", "no").lower() in ("yes", "true"),
             "summary": meta.get("summary", ""),
             "position": meta.get("photo_position", "50% 30%"),
@@ -217,13 +219,15 @@ def photo_for(p, base, variant):
     return picture(base, p["info"], f"Portrait of {p['name']}", SIZES[variant], p["position"], eager)
 
 
-def card(p, base, level=3):
+def card(p, base, level=3, read=True):
     status = f'<span class="status-badge">{esc(p["status"])}</span>' if p["status"] else ""
+    read_btn = (f'<span class="card__read">Read story<span class="visually-hidden"> about {esc(p["name"])}</span></span>'
+                if read else "")
     return f"""<a class="card" href="{base}stories/{p['id']}.html">
         <div class="card__photo">{photo_for(p, base, 'card')}{status}</div>
         <h{level} class="card__name">{esc(p['name'])}</h{level}>
         <p class="card__quote">“{esc(p['card_quote'])}”</p>
-        <span class="card__read">Read story<span class="visually-hidden"> about {esc(p['name'])}</span></span>
+        {read_btn}
       </a>"""
 
 
@@ -237,7 +241,7 @@ def carousel(people, base):
             f'<div class="hc__slide{active}" data-index="{i}"{"" if i == 0 else " aria-hidden=\"true\""}>'
             # Load every slide's photo up front so a slide never appears before its image.
             f'{picture(base, p["info"], f"Portrait of {p['name']}", SIZES["hero"], p["position"], eager=(i == 0)).replace(' loading="lazy"', '')}'
-            f'<div class="hc__card"><p class="hc__quote">“{esc(p["card_quote"])}”</p>'
+            f'<div class="hc__card"><p class="hc__quote">“{esc(p["hero_quote"])}”</p>'
             f'<div class="hc__meta"><span class="hc__name">{esc(p["name"])}</span>'
             f'<a class="hc__read" href="{url}"{"" if i == 0 else " tabindex=\"-1\""}>'
             f'Read story<span class="visually-hidden"> about {esc(p["name"])}</span></a></div></div></div>'
@@ -323,7 +327,8 @@ def main():
     ctx["participants.featured"] = featured(feat, base)
     rest = [p for p in people if p is not feat]
     ctx["participants.not_featured"] = "\n      ".join(card(p, base) for p in rest)
-    ctx["participants.all"] = "\n      ".join(card(p, base) for p in people)
+    # Home page cards skip the Read story button (the whole card is still a link).
+    ctx["participants.all"] = "\n      ".join(card(p, base, read=False) for p in people)
     # The stories page has no section heading above the cards, so names are h2 there.
     ctx["participants.all_h2"] = "\n      ".join(card(p, base, level=2) for p in people)
     ctx["participants.carousel"] = carousel(people, base)

@@ -4,6 +4,7 @@ order: 2
 photo: alison.jpg
 photo_position: 50% 66%
 quote: I overcame hell.
+hero_quote: …we’re only going forward, we ain’t going backwards. We ain’t doing this again.
 featured: no
 ---
 

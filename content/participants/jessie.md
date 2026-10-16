@@ -4,6 +4,7 @@ order: 3
 photo: jessie.jpg
 photo_position: 50% 25%
 quote: I look at the glass half full of everything.
+hero_quote: I was finally trying to take my life seriously.
 featured: no
 ---
 

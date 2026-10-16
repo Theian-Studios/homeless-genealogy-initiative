@@ -4,6 +4,7 @@ order: 1
 photo: jan.jpg
 photo_position: 50% 75%
 quote: This feels like it was by design.
+hero_quote: I know what I want to do, and I know the steps I need to take.
 featured: no
 summary: Jan moved to Utah with a simple goal: to spend her days helping people discover their family history. But things didn’t go quite as planned—her car was towed in Nevada, she spent nights outside without a phone, and she now relies on a warming center for shelter. Yet when people ask, “So, what’s your story?”, the first thing Jan talks about isn’t the hardship. It’s the people she met along the way. With a contagious laugh and deep love for others, Jan has formed genuine friendships everywhere she goes. Even as she prepares to find housing outside of the warming center, the thought of leaving the friends she’s made there is bittersweet.
 ---

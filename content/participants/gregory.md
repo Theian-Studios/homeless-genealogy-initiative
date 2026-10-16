@@ -4,6 +4,7 @@ order: 4
 photo: gregory.jpg
 photo_position: 50% 88%
 quote: I want to feel accomplished.
+hero_quote: I don’t have a job. I need a job. I need to do something.
 featured: no
 ---
 
