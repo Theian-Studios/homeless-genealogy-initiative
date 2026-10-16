@@ -73,11 +73,13 @@ Then open http://localhost:8080. Re-run the build after each change.
 | To change… | Edit |
 | --- | --- |
 | Words on a page | `src/pages/<page>.html` |
-| The header menu or footer | `src/layout.html` |
+| Menu links (header and footer together) | `site.json` → `menu` |
+| The blue "support" band's wording | `site.json` → `support`, or a page's own settings |
+| The rest of the footer | `src/layout.html` |
 | Email, Facebook link, address | `site.json` |
 | "17 people have worked in STEP so far" | `site.json` → `participants_so_far` |
-| Colors and fonts | the variables at the top of `assets/css/styles.css` |
-| A participant's story | `content/participants/<name>.md` |
+| Colors, text sizes, fonts | the variables at the top of `assets/css/styles.css` |
+| A participant's story, or a quote of theirs on any page | `content/participants/<name>.md` |
 
 You can make any of these edits directly on GitHub in the browser: open the file, click the pencil icon, and commit. The live site updates within a couple of minutes. Check progress under the repository's **Actions** tab.
 

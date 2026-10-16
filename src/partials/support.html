@@ -1,12 +1,11 @@
 <section class="support">
   <div class="container support__inner">
     <div>
-      <h2>Help someone take the next step.</h2>
-      <p>Your gift pays participants’ wages and funds weekly training for everyone in the program.</p>
+      <h2>{{ support.heading }}</h2>
+      <p>{{ support.text }}</p>
     </div>
     <div class="support__actions">
-      <a class="btn btn--light" href="{{ site.donate_url }}">Donate</a>
-      <a class="btn btn--outline-light" href="{{ base }}contact.html?subject=volunteer#contact-form">Volunteer</a>
+      {{ support.buttons }}
     </div>
   </div>
 </section>

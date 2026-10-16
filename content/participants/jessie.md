@@ -5,6 +5,8 @@ photo: jessie.jpg
 photo_position: 50% 25%
 quote: I look at the glass half full of everything.
 hero_quote: I was finally trying to take my life seriously.
+about_quote: The biggest thing I wish people understand of homelessness is it’s not always just that person.
+home_quote: …it just builds… family, brotherhood, sisterhood…
 ---
 
 Jessie has been through more than most people would guess from meeting him.

@@ -67,31 +67,31 @@ current: about
     </header>
     <div class="voices">
       <figure class="voice">
-        <blockquote><p>The biggest thing I wish people understand of homelessness is it’s not always just that person.</p></blockquote>
+        <blockquote><p>{{ person.jessie.about_quote }}</p></blockquote>
         <figcaption>
           <span class="voice__photo">{{ photo.jessie.quote }}</span>
-          <span><strong>Jessie</strong> <a href="{{ base }}stories/jessie.html">Read Jessie’s story</a></span>
+          <span><strong>{{ person.jessie.name }}</strong> {{ person.jessie.link }}</span>
         </figcaption>
       </figure>
       <figure class="voice">
-        <blockquote><p>I don’t have a job. I need a job. I need to do something.</p></blockquote>
+        <blockquote><p>{{ person.gregory.about_quote }}</p></blockquote>
         <figcaption>
           <span class="voice__photo">{{ photo.gregory.quote }}</span>
-          <span><strong>Gregory</strong> <a href="{{ base }}stories/gregory.html">Read Gregory’s story</a></span>
+          <span><strong>{{ person.gregory.name }}</strong> {{ person.gregory.link }}</span>
         </figcaption>
       </figure>
       <figure class="voice">
-        <blockquote><p>I know what I want to do, and I know the steps I need to take.</p></blockquote>
+        <blockquote><p>{{ person.jan.about_quote }}</p></blockquote>
         <figcaption>
           <span class="voice__photo">{{ photo.jan.quote }}</span>
-          <span><strong>Jan</strong> <a href="{{ base }}stories/jan.html">Read Jan’s story</a></span>
+          <span><strong>{{ person.jan.name }}</strong> {{ person.jan.link }}</span>
         </figcaption>
       </figure>
       <figure class="voice">
-        <blockquote><p>I overcame hell.</p></blockquote>
+        <blockquote><p>{{ person.alison.about_quote }}</p></blockquote>
         <figcaption>
           <span class="voice__photo">{{ photo.alison.quote }}</span>
-          <span><strong>Alison</strong> <a href="{{ base }}stories/alison.html">Read Alison’s story</a></span>
+          <span><strong>{{ person.alison.name }}</strong> {{ person.alison.link }}</span>
         </figcaption>
       </figure>
     </div>

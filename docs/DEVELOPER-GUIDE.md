@@ -37,9 +37,10 @@ current: how
 | --- | --- |
 | `title` | The browser tab title. Every page except Home gets " \| STEP" added. |
 | `description` | Shown under the title in search results and link previews. Keep it under about 155 characters. |
-| `current` | Underlines this page in the menu. One of `about`, `how`, `stories`, `hire`, `contact`. |
+| `current` | Underlines this page in the menu. Matches a `page` value in `site.json` → `menu`. |
 | `noindex` | Set to `yes` to keep a page out of search engines and the sitemap (used by the 404 page). |
 | `og_title`, `og_image`, `og_image_alt`, `og_type` | Optional overrides for link previews. |
+| `support_heading`, `support_text`, `support_button`, `support_button_2` | Change the blue support band's wording on this page only. See [The support band](#the-support-band). |
 
 ### Placeholders available on every page
 
@@ -48,14 +49,65 @@ current: how
 | `{{ base }}` | The site's root path: `/step/` live, `/` locally. Start every internal link with it. |
 | `{{ site.<key> }}` | Any text setting from `site.json`, for example `{{ site.email }}`. |
 | `{{ year }}` | The current year. |
-| `{{ partial.<name> }}` | The contents of `src/partials/<name>.html`. |
+| `{{ partial.support }}` | The blue support band, worded for this page. |
+| `{{ partial.<name> }}` | Any other file in `src/partials/`. |
 | `{{ participants.all }}` | Cards for every participant, without the "Read story" button (Home). |
 | `{{ participants.all_h2 }}` | The same cards with names as h2 headings (Stories page). |
 | `{{ participants.all_cols }}` | `3` or `4`, the column count that leaves the fewest empty spots. |
 | `{{ participants.carousel }}` | The home page photo carousel. |
 | `{{ photo.<id>.<size> }}` | One participant's photo, for example `{{ photo.jan.quote }}`. Sizes are `card`, `hero`, `story` and `quote`. |
+| `{{ person.<id>.name }}` | A participant's name, for example `{{ person.jan.name }}`. |
+| `{{ person.<id>.link }}` | A "Read Jan’s story" link to their page. `{{ person.<id>.url }}` is just the address. |
+| `{{ person.<id>.<setting> }}` | Any setting in their file ending in `quote`, for example `{{ person.jan.about_quote }}`. |
 
-`src/layout.html` also receives `title`, `description`, `canonical`, `og_*`, `robots`, `jsonld` and `content` (the page itself).
+`src/layout.html` also receives `title`, `description`, `canonical`, `og_*`, `robots`, `jsonld`, `nav.header`, `nav.footer` and `content` (the page itself).
+
+### Quoting a participant on a page
+
+Quotes live only in the participant's own file, so a correction there updates every page. The convention is one setting per place the quote appears:
+
+| Setting | Where it shows |
+| --- | --- |
+| `quote` | Top of their story page |
+| `card_quote` | Their card |
+| `hero_quote` | Home page carousel |
+| `home_quote` | Other spots on the Home page |
+| `about_quote` | About page, "What participants want you to know" |
+| `how_quote` | How it works page |
+
+To quote someone in a new place, add a setting such as `hire_quote:` to their file and use `{{ person.<id>.hire_quote }}` on the page. If the setting is missing, the build stops and names it.
+
+### The menu
+
+The header menu and the footer's "Explore" list both come from `site.json` → `menu`:
+
+```json
+{"label": "Employers", "footer_label": "For employers", "href": "hire.html", "page": "hire"}
+```
+
+| Field | Meaning |
+| --- | --- |
+| `label` | Link text. |
+| `href` | Address from the site root, like `about.html` or `stories/`. |
+| `page` | Matches the `current` setting of the page, to underline it. |
+| `footer_label` | Optional different text in the footer. |
+| `header` / `footer` | Set to `false` to leave the link out of one of them. |
+
+### The support band
+
+The blue "Help someone take the next step" band at the bottom of several pages uses one template, `src/partials/support.html`. Its default wording and buttons are in `site.json` → `support`. A page changes any of them in its settings:
+
+```html
+<!--
+title: For employers
+support_heading: Have a role to fill?
+support_text: Tell us about it, and we’ll let you know if someone in the program may be a fit.
+support_button: Contact us | contact.html?subject=hiring#contact-form
+support_button_2: none
+-->
+```
+
+Buttons are written `Label | link`. The link `donate` means `site.json`'s `donate_url`, and `none` hides the button.
 
 ### Placeholders on story pages
 
@@ -77,14 +129,17 @@ Straight apostrophes are turned into curly ones. Bullet lists, links and bold ar
 ## Adding a new page
 
 1. Create `src/pages/new-page.html` with a settings comment and the page body. It will be published as `new-page.html`.
-2. If it belongs in the menu, add a link in `src/layout.html` in both the header and the footer. To underline it when active, add its key to the `for key in (...)` list in `main()` and use `{{ current.<key> }}` on the link.
+2. If it belongs in the menu, add it to `site.json` → `menu` with a `page` value, and put the same value in the page's `current` setting.
 3. Rebuild. The page is added to the sitemap automatically.
 
 ## CSS
 
 All styles are in [assets/css/styles.css](../assets/css/styles.css). The comment at the top lists its sections in order.
 
-- **Variables first.** Colors, fonts, radii and shadows are defined once in `:root`. Each color notes its contrast ratio.
+- **Variables first.** Every color, text size, shadow and radius is defined once in `:root` at the top. Rules use the variables, never typed-in values, so a brand color or the overall text size changes in one line.
+- **Colors** are named for what they are: `--navy`, `--blue`, `--blue-light`, plus groups for neutrals, text on dark backgrounds, and form messages. The only typed-in colors left are a few see-through white overlays used once each.
+- **Text sizes** use a scale from `--text-2xs` (12px) to `--text-2xl` (26px), plus `--text-h1`, `--text-h2` and two sizes for big numbers. A handful of headings and quotes keep their own sizes because they scale with the screen width in their own way.
+- **Breakpoints** are five widths: 1100px (small laptops), 900px (tablets), 760px (phone menu), 560px (phones) and 420px (small phones). CSS can't store these in variables, so stick to these numbers when adding rules.
 - **Class names** follow `block__part--variant`, for example `.stair`, `.stair__bar`, `.stair--2`.
 - **Responsive rules** sit in `@media (max-width: …)` blocks directly under the rules they change, so everything about one component is in one place.
 - **No preprocessor or build step.** Edit and rebuild.

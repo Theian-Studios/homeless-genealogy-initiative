@@ -218,6 +218,9 @@ def load_participants(photos):
             "body_md": body,
             "photo_file": meta.get("photo", ""),
             "status": meta.get("status", ""),
+            # Every *_quote setting (about_quote, how_quote, ...), so pages can quote this
+            # person with {{ person.<id>.<setting> }} and the words live only in this file.
+            "quotes": {k: v for k, v in meta.items() if k.endswith("quote")},
         }
         # Used for the page's search-engine description and link previews.
         p["excerpt"] = p["summary"] or first_paragraph(body)
@@ -335,11 +338,48 @@ def main():
                      ("icon", "assets/img/logo-mark.svg"), ("favicon", "assets/img/favicon-32.png"),
                      ("touch_icon", "assets/img/apple-touch-icon.png"), ("og", "assets/img/og-home.jpg")):
         ctx[f"version.{key}"] = hashlib.sha1((ROOT / rel).read_bytes()).hexdigest()[:8]
-    for key in ("stories", "about", "how", "hire", "contact"):
-        ctx[f"current.{key}"] = ""
+    def site_link(href):
+        """Links in site.json are written from the site root ("about.html"); add the base path."""
+        if href == "donate":
+            return donate
+        return href if re.match(r"^(https?:|mailto:|#)", href) else base + href
 
+    # Partials are reusable snippets. The support band is filled per page (see support_band below).
     for path in (ROOT / "src" / "partials").glob("*.html"):
-        ctx[f"partial.{path.stem}"] = render(path.read_text(encoding="utf-8"), ctx, path.name)
+        if path.stem != "support":
+            ctx[f"partial.{path.stem}"] = render(path.read_text(encoding="utf-8"), ctx, path.name)
+    support_tpl = (ROOT / "src" / "partials" / "support.html").read_text(encoding="utf-8")
+
+    def support_band(meta):
+        """The blue "support" band. Wording and buttons come from site.json → support,
+        and a page can override any of them with support_heading, support_text,
+        support_button or support_button_2 in its settings. Buttons are written
+        "Label | link"; "none" hides a button; the link "donate" means site.json's donate_url."""
+        s = {key: meta.get(f"support_{key}", value) for key, value in site["support"].items()}
+        buttons = []
+        for key, style in (("button", "btn--light"), ("button_2", "btn--outline-light")):
+            if s[key].strip().lower() in ("", "none"):
+                continue
+            label, _, href = (part.strip() for part in s[key].partition("|"))
+            buttons.append(f'<a class="btn {style}" href="{esc(site_link(href))}">{esc(label)}</a>')
+        return render(support_tpl, {
+            "support.heading": esc(s["heading"]),
+            "support.text": esc(s["text"]),
+            "support.buttons": "\n      ".join(buttons),
+        }, "support.html")
+
+    def menu(current):
+        """Header and footer menus from site.json → menu. `current` underlines the page you're on.
+        An item with "header": false appears only in the footer, and "footer_label" renames it there."""
+        header, footer = [], []
+        for item in site["menu"]:
+            href = esc(site_link(item["href"]))
+            here = ' aria-current="page"' if current and item.get("page") == current else ""
+            if item.get("header", True):
+                header.append(f'<a href="{href}"{here}>{esc(item["label"])}</a>')
+            if item.get("footer", True):
+                footer.append(f'<li><a href="{href}">{esc(item.get("footer_label", item["label"]))}</a></li>')
+        return "\n        ".join(header), "\n            ".join(footer)
 
     # Ready-made participant HTML that pages drop in with {{ participants.* }}.
     # Home page cards skip the Read story button (the whole card is still a link).
@@ -352,6 +392,16 @@ def main():
     for p in people:
         for variant in SIZES:
             ctx[f"photo.{p['id']}.{variant}"] = photo_for(p, base, variant)
+    # {{ person.<id>.name }}, {{ person.<id>.url }}, {{ person.<id>.link }} ("Read Jan’s story")
+    # and {{ person.<id>.<any *_quote setting> }}, so a page quoting someone always
+    # matches their story file.
+    for p in people:
+        url = f"{base}stories/{p['id']}.html"
+        ctx[f"person.{p['id']}.name"] = esc(p["name"])
+        ctx[f"person.{p['id']}.url"] = url
+        ctx[f"person.{p['id']}.link"] = f'<a href="{url}">Read {esc(p["name"])}’s story</a>'
+        for key, text in p["quotes"].items():
+            ctx[f"person.{p['id']}.{key}"] = inline_md(text)
 
     # Structured data (JSON-LD) so search engines can show the organization and stories properly.
     addr = site["postal_address"]
@@ -395,8 +445,8 @@ def main():
     def write_page(out_path, meta, content):
         url_path = out_path.replace("index.html", "")
         page_ctx = dict(ctx)
-        if meta.get("current"):
-            page_ctx[f"current.{meta['current']}"] = ' aria-current="page"'
+        page_ctx["nav.header"], page_ctx["nav.footer"] = menu(meta.get("current"))
+        page_ctx["partial.support"] = support_band(meta)
         is_home = out_path == "index.html"
         title = meta["title"] if is_home else f"{meta['title']} | {site['short_name']}"
         page_ctx.update({

@@ -2,6 +2,10 @@
 title: How it works
 description: STEP works in three stages: start working, build skills and stability, and move on to a lasting job.
 current: how
+support_heading: Know someone who could use this job?
+support_text: Get in touch about the employment program, or support the work with a donation.
+support_button: Ask about the program | contact.html?subject=employment#contact-form
+support_button_2: Donate | donate
 -->
 <header class="page-header">
   <div class="container">
@@ -35,8 +39,8 @@ current: how
 
 <figure class="quote-band">
   <div class="container">
-    <blockquote><p>“I don’t have a job. I need a job. I need to do something.”</p></blockquote>
-    <figcaption><span>Gregory</span> <a href="{{ base }}stories/gregory.html">Read Gregory’s story</a></figcaption>
+    <blockquote><p>“{{ person.gregory.how_quote }}”</p></blockquote>
+    <figcaption><span>{{ person.gregory.name }}</span> {{ person.gregory.link }}</figcaption>
   </div>
 </figure>
 
@@ -68,8 +72,8 @@ current: how
 
 <figure class="quote-band">
   <div class="container">
-    <blockquote><p>“Feels good. It’s scary because, like, you know, we’re only going forward, we ain’t going backwards. We ain’t doing this again.”</p></blockquote>
-    <figcaption><span>Alison</span> <a href="{{ base }}stories/alison.html">Read Alison’s story</a></figcaption>
+    <blockquote><p>“{{ person.alison.how_quote }}”</p></blockquote>
+    <figcaption><span>{{ person.alison.name }}</span> {{ person.alison.link }}</figcaption>
   </div>
 </figure>
 
@@ -101,8 +105,8 @@ current: how
         <p>The lab’s largest effort is the Census Tree: linking the 217 million people who lived in the United States between 1850 and 1940 across every census they appear in, and connecting each person to their parents, siblings, spouses, and children. When it’s finished, it will be the largest long-term data set ever created in the U.S., opening up new research in economics, demography, sociology, and public health.</p>
         <p>The lab pairs machine learning, which reads and matches handwritten records quickly, with careful work by people, which catches what the software misses, especially for groups that are hard to link, like women and immigrants. STEP participants do that careful human work alongside more than 50 BYU students: merging duplicate records, adding people who are missing, cross-checking sources, and filling in details for people already on the tree.</p>
         <figure class="lab__quote">
-          <blockquote><p>“This has been an opportunity to learn about people I might never have met otherwise.”</p></blockquote>
-          <figcaption>Jan, a participant, on the work · <a href="{{ base }}stories/jan.html">Read Jan’s story</a></figcaption>
+          <blockquote><p>“{{ person.jan.how_quote }}”</p></blockquote>
+          <figcaption>{{ person.jan.name }}, a participant, on the work · {{ person.jan.link }}</figcaption>
         </figure>
         <p><a href="https://record-linking-lab.byu.edu/projects" rel="noopener">See the lab’s projects</a></p>
       </div>
@@ -158,15 +162,4 @@ current: how
   </div>
 </section>
 
-<section class="support">
-  <div class="container support__inner">
-    <div>
-      <h2>Know someone who could use this job?</h2>
-      <p>Get in touch about the employment program, or support the work with a donation.</p>
-    </div>
-    <div class="support__actions">
-      <a class="btn btn--light" href="{{ base }}contact.html?subject=employment#contact-form">Ask about the program</a>
-      <a class="btn btn--outline-light" href="{{ site.donate_url }}">Donate</a>
-    </div>
-  </div>
-</section>
+{{ partial.support }}
