@@ -2,7 +2,7 @@
 name: Alison
 order: 2
 photo: alison.jpg
-photo_position: 50% 30%
+photo_position: 50% 66%
 quote: I overcame hell.
 featured: no
 ---

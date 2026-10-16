@@ -2,7 +2,7 @@
 name: Gregory
 order: 4
 photo: gregory.jpg
-photo_position: 50% 35%
+photo_position: 50% 88%
 quote: I want to feel accomplished.
 featured: no
 ---

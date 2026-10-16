@@ -2,7 +2,7 @@
 name: Jessie
 order: 3
 photo: jessie.jpg
-photo_position: 50% 12%
+photo_position: 50% 25%
 quote: I look at the glass half full of everything.
 featured: no
 ---

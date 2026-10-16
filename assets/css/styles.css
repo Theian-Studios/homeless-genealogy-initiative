@@ -202,13 +202,15 @@ strong { font-weight: 600; }
 /* Hero carousel: one portrait at a time; name tabs below act as controls */
 .hc__stage { position: relative; touch-action: pan-y; aspect-ratio: 4 / 5; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); background: var(--paper-2); }
 /* Slides move sideways; main.js sets the direction (next slides left, previous slides right). */
-.hc__slide { position: absolute; inset: 0; visibility: hidden; transform: translateX(100%); transition: transform 0.6s var(--ease), visibility 0s 0.6s; }
+/* Photo above, white quote strip below; the photo fills only the space above the strip so faces center in what's visible. */
+.hc__slide { position: absolute; inset: 0; display: flex; flex-direction: column; visibility: hidden; transform: translateX(100%); transition: transform 0.6s var(--ease), visibility 0s 0.6s; }
 .hc__slide.is-active { visibility: visible; transform: none; transition: transform 0.6s var(--ease), visibility 0s; }
 .hc__slide.is-leaving { visibility: visible; transition: transform 0.6s var(--ease), visibility 0s; }
-.hc__slide img { width: 100%; height: 100%; object-fit: cover; }
+.hc__slide picture { flex: 1; min-height: 0; display: block; }
+.hc__slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* White strip across the bottom: quote over name on the left, button on the right. */
 .hc__card {
-  position: absolute; left: 0; right: 0; bottom: 0; background: #fff; padding: 14px 18px;
+  flex: none; background: #fff; padding: 14px 18px;
   display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 16px;
 }
 .hc__quote { font-family: var(--serif); font-style: italic; font-size: 1.15rem; line-height: 1.25; color: var(--forest); margin: 0 0 2px; }
@@ -716,3 +718,22 @@ strong { font-weight: 600; }
 .quote-band figcaption a { font-weight: 600; font-size: 0.95rem; text-decoration: none; }
 .quote-band figcaption a:hover { text-decoration: underline; }
 @media (max-width: 600px) { .quote-band { padding: 40px 0; } }
+.quote-band--dark { background: var(--forest); }
+.quote-band--dark blockquote p { color: #fff; }
+.quote-band--dark figcaption span { color: var(--label-on-dark); }
+.quote-band--dark figcaption a { color: #fff; }
+
+/* A participant's words under the ways-to-help cards (blue band) */
+.ways__quote { margin: 36px 0 0; max-width: 40em; }
+.ways__quote blockquote { margin: 0 0 10px; }
+.ways__quote blockquote p { margin: 0; font: italic 400 clamp(1.3rem, 2.2vw, 1.6rem)/1.35 var(--serif); color: #fff; }
+.ways__quote figcaption { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; font-size: 0.9rem; }
+.ways__quote figcaption span { color: #d6e6f8; }
+.ways__quote figcaption a { color: #fff; font-weight: 600; text-decoration: none; }
+.ways__quote figcaption a:hover { text-decoration: underline; }
+
+/* Pull quote inside the Record Linking Lab text */
+.lab__quote { margin: 28px 0; padding-left: 24px; }
+.lab__quote blockquote { margin: 0 0 8px; }
+.lab__quote blockquote p { margin: 0; font: italic 400 1.35rem/1.4 var(--serif); color: var(--forest); }
+.lab__quote figcaption { font-size: 0.9rem; color: var(--muted); }
