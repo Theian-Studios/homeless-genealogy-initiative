@@ -200,7 +200,9 @@ strong { font-weight: 600; }
 .hero__figure figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 16px; }
 
 /* Hero carousel: one portrait at a time; name tabs below act as controls */
-.hc__stage { position: relative; touch-action: pan-y; aspect-ratio: 4 / 5; border-radius: var(--radius-lg); overflow: hidden; background: var(--paper-2); }
+.hc__stage { position: relative; touch-action: pan-y; aspect-ratio: 4 / 5; border-radius: var(--radius-lg); overflow: hidden; background: var(--paper-2);
+  /* A soft shadow along the bottom only, so the white quote strip stands out from the white page. */
+  box-shadow: 0 8px 14px -8px rgba(0, 46, 93, 0.22), 0 1px 0 rgba(0, 46, 93, 0.06); }
 /* Slides move sideways; main.js sets the direction (next slides left, previous slides right). */
 /* Photo above, white quote strip below; the photo fills only the space above the strip so faces center in what's visible. */
 .hc__slide { position: absolute; inset: 0; display: flex; flex-direction: column; visibility: hidden; transform: translateX(100%); transition: transform 0.6s var(--ease), visibility 0s 0.6s; }
@@ -407,10 +409,11 @@ strong { font-weight: 600; }
 .page-header__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (max-width: 1100px) {
   /* Stacked below 1100px, where a side photo would get cropped narrow: the photo runs the full
-     width under the text, flush with the bottom of the band. */
-  .page-header--photo { padding-bottom: 0; }
+     width across the top of the band, with the text underneath. */
+  .page-header--photo { padding-top: 0; }
+  .page-header--photo .container { display: flex; flex-direction: column; }
   .page-header--photo .page-header__text { max-width: none; }
-  .page-header__photo { position: static; width: auto; height: clamp(220px, 50vw, 440px); margin: 32px calc(-1 * var(--gutter)) 0; }
+  .page-header__photo { order: -1; position: static; width: auto; height: clamp(220px, 50vw, 440px); margin: 0 calc(-1 * var(--gutter)) 32px; }
 }
 
 /* ---------- Prose ---------- */
