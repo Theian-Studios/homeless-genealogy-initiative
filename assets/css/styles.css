@@ -378,7 +378,8 @@ strong { font-weight: 600; }
 .support__actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* ---------- Interior page header ---------- */
-.page-header { padding: 64px 0 24px; }
+/* Inner pages open on a light gray band, so the title stands apart from the content. */
+.page-header { padding: 64px 0 52px; background: var(--paper-2); }
 .page-header h1 { max-width: 18em; margin-bottom: 20px; }
 .page-header__lede { font-size: 1.2rem; color: var(--muted); max-width: 38em; margin: 0; }
 @media (max-width: 600px) { .page-header { padding: 40px 0 32px; } }
@@ -623,8 +624,8 @@ strong { font-weight: 600; }
 
 /* ---------- Program stages (How it works) ----------
    Each stage is a row: a filled step bar and title on the left, plain steps on the right. */
-.section--flush-top { padding-top: 24px; }
-.stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 64px; padding: 40px 0; }
+.section--stage { padding: 64px 0; }
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 64px; }
 .stage__bar {
   display: flex; align-items: center; height: 56px; padding: 0 18px; border-radius: 3px; margin-bottom: 20px;
   color: #fff; font: 700 2rem/1 var(--sans);
@@ -638,7 +639,8 @@ strong { font-weight: 600; }
 .stage__item h3 { font-size: 1.35rem; margin-bottom: 6px; }
 .stage__item p { margin: 0; color: var(--muted); max-width: 40em; }
 @media (max-width: 860px) {
-  .stage { grid-template-columns: 1fr; padding: 40px 0; }
+  .section--stage { padding: 44px 0; }
+  .stage { grid-template-columns: 1fr; }
   .stage__bar { height: 48px; font-size: 1.7rem; margin-bottom: 16px; }
 }
 
@@ -672,3 +674,14 @@ strong { font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* ---------- Quote bands ----------
+   A participant's own words on a gray band, used to separate sections. */
+.quote-band { margin: 0; padding: 56px 0; background: var(--paper-2); }
+.quote-band blockquote { margin: 0 0 14px; max-width: 34em; }
+.quote-band blockquote p { margin: 0; font: italic 400 clamp(1.4rem, 2.6vw, 1.9rem)/1.35 var(--serif); color: var(--forest); }
+.quote-band figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.quote-band figcaption span { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.quote-band figcaption a { font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+.quote-band figcaption a:hover { text-decoration: underline; }
+@media (max-width: 600px) { .quote-band { padding: 40px 0; } }
