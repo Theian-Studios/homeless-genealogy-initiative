@@ -109,11 +109,19 @@ current: how
         <p>The lab pairs machine learning, which reads and matches handwritten records quickly, with careful work by people, which catches what the software misses, especially for groups that are hard to link, like women and immigrants. STEP participants do that careful human work alongside more than 50 BYU students.</p>
         <p><a href="https://record-linking-lab.byu.edu/projects" rel="noopener">See the lab’s projects</a></p>
       </div>
+      <div class="lab__side">
+      <figure class="lab__photo">
+        <picture>
+          <source type="image/webp" srcset="{{ base }}assets/img/lab-work-600.webp 600w, {{ base }}assets/img/lab-work-900.webp 900w, {{ base }}assets/img/lab-work-1200.webp 1200w" sizes="(max-width: 860px) 100vw, 420px">
+          <img src="{{ base }}assets/img/lab-work.jpg" alt="A person at a library computer comparing a handwritten census page on one screen with a possible record match on the other" width="1200" height="800" loading="lazy" decoding="async">
+        </picture>
+      </figure>
       <dl class="lab__facts">
         <div><dt>217 million</dt><dd>people in U.S. censuses from 1850 to 1940, being linked across records</dd></div>
         <div><dt>6 million+</dt><dd>African Americans added to the Family Tree from the 1900 and 1910 censuses</dd></div>
-                <div><dt>{{ site.participants_so_far }}</dt><dd>STEP participants so far</dd></div>
+        <div><dt>{{ site.participants_so_far }}</dt><dd>STEP participants so far</dd></div>
       </dl>
+      </div>
     </div>
   </div>
 </section>

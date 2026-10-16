@@ -650,6 +650,8 @@ strong { font-weight: 600; }
 .lab__text p:last-child { margin-bottom: 0; }
 .lab__text .section-label { color: var(--clay-text); }
 .lab__facts { margin: 0; display: grid; gap: 28px; }
+.lab__photo { margin: 0 0 32px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); aspect-ratio: 3 / 2; background: var(--paper-2); }
+.lab__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .lab__facts dt { font: 600 2.2rem/1.1 var(--serif); color: var(--forest); }
 .lab__facts dd { margin: 6px 0 0; color: var(--muted); }
 @media (max-width: 860px) { .lab { grid-template-columns: 1fr; } }
