@@ -307,6 +307,9 @@ def grid_cols(n):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--base", help="URL path the site is served from, e.g. / for local preview")
+    parser.add_argument("--preview", metavar="PR_NUMBER",
+                        help="build a preview of a pull request, served from pr-preview/pr-<number>/ "
+                             "(used by .github/workflows/preview.yml)")
     args = parser.parse_args()
 
     site = json.loads((ROOT / "site.json").read_text(encoding="utf-8"))
@@ -314,6 +317,8 @@ def main():
     base = args.base if args.base is not None else (urlparse(site_url).path or "/")
     if not base.endswith("/"):
         base += "/"
+    if args.preview:
+        base += f"pr-preview/pr-{args.preview}/"
 
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -330,6 +335,9 @@ def main():
         "base": base,
         "year": datetime.date.today().year,
         "site.donate_url": esc(donate),
+        # A strip across the top of every preview page, so nobody mistakes it for the live site.
+        "preview_banner": (f'<p class="preview-banner">Preview of proposed change #{esc(args.preview)}. '
+                           f'This is not the live site.</p>') if args.preview else "",
         **{f"site.{k}": esc(v) for k, v in site.items() if k != "donate_url" and isinstance(v, str)},
     }
     # Content hashes so browsers fetch new CSS/JS as soon as they change.
@@ -457,7 +465,8 @@ def main():
             "og_type": meta.get("og_type", "website"),
             "og_image": esc(meta.get("og_image", default_og)),
             "og_image_alt": esc(meta.get("og_image_alt", site["name"])),
-            "robots": '<meta name="robots" content="noindex">' if meta.get("noindex") else "",
+            # Previews are never indexed, so search engines only ever list the live site.
+            "robots": '<meta name="robots" content="noindex">' if meta.get("noindex") or args.preview else "",
         })
         page_ctx["content"] = render(content, page_ctx, out_path)
         data = meta.get("jsonld") or ([org] if is_home else [])

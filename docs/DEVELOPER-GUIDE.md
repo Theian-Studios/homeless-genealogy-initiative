@@ -178,6 +178,19 @@ These keep the site consistent. Changes that break them have usually been tried 
 - Form errors are announced as they appear, and focus moves to the first problem.
 - FAQ answers use the native `<details>` element, which works with keyboards and screen readers without extra code.
 
+## Publishing and previews
+
+Two workflows in `.github/workflows/` handle publishing. Both write to the `gh-pages` branch, which GitHub Pages serves (Settings → Pages → Source: "Deploy from a branch", `gh-pages`, `/ (root)`). Nobody should edit `gh-pages` by hand; it is rebuilt from `main` every time.
+
+| Workflow | Runs when | Does |
+| --- | --- | --- |
+| `deploy.yml` | Something is pushed or merged to `main` | Runs `build.py` and replaces the live site on `gh-pages`, leaving the `pr-preview/` folder alone. |
+| `preview.yml` | A pull request is opened or updated | Runs `build.py --preview <number>` and publishes it at `/step/pr-preview/pr-<number>/`, then comments the link on the pull request. The folder is deleted when the pull request closes. |
+
+`--preview` builds links for the preview folder, adds a yellow "not the live site" strip to every page, and tells search engines not to index it. Canonical links still point at the live site.
+
+Both workflows share one queue, so they never write to `gh-pages` at the same time.
+
 ## Troubleshooting
 
 | Problem | Likely cause and fix |
@@ -185,6 +198,7 @@ These keep the site consistent. Changes that break them have usually been tried 
 | Build stops with `Unknown placeholder {{ x }} in page.html` | A typo in a placeholder, or a name that doesn't exist. Check the tables above. |
 | A participant's photo doesn't show | The `photo:` file name must match exactly, including capital letters. GitHub's servers are case-sensitive even when a Mac isn't. |
 | A change isn't on the live site | Check the **Actions** tab on GitHub for a failed run. If it succeeded, wait a few minutes: GitHub Pages caches pages for up to 10 minutes. |
+| No preview link on a pull request | Check the **Actions** tab for a failed "Preview pull request" run. Pull requests from someone else's copy (fork) of the repository can't publish previews. |
 | Photos look large or slow locally | Pillow isn't installed. Run `.venv/bin/pip install -r requirements.txt`. |
 | Links are broken locally | Build with `--base /`. Without it, links point to `/step/`. |
 | Link previews on Facebook show old content | Paste the page address into Facebook's Sharing Debugger and click "Scrape Again". |

@@ -1,6 +1,10 @@
-# Builds the site with build.py and publishes it to GitHub Pages.
+# Builds the live site with build.py and publishes it.
 # Runs on every push to main, or by hand from the Actions tab ("Run workflow").
-# The repository's Settings → Pages → Source must be set to "GitHub Actions".
+#
+# The finished site is pushed to the gh-pages branch, and GitHub Pages serves
+# that branch (Settings → Pages → Source: "Deploy from a branch", gh-pages, / (root)).
+# Pull request previews live in gh-pages/pr-preview/ (see preview.yml); this
+# workflow leaves that folder alone.
 name: Build and deploy site
 
 on:
@@ -8,19 +12,18 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Just enough access to read the code and publish to Pages.
+# Write access is needed to push to the gh-pages branch.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# If two pushes land close together, cancel the older run so only the latest publishes.
+# Shared with preview.yml so only one workflow writes to gh-pages at a time.
+# Runs wait their turn instead of being cancelled halfway through a push.
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: gh-pages
+  cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,17 +33,10 @@ jobs:
       - run: pip install -r requirements.txt
       # No --base flag: links are built for the live address in site.json ("url").
       - run: python build.py
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: _site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          folder: _site
+          branch: gh-pages
+          # Keep open pull request previews when replacing the live site.
+          clean-exclude: pr-preview/
+          force: false
