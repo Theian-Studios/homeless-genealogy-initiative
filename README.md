@@ -17,15 +17,14 @@ The site has 6 pages, plus one story page per participant:
 
 ## How it's built, in one paragraph
 
-This is a **static site**: plain HTML, one CSS file, one small JavaScript file, and no framework or database. A short Python script, [build.py](build.py), reads the page files and participant stories, fills in the shared header and footer, resizes photos, and writes the finished site into a `_site/` folder. Every time a change is pushed to the `main` branch, GitHub runs that script and puts the result on the `gh-pages` branch, which GitHub Pages serves. Proposed changes (pull requests) get their own preview copy in the same way. There is nothing else to host or maintain.
+This is a **static site**: plain HTML, one CSS file, one small JavaScript file, and no framework or database. A short Python script, [build.py](build.py), reads the page files and participant stories, fills in the shared header and footer, resizes photos, and writes the finished site into a `_site/` folder. Every time a change is pushed to the `main` branch, GitHub runs that script and publishes `_site/` with GitHub Pages. There is nothing else to host or maintain.
 
 ```mermaid
 flowchart LR
     A["content/participants/*.md<br>src/pages/*.html<br>site.json"] --> B["build.py"]
     C["assets/<br>CSS, JS, images, fonts"] --> B
     B --> D["_site/<br>finished website"]
-    D -->|"push to main"| E["gh-pages branch<br>(live site)"]
-    D -->|"pull request"| F["gh-pages/pr-preview/pr-N/<br>(preview link)"]
+    D --> E["GitHub Pages<br>(live site)"]
 ```
 
 ## Quick start
@@ -64,10 +63,7 @@ Then open http://localhost:8080. Re-run the build after each change.
 │   └── fonts/                  Newsreader and Public Sans (open-source fonts, self-hosted)
 ├── docs/
 │   └── DEVELOPER-GUIDE.md      How the build and templates work, conventions, troubleshooting
-├── tools/trim_fonts.py         Re-creates the trimmed font files (only needed if fonts change)
-└── .github/workflows/
-    ├── deploy.yml              Builds and publishes the live site on every push to main
-    └── preview.yml             Publishes a preview link for each pull request
+└── .github/workflows/deploy.yml   Builds and publishes the site on every push to main
 ```
 
 `_site/` and `.venv/` are created on your computer and are not saved in the repository.
@@ -86,18 +82,6 @@ Then open http://localhost:8080. Re-run the build after each change.
 | A participant's story, or a quote of theirs on any page | `content/participants/<name>.md` |
 
 You can make any of these edits directly on GitHub in the browser: open the file, click the pencil icon, and commit. The live site updates within a couple of minutes. Check progress under the repository's **Actions** tab.
-
-## Previewing a change before it goes live
-
-Instead of saving straight to the live site, you can propose a change and look at it first:
-
-1. Edit the file on GitHub as usual, then click **Commit changes…**.
-2. Choose **Create a new branch for this commit and start a pull request**, then **Propose changes** and **Create pull request**.
-3. Wait about two minutes. A comment appears on the pull request with a preview link, like `https://theian-studios.github.io/step/pr-preview/pr-12/`.
-4. Open the link and check the change. Every page in the preview has a yellow "not the live site" strip at the top. More edits to the same pull request update the preview.
-5. Happy with it? Click **Merge pull request**, and the change goes live. Not happy? Click **Close pull request**, and nothing changes. Either way, the preview is deleted.
-
-Previews are hidden from search engines, but anyone with the link can open them. Don't use them for anything that must stay private.
 
 ## Adding or editing a participant
 

@@ -19,8 +19,7 @@
      Sections, Participant cards, Support band, Interior page header, Prose, Story page,
      Contact, 404, Footer, Problem → answer, Participant voices, Ways to get involved,
      FAQ, Status badges and sharing, Three-step staircase, Program stages,
-     Record Linking Lab, Next story, Panel outlines, Motion, Quote bands, Phone tap targets,
-     Preview banner
+     Record Linking Lab, Next story, Panel outlines, Motion, Quote bands, Phone tap targets
 */
 
 /* Self-hosted fonts (SIL Open Font License; see assets/fonts). Variable files, Latin characters only. */
@@ -819,11 +818,4 @@ strong { font-weight: 600; }
   .breadcrumb a { display: inline-block; padding: 10px 2px; margin: -10px 0; }
   .story__share a, .copy-link { display: inline-block; padding: 14px 2px; margin: -14px 0; }
   .card__read { padding: 10px 16px; }
-}
-
-/* ---------- Preview banner ----------
-   Only on preview builds of a pull request (build.py --preview), never on the live site. */
-.preview-banner {
-  margin: 0; padding: 8px var(--gutter); text-align: center;
-  background: #fff3c4; color: var(--ink); font-size: var(--text-sm); font-weight: 600;
 }
