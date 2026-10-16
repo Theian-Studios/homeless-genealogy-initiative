@@ -186,7 +186,7 @@ strong { font-weight: 600; }
 
 /* ---------- Home: hero ---------- */
 .hero { padding: 64px 0 56px; }
-/* The photo column's width comes from main.js (a 4:5 portrait as tall as the text); 400px until then. */
+/* The photo column's width comes from main.js (90% of the text's height); 400px until then. */
 .hero__grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 72px; align-items: start; }
 .hero h1 { margin-bottom: 24px; }
 .hero h1 em { font-style: italic; color: var(--green); }

@@ -177,7 +177,7 @@
 
   /* ---------- Line the hero photo up with the text ----------
      On wide screens the photo's top meets the top of the headline and its bottom
-     meets the bottom of the "Hosted by" logos; its width keeps a 4:5 portrait. */
+     meets the bottom of the "Hosted by" logos; its width is 90% of its height. */
   const heroFig = document.querySelector(".hero__figure");
   const heroStage = heroFig && heroFig.querySelector(".hc__stage");
   if (heroStage) {
@@ -193,7 +193,7 @@
       const top = h1.offsetTop + Math.max(0, halfLeading);
       const height = Math.max(300, trust.offsetTop + trust.offsetHeight - top);
       heroFig.style.marginTop = top + "px";
-      heroFig.style.width = Math.round(height * 0.8) + "px";
+      heroFig.style.width = Math.round(height * 0.9) + "px";
       heroStage.style.aspectRatio = "auto";
       heroStage.style.height = height + "px";
     };
