@@ -3,11 +3,19 @@ title: About us
 description: STEP, the Supporting Transitions to Employment Program, is a transitional employment program for people experiencing homelessness in Utah County, founded in 2026 and hosted by BYU's Department of Economics.
 current: about
 -->
-<header class="page-header">
+<header class="page-header page-header--photo">
   <div class="container">
-    <p class="page-header__kicker">About us</p>
-    <h1>A first step toward stable work.</h1>
-    <p class="page-header__lede">STEP, the Supporting Transitions to Employment Program, offers paid, meaningful work to people experiencing homelessness in Utah County and helps preserve family connections for future generations.</p>
+    <div class="page-header__text">
+      <p class="page-header__kicker">About us</p>
+      <h1>A first step toward stable work.</h1>
+      <p class="page-header__lede">STEP, the Supporting Transitions to Employment Program, offers paid, meaningful work to people experiencing homelessness in Utah County and helps preserve family connections for future generations.</p>
+    </div>
+    <figure class="page-header__photo">
+      <picture>
+        <source type="image/webp" srcset="{{ base }}assets/img/utah-county-600.webp 600w, {{ base }}assets/img/utah-county-900.webp 900w, {{ base }}assets/img/utah-county-1200.webp 1200w" sizes="(max-width: 860px) 100vw, 480px">
+        <img src="{{ base }}assets/img/utah-county.jpg" alt="A tree-lined downtown street in Utah County with mountains behind it" width="1200" height="900" decoding="async" style="object-position:50% 45%">
+      </picture>
+    </figure>
   </div>
 </header>
 
