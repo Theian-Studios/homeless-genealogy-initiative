@@ -548,8 +548,7 @@ strong { font-weight: 600; }
 .problem__arrow svg { width: 40px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 860px) {
   .problem__grid { grid-template-columns: 1fr; }
-  /* Stacked: the arrow lines up with the cards' text instead of sitting centered. */
-  .problem__arrow { height: 52px; justify-items: start; padding-left: 16px; }
+  .problem__arrow { height: 52px; }
   .problem__arrow svg { transform: rotate(90deg); }
   .problem__card { padding: 28px 24px; }
 }
