@@ -406,10 +406,10 @@ strong { font-weight: 600; }
 .prose p:last-child { margin-bottom: 0; }
 .section--dark .prose { color: #e6eee9; }
 
-.ledger { list-style: none; margin: 8px 0 24px; padding: 0; display: grid; gap: 8px; }
+.ledger { list-style: none; margin: 8px 0 24px; padding: 0; display: grid; gap: 6px; line-height: 1.45; }
 .ledger li { position: relative; padding-left: 20px; }
 .ledger li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 9px; height: 6px; border-radius: 1px; background: var(--step-1); }
-.ledger--2col { grid-template-columns: 1fr 1fr; column-gap: 32px; margin: 20px 0 0; }
+.ledger--2col { grid-template-columns: 1fr 1fr; column-gap: 32px; margin: 16px 0 0; }
 @media (max-width: 560px) { .ledger--2col { grid-template-columns: 1fr; } }
 
 
