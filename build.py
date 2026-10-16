@@ -223,6 +223,7 @@ def card(p, base, level=3):
         <div class="card__photo">{photo_for(p, base, 'card')}{status}</div>
         <h{level} class="card__name">{esc(p['name'])}</h{level}>
         <p class="card__quote">“{esc(p['card_quote'])}”</p>
+        <span class="card__read">Read story<span class="visually-hidden"> about {esc(p['name'])}</span></span>
       </a>"""
 
 

@@ -305,7 +305,7 @@ strong { font-weight: 600; }
 .section--compact .section-more { margin-top: 24px; }
 .section--compact .card__photo { margin-bottom: 12px; }
 .section--compact .card__name { margin-bottom: 2px; }
-.section--compact .card__quote { margin-bottom: 0; }
+.section--compact .card__quote { margin-bottom: 12px; }
 @media (max-width: 600px) { .section--compact { padding: 44px 0; } }
 
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
@@ -367,7 +367,13 @@ strong { font-weight: 600; }
 .card:hover .card__photo { box-shadow: var(--shadow); }
 .card__name { font-size: 1.45rem; margin-bottom: 6px; }
 .card:hover .card__name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
-.card__quote { color: var(--muted); margin-bottom: 10px; }
+.card__quote { color: var(--muted); margin-bottom: 14px; }
+/* Small outlined button so it's clear each card opens a story; it fills when the card is hovered. */
+.card__read {
+  margin-top: auto; align-self: flex-start; padding: 5px 12px; border: 1.5px solid var(--green); border-radius: 999px;
+  color: var(--green); font-size: 0.82rem; font-weight: 600; transition: background 0.2s, color 0.2s;
+}
+.card:hover .card__read, .card:focus-visible .card__read { background: var(--green); color: #fff; }
 
 
 /* ---------- Support band ---------- */
@@ -385,7 +391,8 @@ strong { font-weight: 600; }
 @media (max-width: 600px) { .page-header { padding: 40px 0 32px; } }
 /* Page header with a photo filling its right side, edge to edge (About, Employers).
    The photo starts just past the 540px text column and runs to the window's right edge. */
-.page-header--photo { position: relative; overflow: hidden; }
+.page-header--photo { position: relative; overflow: hidden; padding: 44px 0 40px; }
+.page-header--photo h1 { font-size: clamp(2.1rem, 3.8vw, 3rem); margin-bottom: 14px; }
 .page-header--photo .page-header__text { max-width: 540px; }
 .page-header__photo {
   position: absolute; top: 0; bottom: 0; right: 0; margin: 0; background: #e1e4e9;
