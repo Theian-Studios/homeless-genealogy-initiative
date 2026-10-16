@@ -63,6 +63,7 @@ Then open http://localhost:8080. Re-run the build after each change.
 │   └── fonts/                  Newsreader and Public Sans (open-source fonts, self-hosted)
 ├── docs/
 │   └── DEVELOPER-GUIDE.md      How the build and templates work, conventions, troubleshooting
+├── tools/trim_fonts.py         Trims the fonts to the weights the site uses (only needed if fonts change)
 └── .github/workflows/deploy.yml   Builds and publishes the site on every push to main
 ```
 

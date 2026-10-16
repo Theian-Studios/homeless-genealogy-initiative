@@ -155,6 +155,7 @@ Every page works without it. The script only adds the phone menu, the carousel's
 ## Fonts and images
 
 - **Fonts** are self-hosted variable fonts under the SIL Open Font License: Newsreader for headings and quotes, Public Sans for everything else. They cover Latin characters only.
+- **The fonts are trimmed** to the weights the site uses (Newsreader 400–600, italic 400–500, Public Sans 400–700), which makes them about a third smaller. [tools/trim_fonts.py](../tools/trim_fonts.py) does this. To use a weight outside those ranges, download the full font from Google Fonts into `assets/fonts/`, widen the range in the script, run it, and update the `font-weight` in the `@font-face` rules at the top of the stylesheet. Otherwise the browser fakes the weight, and it looks wrong.
 - **Participant photos** go in `assets/img/` at roughly 900×1200. The build makes the smaller copies, so don't commit resized versions.
 - **Page photos** (About, Employers, How it works) were resized ahead of time into `-600`, `-900` and `-1200` WebP files next to the JPEG. Do the same for any new page photo.
 - **Logos** in `assets/img/partners/` are SVG. The Record Linking Lab logo was traced from the lab's own image because no vector version is published.
