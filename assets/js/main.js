@@ -2,23 +2,6 @@
    Pages are complete HTML without this script; it only adds behavior. */
 
 (function () {
-  /* ---------- Refresh stale pages ----------
-     GitHub Pages lets browsers reuse a page for 10 minutes. If a newer version
-     has been published since this copy was saved, fetch it and reload once. */
-  const buildMeta = document.querySelector('meta[name="build"]');
-  if (buildMeta && window.fetch) {
-    fetch(buildMeta.dataset.versionUrl, { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then(async (v) => {
-        if (!v || !v.build || v.build === buildMeta.content) return;
-        const key = "step-reloaded-" + v.build;
-        try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, "1"); } catch { return; }
-        await fetch(location.href, { cache: "reload" });
-        location.reload();
-      })
-      .catch(() => {});
-  }
-
   /* ---------- Mobile menu ---------- */
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.getElementById("primary-nav");
@@ -54,7 +37,6 @@
   const ease = (t) => 1 - Math.pow(1 - t, 3);
   const scrollGroups = [
     { list: document.querySelector(".stairs"), items: ".stair", bar: ".stair__bar" },
-    { list: document.querySelector(".phases"), items: ".phase", bar: ".phase__bar" },
   ].filter((g) => g.list);
   if (scrollGroups.length && !reduceMotion) {
     let ticking = false;
@@ -150,6 +132,23 @@
     // Hold for keyboard focus only, so a mouse click on a tab doesn't stop rotation for good.
     hc.addEventListener("focusin", (e) => { if (e.target.matches(":focus-visible")) hold(true); });
     hc.addEventListener("focusout", () => hold(false));
+    // Swipe left or right on the photo to change person (touch and pen; mice use the arrows).
+    const stage = hc.querySelector(".hc__stage");
+    let swipe = null;
+    stage.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse") swipe = { x: e.clientX, y: e.clientY };
+    });
+    stage.addEventListener("pointerup", (e) => {
+      if (!swipe) return;
+      const dx = e.clientX - swipe.x, dy = e.clientY - swipe.y;
+      swipe = null;
+      if (slides.length > 1 && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        const step = dx < 0 ? 1 : -1;
+        show(current + step, step);
+        schedule();
+      }
+    });
+    stage.addEventListener("pointercancel", () => (swipe = null));
     if (slides.length > 1) {
       hc.querySelector(".hc__dots").hidden = false;
       hc.querySelectorAll(".hc__nav").forEach((btn) => {
@@ -163,25 +162,25 @@
 
   /* ---------- Line the hero photo up with the text ----------
      On wide screens the photo's top meets the top of the headline and its bottom
-     meets the rule above the "Hosted by" line. Uses offsetTop, which ignores the
-     entrance animation's transforms. */
+     meets the bottom of the "Hosted by" logos; its width keeps a 4:5 portrait. */
   const heroFig = document.querySelector(".hero__figure");
   const heroStage = heroFig && heroFig.querySelector(".hc__stage");
   if (heroStage) {
     const h1 = document.querySelector(".hero h1");
-    const rule = document.querySelector(".hero__trust");
+    const trust = document.querySelector(".hero__trust");
     const fit = () => {
-      if (window.matchMedia("(max-width: 900px)").matches || !h1 || !rule) {
-        heroFig.style.marginTop = ""; heroStage.style.height = ""; heroStage.style.aspectRatio = "";
+      if (window.matchMedia("(max-width: 900px)").matches || !h1 || !trust) {
+        heroFig.style.marginTop = heroFig.style.width = heroStage.style.height = heroStage.style.aspectRatio = "";
         return;
       }
       const cs = getComputedStyle(h1);
       const halfLeading = (parseFloat(cs.lineHeight) - parseFloat(cs.fontSize)) / 2;
       const top = h1.offsetTop + Math.max(0, halfLeading);
-      const bottom = rule.offsetTop;
+      const height = Math.max(300, trust.offsetTop + trust.offsetHeight - top);
       heroFig.style.marginTop = top + "px";
+      heroFig.style.width = Math.round(height * 0.8) + "px";
       heroStage.style.aspectRatio = "auto";
-      heroStage.style.height = Math.max(240, bottom - top) + "px";
+      heroStage.style.height = height + "px";
     };
     fit();
     window.addEventListener("resize", fit);
@@ -216,6 +215,18 @@
   // contact.html?subject=donations pre-selects a subject.
   const wanted = new URLSearchParams(location.search).get("subject");
   if (wanted && [...select.options].some((o) => o.value === wanted)) select.value = wanted;
+
+  // Show the donations or referral note only when that subject is chosen.
+  const notes = [...document.querySelectorAll("[data-for]")];
+  const showNotes = () => notes.forEach((n) => (n.hidden = n.dataset.for !== select.value));
+  showNotes();
+  select.addEventListener("change", showNotes);
+
+  // Without a form service, the form hands the message to the visitor's email app; say so up front.
+  if (!endpoint) {
+    form.querySelector('button[type="submit"]').textContent = "Open in my email app";
+    document.getElementById("form-hint").hidden = false;
+  }
 
   const rules = {
     name: (v) => v.trim() !== "" || "Please enter your name.",
@@ -277,6 +288,6 @@
     // No form service yet: open the visitor's email app with the message filled in.
     const body = `${data.message}\n\n${data.name}\n${data.email}`;
     location.href = `mailto:${email}?subject=${encodeURIComponent(`[${subject}] Message from ${data.name}`)}&body=${encodeURIComponent(body)}`;
-    say(`Your email app should open with your message ready to send. If it doesn’t, write to us at <a href="mailto:${email}">${email}</a>.`, true);
+    say(`If your email app didn’t open, copy your message and send it to <a href="mailto:${email}">${email}</a>. Nothing has been sent yet.`, true);
   });
 })();

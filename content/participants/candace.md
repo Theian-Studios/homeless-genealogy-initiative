@@ -1,6 +1,6 @@
 ---
 name: Candace
-order: 1
+order: 5
 photo: 
 photo_position: 50% 30%
 quote: Everyone needs somebody who cares. I try to be kind to everybody.

@@ -217,11 +217,11 @@ def photo_for(p, base, variant):
     return picture(base, p["info"], f"Portrait of {p['name']}", SIZES[variant], p["position"], eager)
 
 
-def card(p, base):
+def card(p, base, level=3):
     status = f'<span class="status-badge">{esc(p["status"])}</span>' if p["status"] else ""
     return f"""<a class="card" href="{base}stories/{p['id']}.html">
         <div class="card__photo">{photo_for(p, base, 'card')}{status}</div>
-        <h3 class="card__name">{esc(p['name'])}</h3>
+        <h{level} class="card__name">{esc(p['name'])}</h{level}>
         <p class="card__quote">“{esc(p['card_quote'])}”</p>
       </a>"""
 
@@ -238,8 +238,8 @@ def carousel(people, base):
             f'{picture(base, p["info"], f"Portrait of {p['name']}", SIZES["hero"], p["position"], eager=(i == 0)).replace(' loading="lazy"', '')}'
             f'<div class="hc__card"><p class="hc__quote">“{esc(p["card_quote"])}”</p>'
             f'<div class="hc__meta"><span class="hc__name">{esc(p["name"])}</span>'
-            f'<a class="hc__read" href="{url}" aria-label="Read {esc(p["name"])}’s story"'
-            f'{"" if i == 0 else " tabindex=\"-1\""}>Read story</a></div></div></div>'
+            f'<a class="hc__read" href="{url}"{"" if i == 0 else " tabindex=\"-1\""}>'
+            f'Read story<span class="visually-hidden"> about {esc(p["name"])}</span></a></div></div></div>'
         )
         dots.append(
             f'<button class="hc__dot{active}" type="button" data-index="{i}" aria-label="Show {esc(p["name"])}"'
@@ -300,13 +300,11 @@ def main():
     if not re.match(r"^(https?:|mailto:)", donate):
         donate = base + donate
 
-    build_id = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d%H%M%S")
     ctx = {
-        "build": build_id,
         "base": base,
         "year": datetime.date.today().year,
         "site.donate_url": esc(donate),
-        **{f"site.{k}": esc(v) for k, v in site.items() if k != "donate_url"},
+        **{f"site.{k}": esc(v) for k, v in site.items() if k != "donate_url" and isinstance(v, str)},
     }
     # Content hashes so browsers fetch new CSS/JS as soon as they change.
     for key, rel in (("css", "assets/css/styles.css"), ("js", "assets/js/main.js"),
@@ -325,12 +323,35 @@ def main():
     rest = [p for p in people if p is not feat]
     ctx["participants.not_featured"] = "\n      ".join(card(p, base) for p in rest)
     ctx["participants.all"] = "\n      ".join(card(p, base) for p in people)
+    # The stories page has no section heading above the cards, so names are h2 there.
+    ctx["participants.all_h2"] = "\n      ".join(card(p, base, level=2) for p in people)
     ctx["participants.carousel"] = carousel(people, base)
     ctx["participants.not_featured_cols"] = grid_cols(len(rest))
     ctx["participants.all_cols"] = grid_cols(len(people))
     for p in people:
         for variant in SIZES:
             ctx[f"photo.{p['id']}.{variant}"] = photo_for(p, base, variant)
+
+    # Structured data (JSON-LD) so search engines can show the organization and stories properly.
+    addr = site["postal_address"]
+    org = {
+        "@type": "NGO",
+        "@id": site_url + "#organization",
+        "name": site["name"],
+        "alternateName": site["short_name"],
+        "url": site_url,
+        "logo": f"{site_url}assets/img/step-logo.svg",
+        "email": site["email"],
+        "description": site["tagline"] + ": paid, remote work and weekly training for people experiencing homelessness in Utah County.",
+        "address": {"@type": "PostalAddress", "streetAddress": addr["street"], "addressLocality": addr["city"],
+                    "addressRegion": addr["region"], "postalCode": addr["postal_code"], "addressCountry": addr["country"]},
+        "areaServed": "Utah County, Utah",
+        "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Brigham Young University", "url": "https://www.byu.edu/"},
+    }
+
+    def jsonld(data):
+        text = json.dumps({"@context": "https://schema.org", **data}, ensure_ascii=False, separators=(",", ":"))
+        return '<script type="application/ld+json">' + text.replace("</", "<\\/") + "</script>"
 
     layout = (ROOT / "src" / "layout.html").read_text(encoding="utf-8")
     default_og = f"{site_url}assets/img/og-home.jpg?v={ctx['version.og']}"
@@ -352,6 +373,7 @@ def main():
             "og_image": esc(meta.get("og_image", default_og)),
             "og_image_alt": esc(meta.get("og_image_alt", site["name"])),
             "robots": '<meta name="robots" content="noindex">' if meta.get("noindex") else "",
+            "jsonld": jsonld(meta["jsonld"]) if meta.get("jsonld") else (jsonld(org) if is_home else ""),
         })
         page_ctx["content"] = render(content, page_ctx, out_path)
         dest = OUT / out_path
@@ -400,6 +422,19 @@ def main():
         if p["info"] and Image is not None:
             meta["og_image"] = f"{site_url}assets/img/og/{p['id']}.jpg"
             meta["og_image_alt"] = f"Portrait of {p['name']}"
+        story_url = f"{site_url}stories/{p['id']}.html"
+        publisher = {k: org[k] for k in ("@type", "@id", "name", "url", "logo")}
+        meta["jsonld"] = {
+            "@type": "Article",
+            "headline": meta["title"],
+            "description": meta["description"],
+            "url": story_url,
+            "mainEntityOfPage": story_url,
+            "image": meta.get("og_image", default_og),
+            "about": {"@type": "Person", "name": p["name"]},
+            "author": publisher,
+            "publisher": publisher,
+        }
         write_page(f"stories/{p['id']}.html", meta, render(story_tpl, {**ctx, **story_ctx}, "story.html"))
 
     # Old story links (story.html?p=jan) forward to the new pages.
@@ -423,8 +458,6 @@ def main():
     )
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {site_url}sitemap.xml\n", encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
-    # Pages compare their build id with this file and refresh once if they're stale.
-    (OUT / "version.json").write_text(json.dumps({"build": build_id}), encoding="utf-8")
 
     print(f"Built {len(sitemap)} pages into {OUT.relative_to(ROOT)}/ (base {base})"
           + ("" if Image else " — Pillow not installed, images copied without resizing"))

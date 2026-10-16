@@ -13,9 +13,20 @@ current: contact
 <section class="section">
   <div class="container contact-layout">
     <div class="contact-main">
-    <div class="donate-note" id="donations">
+    <div class="donate-note" id="donations" data-for="donations">
       <h2>Online giving is coming soon.</h2>
       <p>Leave your name and email below with <strong>Donations</strong> selected, and we’ll follow up about how to give.</p>
+    </div>
+    <div class="donate-note" id="referral" data-for="referral">
+      <h2>Referring someone</h2>
+      <p>Caseworkers, shelter staff, friends, and family are all welcome to refer someone. In your message, please include:</p>
+      <ul>
+        <li>Your name, your organization if you have one, and the best way to reach you</li>
+        <li>The person’s first name and how we can contact them, directly or through you</li>
+        <li>A little about their situation: where they’re staying, whether they have a phone or regular internet access, and the kind of work they want</li>
+        <li>Whether they know about STEP and have agreed to be referred</li>
+      </ul>
+      <p>Please leave out Social Security numbers, medical details, and other sensitive information. We’ll ask for what we need when we follow up.</p>
     </div>
     <form id="contact-form" class="contact-form" novalidate data-email="{{ site.email }}" data-endpoint="{{ site.form_endpoint }}">
       <div class="form-row">
@@ -50,6 +61,7 @@ current: contact
         <p class="field__error" aria-live="polite"></p>
       </div>
       <button class="btn btn--primary" type="submit">Send message</button>
+      <p class="form-hint" id="form-hint" hidden>This opens your email app with your message filled in, ready to send to <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
       <p id="form-status" class="form-status" role="status"></p>
     </form>
     </div>

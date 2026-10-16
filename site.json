@@ -7,5 +7,13 @@
   "facebook": "https://www.facebook.com/BYUrecordlinkinglab/",
   "address": "Record Linking Lab, Department of Economics, 2146 West View Building, Brigham Young University, Provo, UT 84604",
   "donate_url": "contact.html?subject=donations#donations",
-  "form_endpoint": ""
+  "form_endpoint": "",
+  "postal_address": {
+    "street": "Record Linking Lab, 2146 West View Building, Brigham Young University",
+    "city": "Provo",
+    "region": "UT",
+    "postal_code": "84604",
+    "country": "US"
+  },
+  "participants_so_far": "17"
 }

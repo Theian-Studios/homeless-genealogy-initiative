@@ -1,6 +1,6 @@
 ---
 name: Jan
-order: 4
+order: 1
 photo: jan.jpg
 photo_position: 50% 35%
 quote: This feels like it was by design.

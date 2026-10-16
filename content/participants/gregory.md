@@ -1,13 +1,13 @@
 ---
 name: Gregory
-order: 2
+order: 4
 photo: gregory.jpg
 photo_position: 50% 35%
 quote: I want to feel accomplished.
 featured: no
 ---
 
-In his own word, Gregory is a “tinker.” Give him something new to learn, a machine to figure out, or a problem to solve, and he will find a way to understand it. “I got into everything,” he says. That curiosity has shaped a lifetime of work and learning.
+In his own words, Gregory is a “tinker.” Give him something new to learn, a machine to figure out, or a problem to solve, and he will find a way to understand it. “I got into everything,” he says. That curiosity has shaped a lifetime of work and learning.
 
 Gregory has built an impressive range of technical skills over the years. He worked in construction, eventually becoming a foreman and regional foreman, and learned concrete, framing, ironwork, heavy machinery, electrical work, flooring, and tile. He became a machinist, worked in digital printing, helped an architect interpret and draw plans, and eventually ran his own landscaping business. He describes himself simply as “pretty work-oriented,” and his history makes that impossible to dispute.
 

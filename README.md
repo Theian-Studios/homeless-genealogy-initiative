@@ -11,6 +11,8 @@ A static website for STEP, the Supporting Transitions to Employment Program. A s
 | Participant stories | `content/participants/<name>.md` (one file per person) |
 | Participant photos | `assets/img/` |
 | Email, Donate link, Facebook, address, live URL | `site.json` |
+| Number of participants so far (shown on Home, About, How it works) | `site.json` → `participants_so_far` |
+| Mailing address used for Google search results | `site.json` → `postal_address` |
 | Home, About, How it works (with FAQ), For employers, Contact, 404 pages | `src/pages/` |
 | Participants list page | `src/pages/stories/index.html` |
 | Story page layout | `src/templates/story.html` |
@@ -64,7 +66,7 @@ Alison finished the program and started a full-time job.
 Edit `site.json`:
 
 - `donate_url`: Donate buttons open the contact form with "Donations" selected. Replace this with a real giving page link when you have one.
-- `form_endpoint`: blank means the form opens the visitor's own email app with their message filled in. To have messages sent straight from the site, create a free form at Web3Forms or Formspree and paste its URL here.
+- `form_endpoint`: blank means the form opens the visitor's own email app with their message filled in. To have messages sent straight from the site, create a free form at Formspree and paste its URL here (for example `https://formspree.io/f/abcdwxyz`).
 - `url`: the site's public address. Change it if you set up a custom domain.
 
 ## Building locally
