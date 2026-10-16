@@ -86,6 +86,19 @@
     hc.style.setProperty("--hc-time", DURATION + "ms");
     let current = 0, timer = null, userPaused = reduceMotion, held = false;
 
+    // Center the arrows on the photo above the white quote strip, not on the whole slide.
+    const centerArrows = () => {
+      const card = slides[current].querySelector(".hc__card");
+      hc.querySelector(".hc__stage").style.setProperty("--hc-card-h", (card ? card.offsetHeight : 0) + "px");
+    };
+    // Re-measure whenever a strip changes size (window resize, fonts loading, the photo being resized).
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(centerArrows);
+      slides.forEach((s) => s.querySelector(".hc__card") && ro.observe(s.querySelector(".hc__card")));
+    } else {
+      window.addEventListener("resize", centerArrows);
+    }
+
     // dir: 1 = next (new photo slides in from the right), -1 = previous (from the left).
     const show = (next, dir = 1) => {
       next = (next + slides.length) % slides.length;
@@ -118,6 +131,7 @@
       links[current].removeAttribute("tabindex");
       tabs[current].classList.add("is-active");
       tabs[current].setAttribute("aria-current", "true");
+      centerArrows();
     };
     const schedule = () => {
       clearTimeout(timer);
@@ -157,6 +171,7 @@
         btn.addEventListener("click", () => { show(current + step, step); schedule(); });
       });
     }
+    centerArrows();
     schedule();
   }
 
